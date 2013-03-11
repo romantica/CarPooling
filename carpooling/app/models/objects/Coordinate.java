@@ -1,5 +1,6 @@
+package models.objects;
 
-public class Coordinates {
+public class Coordinate {
 	private float x, y;
 
 	public float getX() {

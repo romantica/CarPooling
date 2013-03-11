@@ -1,3 +1,13 @@
+package controllers.interfaces;
+
+
+import models.objects.PickupPoint;
+import models.objects.Coordinate;
+import models.objects.Proposal;
+import models.objects.User;
+
+import java.util.List;
+
 public interface ProposalManager{
 	
 	/**

@@ -1,3 +1,8 @@
+package controllers.interfaces;
+
+import models.objects.Traject;
+import models.objects.User;
+
 public interface TrajectManager{
 	
 	/**

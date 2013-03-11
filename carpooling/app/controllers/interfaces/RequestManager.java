@@ -1,3 +1,10 @@
+package controllers.interfaces;
+
+import java.util.List;
+
+import models.objects.Request;
+import models.objects.Traject;
+
 public interface RequestManager{
 	/**
 	 * Enregistre la requete dans la base de donnees

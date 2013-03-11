@@ -1,3 +1,4 @@
+package models.objects;
 
 public class Car {
 	

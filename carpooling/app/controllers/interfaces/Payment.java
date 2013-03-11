@@ -1,3 +1,7 @@
+package controllers.interfaces;
+
+import models.objects.User;
+
 public interface Payment{
 	/**
 	 * Connaitre le montant du compte de l'utilisateur

@@ -1,12 +1,13 @@
+package models.objects;
 
 public class PickupPoint {
 	
 	private String name, description, address;
-	private Coordinates coordinates;
+	private Coordinate coordinates;
 	
 	
 	public PickupPoint(String name, String description, String address,
-			Coordinates coordinates) {
+			Coordinate coordinates) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -45,12 +46,12 @@ public class PickupPoint {
 	}
 
 
-	public Coordinates getCoordinates() {
+	public Coordinate getCoordinates() {
 		return coordinates;
 	}
 
 
-	public void setCoordinates(Coordinates coordinates) {
+	public void setCoordinates(Coordinate coordinates) {
 		this.coordinates = coordinates;
 	}
 	

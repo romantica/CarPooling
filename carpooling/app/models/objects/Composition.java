@@ -1,5 +1,6 @@
-import java.util.Date;
+package models.objects;
 
+import java.util.Date;
 
 public class Composition {
 	

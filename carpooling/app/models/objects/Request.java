@@ -1,8 +1,10 @@
+package models.objects;
+
 import java.util.Date;
 
 
 public class Request {
-	private Coordinates departureCoordinates, arrivalCoordinates;
+	private Coordinate departureCoordinates, arrivalCoordinates;
 	private String departureAddress, arrivalAddress;
 	private Date arrivalTime;
 	private int necessarySeats, toleranceTime, toleranceWalkDistance;
@@ -11,8 +13,8 @@ public class Request {
 	private User user;
 	private Traject traject;
 	
-	public Request(Coordinates departureCoordinates,
-			Coordinates arrivalCoordinates, String departureAddress,
+	public Request(Coordinate departureCoordinates,
+			Coordinate arrivalCoordinates, String departureAddress,
 			String arrivalAddress, Date arrivalTime, int necessarySeats,
 			int toleranceTime, int toleranceWalkDistance, float tolearncePrice,
 			User user, Traject traject) {
@@ -30,19 +32,19 @@ public class Request {
 		this.traject = traject;
 	}
 
-	public Coordinates getDepartureCoordinates() {
+	public Coordinate getDepartureCoordinates() {
 		return departureCoordinates;
 	}
 
-	public void setDepartureCoordinates(Coordinates departureCoordinates) {
+	public void setDepartureCoordinates(Coordinate departureCoordinates) {
 		this.departureCoordinates = departureCoordinates;
 	}
 
-	public Coordinates getArrivalCoordinates() {
+	public Coordinate getArrivalCoordinates() {
 		return arrivalCoordinates;
 	}
 
-	public void setArrivalCoordinates(Coordinates arrivalCoordinates) {
+	public void setArrivalCoordinates(Coordinate arrivalCoordinates) {
 		this.arrivalCoordinates = arrivalCoordinates;
 	}
 

@@ -1,3 +1,8 @@
+package controllers.interfaces;
+
+import models.objects.Car;
+import models.objects.User;
+
 public interface UserManager{
 	
 	/**
