@@ -6,6 +6,12 @@ import models.objects.Request;
 import models.objects.Traject;
 
 public class RequestManager{
+
+        private Matching matching;
+
+        public RequestManager(){
+
+        }
 	/**
 	 * Enregistre la requete dans la base de donnees
 	 */
