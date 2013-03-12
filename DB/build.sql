@@ -11,12 +11,14 @@ USE `CarPooling` ;
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`User` (
   `ID` INT NOT NULL ,
   `Login` VARCHAR(45) NOT NULL ,
+  `Password` VARCHAR(45) NOT NULL ,
   `LastName` VARCHAR(45) NOT NULL COMMENT '	' ,
   `FirstName` VARCHAR(45) NOT NULL ,
   `AccountNumber` INT NULL ,
   `PhoneNumber` VARCHAR(45) NULL ,
   `Email` VARCHAR(45) NOT NULL ,
-  PRIMARY KEY (`ID`) )
+  PRIMARY KEY (`ID`) ,
+  UNIQUE INDEX `Login_UNIQUE` (`Login` ASC) )
 ENGINE = InnoDB;
 
 

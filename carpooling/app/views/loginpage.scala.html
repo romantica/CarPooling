@@ -1,0 +1,13 @@
+@(username: String, error: String)
+@main("Carpooling - Login", null) {
+    <div class="loginpanel">
+    @if(error != null){
+        <div class="error">@error</div>
+    }
+        <form action="login"  method="POST">
+            <input type="text" name="username" placeholder="Username" value="@username">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" name="Login">
+        </form>
+    </div>
+}

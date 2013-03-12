@@ -1,15 +1,19 @@
 @(Username: String)
 
 <div class="mainbar">
-    <a href="" class="brand posLeft">CarPooling</a>
+    <a href="/" class="brand posLeft">CarPooling</a>
     <ul class="posLeft">
         <li><a href="proposal">Proposal</a></li>
         <li><a href="traject">Traject</a></li>
         <li><a href="request">Request</a></li>
     </ul>
     <ul class="posRight">
+        @if(Username != null){
         <li><a href="user">@Username</a></li>
+        <li><a href="logout">Logout</a></li>
+        }else{
         <li><a href="login">Login</a></li>
+        }
     </ul>
     <div class="clearfix"></div>
 </div>
