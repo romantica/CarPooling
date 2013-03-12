@@ -2,7 +2,7 @@ package controllers.interfaces;
 
 import models.objects.*;
 
-abstract class Communication{
+abstract class ICommunication{
 	
 	/**
 	 * Si une offre de trajet est supprimee, alors une notification 
@@ -28,7 +28,7 @@ abstract class Communication{
 	 * est finalement trouve plus tard, alors l'utilisateur est 
 	 * prevenu.
 	 */
-	public static void trajectFound(User user, Traject t){
+	public static void trajectFound(User user){
 		
 	}
 	
