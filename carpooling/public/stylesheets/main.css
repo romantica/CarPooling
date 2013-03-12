@@ -25,6 +25,8 @@ dl, dt, dd, li, ul {
     border: 0;
 }
 
+
+
 /*          FORM         */
 form input,
 form textarea,
@@ -43,7 +45,7 @@ form select {
 form input:focus,
 form textarea:focus,
 form select:focus {
-    border-color: #754C24;
+    border-color: rgb(97, 196, 25);
 }
 
 a {
@@ -57,6 +59,37 @@ a:hover {
 .clearfix {
     clear: both;
 }
+
+
+/*         BUTTON TYPE      */
+.grayButton{
+    display:block;
+    line-height:25px;
+    color:#474747;
+    text-shadow:rgba(255,255,255,0.6) 0px 1px 0px;
+    vertical-align:middle;
+    text-align:center;
+    background: -webkit-linear-gradient(top, rgb(245,245,245) 0%, rgb(230,230,230) 100%);
+    background: -moz-linear-gradient(top, rgb(245,245,245) 0%, rgb(230,230,230) 100%);
+    background: -o-linear-gradient(top, rgb(245,245,245) 0%, rgb(230,230,230) 100%);
+    background: -ms-linear-gradient(top, rgb(245,245,245) 0%, rgb(230,230,230) 100%);
+    background: linear-gradient(top, rgb(245,245,245) 0%, rgb(230,230,230) 100%);
+    border:rgb(200,200,200) 1px solid;
+    border-radius:5px;
+    padding:2px;
+    text-shadow:#DDD 0px 1px 0px;
+}
+.grayButton:active{
+    background:rgb(175,175,175);
+    -webkit-box-shadow:inset #666 0 0px 3px;
+    -moz-box-shadow:inset #666 0 0px 3px;
+    -o-box-shadow:inset #666 0 0px 3px;
+    -ms-box-shadow:inset #666 0 0px 3px;
+    box-shadow:inset #666 0 0px 3px;
+    border:#666 1px solid;
+}
+
+
 
 /*          MAINBAR         */
 .mainbar {

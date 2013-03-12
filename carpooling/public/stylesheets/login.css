@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+.loginpanel{
+    display: block;
+    margin: 100px auto;
+    width: 350px;
+    padding: 25px;
+    background-color: #FFF;
+    border:#CCC 1px solid;
+    border-radius: 10px;
+    box-shadow: 0 0 6px #CCC;
+    -moz-box-shadow: 0 0 6px #CCC;
+    -webkit-box-shadow: 0 0 6px #CCC;
+    -o-box-shadow: 0 0 6px #CCC;
+    -ms-box-shadow: 0 0 6px #CCC;
+    background-image: linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -o-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -moz-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -webkit-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -ms-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+}
+.loginpanel .error{
+    font-size: 12px;
+    font-weight: bold;
+    color: #FFF;
+    padding:10px;
+    background:#AD0000;
+    display: block;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+    -webkit-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -moz-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -o-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -ms-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    text-shadow: 0px -1px 0px #000;
+}
+.loginpanel input{
+    display: block;
+    float: left;
+    width: 340px;
+    margin: 5px 0px;
+}
+
+.loginpanel .send{
+   display: block;
+    width: 100px;
+    float: right;
+}
