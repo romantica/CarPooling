@@ -1,6 +1,6 @@
 package controllers.interfaces;
 
-public interface Login{
+public interface ILogin{
 	
 	public boolean logIn(String username, String password);
 	

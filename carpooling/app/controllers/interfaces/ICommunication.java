@@ -2,7 +2,7 @@ package controllers.interfaces;
 
 import models.objects.*;
 
-abstract class Communication{
+abstract class ICommunication{
 	
 	/**
 	 * Si une offre de trajet est supprimee, alors une notification 

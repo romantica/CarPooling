@@ -5,7 +5,7 @@ import java.util.List;
 import models.objects.Request;
 import models.objects.Traject;
 
-public abstract class Matching{
+public abstract class IMatching{
 	/**
 	 * Sur base d'une requete et en accedant a la base de donnees, 
 	 * renvoie une liste de trajets qui seront propose au 

@@ -3,7 +3,7 @@ package controllers.interfaces;
 import models.objects.Traject;
 import models.objects.User;
 
-public interface TrajectManager{
+public interface ITrajectManager{
 	
 	/**
 	 * Enregistre un trajet dans la base de donnees
