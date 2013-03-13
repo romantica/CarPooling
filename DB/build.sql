@@ -9,7 +9,7 @@ USE `CarPooling` ;
 -- Table `CarPooling`.`User`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`User` (
-  `ID` INT NOT NULL ,
+  `ID` INT NOT NULL AUTO_INCREMENT ,
   `Login` VARCHAR(45) NOT NULL ,
   `Password` VARCHAR(45) NOT NULL ,
   `LastName` VARCHAR(45) NOT NULL COMMENT '	' ,
@@ -44,7 +44,7 @@ ENGINE = InnoDB;
 -- Table `CarPooling`.`Proposal`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Proposal` (
-  `ID` INT NOT NULL ,
+  `ID` INT NOT NULL AUTO_INCREMENT ,
   `UserID` INT NOT NULL ,
   `CarID` VARCHAR(7) NOT NULL ,
   `KmCost` FLOAT NOT NULL ,
@@ -101,13 +101,13 @@ ENGINE = InnoDB;
 -- Table `CarPooling`.`Request`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Request` (
-  `ID` INT NOT NULL ,
+  `ID` INT NOT NULL AUTO_INCREMENT ,
   `UserID` INT NOT NULL ,
-  `DepartureCoordinateX` FLOAT NOT NULL ,
-  `DepartureCoordinateY` FLOAT NOT NULL ,
+  `DepartureCoordinateX` DOUBLE NOT NULL ,
+  `DepartureCoordinateY` DOUBLE NOT NULL ,
   `DepartureAddress` VARCHAR(45) NOT NULL ,
-  `ArrivalCoordinateX` FLOAT NOT NULL ,
-  `ArrivalCoordinateY` FLOAT NOT NULL ,
+  `ArrivalCoordinateX` DOUBLE NOT NULL ,
+  `ArrivalCoordinateY` DOUBLE NOT NULL ,
   `ArrivalAddress` VARCHAR(45) NOT NULL ,
   `NecessarySeats` TINYINT NOT NULL ,
   `ToleranceTime` INT NULL ,
@@ -127,7 +127,7 @@ ENGINE = InnoDB;
 -- Table `CarPooling`.`Traject`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Traject` (
-  `ID` INT NOT NULL ,
+  `ID` INT NOT NULL AUTO_INCREMENT ,
   `UserID` INT NULL ,
   `RequestID` INT NOT NULL ,
   `ProposalID` INT NOT NULL ,
@@ -159,10 +159,10 @@ ENGINE = InnoDB;
 -- Table `CarPooling`.`PickupPoint`
 -- -----------------------------------------------------
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`PickupPoint` (
-  `ID` INT NOT NULL ,
+  `ID` INT NOT NULL AUTO_INCREMENT ,
   `Name` VARCHAR(45) NULL ,
-  `CoordinateX` FLOAT NOT NULL ,
-  `CoordinateY` FLOAT NOT NULL ,
+  `CoordinateX` DOUBLE NOT NULL ,
+  `CoordinateY` DOUBLE NOT NULL ,
   `Address` VARCHAR(45) NOT NULL ,
   PRIMARY KEY (`ID`) )
 ENGINE = InnoDB;

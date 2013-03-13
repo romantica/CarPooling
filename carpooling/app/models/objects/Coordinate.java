@@ -1,12 +1,12 @@
 package models.objects;
 
 public class Coordinate {
-    private float x, y;
+    private double x, y;
 
     public Coordinate() {
     }
 
-    public Coordinate(float x, float y) {
+    public Coordinate(double x, double y) {
         this.x = x;
         this.y = y;
     }
@@ -18,23 +18,23 @@ public class Coordinate {
      */
     public Coordinate(String coord) {
         String[] c = coord.split(",");
-        this.x = Float.parseFloat(c[0]);
-        this.y = Float.parseFloat(c[1]);
+        this.x = Double.parseDouble(c[0]);
+        this.y =  Double.parseDouble(c[1]);
     }
 
-    public float getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public float getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(double y) {
         this.y = y;
     }
 
