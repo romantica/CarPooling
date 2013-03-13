@@ -10,7 +10,7 @@ import models.objects.Proposal;
 import models.objects.User;
 import play.db.*;
 
-public class ProposalManager implements controllers.interfaces.ProposalManager{
+public class ProposalManager implements controllers.interfaces.IProposalManager{
 
 	@Override
 	public List<PickupPoint> getPickupPoints(Coordinate start, Coordinate end) {

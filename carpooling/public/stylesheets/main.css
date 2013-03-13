@@ -131,11 +131,8 @@ a:hover {
 
 .mainbar ul li {
     display: block;
-    padding: 0px 5px;
-    line-height: 35px;
     float: left;
 }
-
 .mainbar .brand {
     color: rgb(55, 110, 25);
     text-shadow: rgb(180, 227, 145) 0px 1px 0px;
@@ -143,6 +140,9 @@ a:hover {
 }
 
 .mainbar ul li a {
+    display: block;
+    padding: 0px 5px;
+    line-height: 35px;
     color: rgb(56, 111, 16);
     text-shadow: rgb(180, 227, 145) 0px 1px 0px;
 }
@@ -159,4 +159,26 @@ a:hover {
 .mainbar ul li:hover a {
     color: rgb(81, 163, 25);
     text-shadow: rgb(180, 227, 145) 0px 1px 0px;
+}
+
+
+/*          CORE            */
+.content{
+    display: block;
+    margin: 10px auto;
+    width: 1000px;
+    padding: 25px;
+    background-color: #FFF;
+    border:#CCC 1px solid;
+    border-radius: 10px;
+    box-shadow: 0 0 6px #CCC;
+    -moz-box-shadow: 0 0 6px #CCC;
+    -webkit-box-shadow: 0 0 6px #CCC;
+    -o-box-shadow: 0 0 6px #CCC;
+    -ms-box-shadow: 0 0 6px #CCC;
+    background-image: linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -o-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -moz-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -webkit-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -ms-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
 }

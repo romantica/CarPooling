@@ -1,0 +1,13 @@
+@(Username: String)
+
+@header = {
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/proposal.css")">
+<script type="text/javascript" src="@routes.Assets.at("javascripts/proposal.js")" charset="utf-8"></script>
+<script type="text/javascript" src="@routes.Assets.at("javascripts/map.js")" charset="utf-8"></script>
+<script src="//maps.googleapis.com/maps/api/js?sensor=true"></script>
+}
+
+@main(title = "Create Proposal", Username = Username, Header = header) {
+<h1>Create new proposal</h1>
+}
+

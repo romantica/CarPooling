@@ -1,23 +1,8 @@
 @charset "utf-8";
 
-.loginpanel{
-    display: block;
-    margin: 100px auto;
+.content{
     width: 350px;
-    padding: 25px;
-    background-color: #FFF;
-    border:#CCC 1px solid;
-    border-radius: 10px;
-    box-shadow: 0 0 6px #CCC;
-    -moz-box-shadow: 0 0 6px #CCC;
-    -webkit-box-shadow: 0 0 6px #CCC;
-    -o-box-shadow: 0 0 6px #CCC;
-    -ms-box-shadow: 0 0 6px #CCC;
-    background-image: linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
-    background-image: -o-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
-    background-image: -moz-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
-    background-image: -webkit-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
-    background-image: -ms-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    margin: 100px auto;
 }
 .loginpanel .error{
     font-size: 12px;

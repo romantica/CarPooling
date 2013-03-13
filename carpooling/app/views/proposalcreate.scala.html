@@ -1,0 +1,43 @@
+@(Username: String, error: String)
+
+@header = {
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/proposal.css")">
+<script type="text/javascript" src="@routes.Assets.at("javascripts/proposal.js")" charset="utf-8"></script>
+<script type="text/javascript" src="@routes.Assets.at("javascripts/map.js")" charset="utf-8"></script>
+<script src="//maps.googleapis.com/maps/api/js?sensor=true"></script>
+}
+
+@main(title = "Create Proposal", Username = Username, Header = header) {
+        <h1>Create new proposal</h1>
+        <form action="proposalselectpp" method="POST" id="proposalfrom">
+            @if(error != null){
+            <div class="error">@error</div>
+            }
+            <dl>
+                <dt>From: </dt>
+                <dd>
+                    <input type="text" name="from" placeholder="Address" id="fromadd"/>
+                    <input type="hidden" name="fromcoord" id="fromcoord" value="" />
+                </dd>
+                <dt>To: </dt>
+                <dd>
+                    <input type="text" name="to" placeholder="Address" id="toadd"/>
+                    <input type="hidden" name="tocoord" id="tocoord" value="" />
+                </dd>
+                <dt>Car</dt>
+                <dd>
+                    <select name="car">
+                        <option value="unknown" selected>Unknown</option>
+                    </select>
+                </dd>
+                <dt>Available seats</dt>
+                <dd><input type="number" name="seats" value="1" /></dd>
+                <dt>Start Hour</dt>
+                <dd><input type="datetime-local" name="starthour" /></dd>
+                <dt>Arrival Hour</dt>
+                <dd><input type="datetime-local" name="arrivalhour" /></dd>
+            </dl>
+            <input type="button" onclick="nextStep()" value="Next step">
+        </form>
+}
+
