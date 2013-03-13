@@ -1,23 +1,45 @@
 package models.objects;
 
 public class Coordinate {
-	private float x, y;
+    private double x, y;
 
-	public float getX() {
-		return x;
-	}
+    public Coordinate() {
+    }
 
-	public void setX(float x) {
-		this.x = x;
-	}
+    public Coordinate(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
 
-	public float getY() {
-		return y;
-	}
+    /**
+     * Transform a string to coordinate
+     *
+     * @param coord String format: FLOAT,FLOAT
+     */
+    public Coordinate(String coord) {
+        String[] c = coord.split(",");
+        this.x = Double.parseDouble(c[0]);
+        this.y =  Double.parseDouble(c[1]);
+    }
 
-	public void setY(float y) {
-		this.y = y;
-	}
-	
-	
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public String toString() {
+        return this.x + "," + this.y;
+    }
+
 }

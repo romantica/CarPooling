@@ -1,0 +1,184 @@
+@charset "utf-8";
+
+body {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: #FFF url(../images/main/background.png);
+    display: block;
+    font-size: 12px;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+img {
+    border: 0;
+}
+
+dl, dt, dd, li, ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+
+
+/*          FORM         */
+form input,
+form textarea,
+form select {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Garuda, sans-serif;
+    font-size: 11px;
+    border: solid #CCC 1px;
+    color: #666;
+    outline: none;
+    padding: 3px;
+    outline-width: medium;
+    background: #FFF url(../images/form/input_background.png) repeat-x;
+    border-radius: 5px;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border-color: rgb(97, 196, 25);
+}
+
+a {
+    color: #333;
+}
+
+a:hover {
+    color: #666;
+}
+
+.clearfix {
+    clear: both;
+}
+
+
+/*         BUTTON TYPE      */
+.grayButton{
+    display:block;
+    line-height:25px;
+    color:#474747;
+    text-shadow:rgba(255,255,255,0.6) 0px 1px 0px;
+    vertical-align:middle;
+    text-align:center;
+    background: -webkit-linear-gradient(top, rgb(245,245,245) 0%, rgb(230,230,230) 100%);
+    background: -moz-linear-gradient(top, rgb(245,245,245) 0%, rgb(230,230,230) 100%);
+    background: -o-linear-gradient(top, rgb(245,245,245) 0%, rgb(230,230,230) 100%);
+    background: -ms-linear-gradient(top, rgb(245,245,245) 0%, rgb(230,230,230) 100%);
+    background: linear-gradient(top, rgb(245,245,245) 0%, rgb(230,230,230) 100%);
+    border:rgb(200,200,200) 1px solid;
+    border-radius:5px;
+    padding:2px;
+    text-shadow:#DDD 0px 1px 0px;
+}
+.grayButton:active{
+    background:rgb(175,175,175);
+    -webkit-box-shadow:inset #666 0 0px 3px;
+    -moz-box-shadow:inset #666 0 0px 3px;
+    -o-box-shadow:inset #666 0 0px 3px;
+    -ms-box-shadow:inset #666 0 0px 3px;
+    box-shadow:inset #666 0 0px 3px;
+    border:#666 1px solid;
+}
+
+
+
+/*          MAINBAR         */
+.mainbar {
+    display: block;
+    list-style-type: none;
+    width: 100%;
+    background: rgb(180, 227, 145);
+    background: -moz-linear-gradient(top, rgb(180, 227, 145) 0%, rgb(97, 196, 25) 50%, rgb(180, 227, 145) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(180, 227, 145)), color-stop(50%, rgb(97, 196, 25)), color-stop(100%, rgb(180, 227, 145)));
+    background: -webkit-linear-gradient(top, rgb(180, 227, 145) 0%, rgb(97, 196, 25) 50%, rgb(180, 227, 145) 100%);
+    background: -o-linear-gradient(top, rgb(180, 227, 145) 0%, rgb(97, 196, 25) 50%, rgb(180, 227, 145) 100%);
+    background: -ms-linear-gradient(top, rgb(180, 227, 145) 0%, rgb(97, 196, 25) 50%, rgb(180, 227, 145) 100%);
+    background: linear-gradient(to bottom, rgb(180, 227, 145) 0%, rgb(97, 196, 25) 50%, rgb(180, 227, 145) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#b4e391', endColorstr = '#b4e391', GradientType = 0);
+    box-shadow: 0 0 6px #CCC;
+    -moz-box-shadow: 0 0 6px #CCC;
+    -webkit-box-shadow: 0 0 6px #CCC;
+    -o-box-shadow: 0 0 6px #CCC;
+    -ms-box-shadow: 0 0 6px #CCC;
+    border-bottom: rgba(100, 100, 100, .3) solid 1px;
+}
+
+.mainbar ul,
+.mainbar .brand {
+    display: block;
+    list-style: none;
+    font-size: 15px;
+    line-height: 35px;
+    padding: 0px 10px;
+}
+
+.mainbar .posLeft {
+    float: left;
+}
+
+.mainbar .posRight {
+    float: right;
+}
+
+.mainbar ul li {
+    display: block;
+    float: left;
+}
+.mainbar .brand {
+    color: rgb(55, 110, 25);
+    text-shadow: rgb(180, 227, 145) 0px 1px 0px;
+    font-size: 18px;
+}
+
+.mainbar ul li a {
+    display: block;
+    padding: 0px 5px;
+    line-height: 35px;
+    color: rgb(56, 111, 16);
+    text-shadow: rgb(180, 227, 145) 0px 1px 0px;
+}
+
+.mainbar ul li:hover {
+    background: rgb(180, 227, 145);
+    -webkit-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -moz-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -o-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -ms-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+}
+
+.mainbar ul li:hover a {
+    color: rgb(81, 163, 25);
+    text-shadow: rgb(180, 227, 145) 0px 1px 0px;
+}
+
+
+/*          CORE            */
+.content{
+    display: block;
+    margin: 10px auto;
+    width: 1000px;
+    padding: 25px;
+    background-color: #FFF;
+    border:#CCC 1px solid;
+    border-radius: 10px;
+    box-shadow: 0 0 6px #CCC;
+    -moz-box-shadow: 0 0 6px #CCC;
+    -webkit-box-shadow: 0 0 6px #CCC;
+    -o-box-shadow: 0 0 6px #CCC;
+    -ms-box-shadow: 0 0 6px #CCC;
+    background-image: linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -o-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -moz-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -webkit-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+    background-image: -ms-linear-gradient(bottom, rgb(245,245,245), rgb(255,255,255));
+}
