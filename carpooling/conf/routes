@@ -9,6 +9,7 @@ POST    /login                      controllers.UserUI.login()
 GET     /logout                     controllers.UserUI.logout()
 GET     /proposal                   controllers.ProposalUI.create()
 POST    /proposalselectpp           controllers.ProposalUI.selectPP()
+GET     /request                    controllers.RequestUI.create()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
