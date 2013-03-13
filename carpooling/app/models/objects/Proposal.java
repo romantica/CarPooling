@@ -10,11 +10,11 @@ public class Proposal {
 	
 	private Car car;
 	private User user;
-	private Traject traject;
+	private List<Traject> traject;
 	private List<Itinerary> itinerary;
 	
 	public Proposal(float kmCost, int availableSeats, Car car, User user,
-			Traject traject, List<Itinerary> itinerary) {
+			List<Traject> traject, List<Itinerary> itinerary) {
 		super();
 		this.kmCost = kmCost;
 		this.availableSeats = availableSeats;
@@ -56,11 +56,11 @@ public class Proposal {
 		this.user = user;
 	}
 
-	public Traject getTraject() {
+	public List<Traject> getTraject() {
 		return traject;
 	}
 
-	public void setTraject(Traject traject) {
+	public void setTraject(List<Traject> traject) {
 		this.traject = traject;
 	}
 
