@@ -4,5 +4,24 @@
 *.jar
 *.war
 *.ear
+
 .DS_Store
-application.conf
+/.DS_Store
+
+logs
+project/project
+project/target
+target
+tmp
+.history
+dist
+/.idea
+/*.iml
+/out
+/.idea_modules
+/.classpath
+/.project
+/RUNNING_PID
+/.settings
+
+>>>>>>> e2eb50eed5ce91264d8de995e03895a4e52d85d3

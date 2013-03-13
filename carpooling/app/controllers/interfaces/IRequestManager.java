@@ -5,7 +5,7 @@ import java.util.List;
 import models.objects.Request;
 import models.objects.Traject;
 
-public interface RequestManager{
+public interface IRequestManager{
 	/**
 	 * Enregistre la requete dans la base de donnees
 	 */

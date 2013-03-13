@@ -3,7 +3,7 @@ package controllers.interfaces;
 import models.objects.Car;
 import models.objects.User;
 
-public interface UserManager{
+public interface IUserManager{
 	
 	/**
 	 * Cree un nouvel utilisateur dans la base de donnnees

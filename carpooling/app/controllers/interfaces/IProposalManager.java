@@ -8,7 +8,7 @@ import models.objects.User;
 
 import java.util.List;
 
-public interface ProposalManager{
+public interface IProposalManager{
 	
 	/**
 	 * Retourne une liste de PickupPoints susceptibles d'etre
