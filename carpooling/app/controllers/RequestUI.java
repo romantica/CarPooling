@@ -18,17 +18,18 @@ public class RequestUI extends Controller {
 		// if (!session.isLogged())
            // return redirect("/");
 		FormUI form = new FormUI("requestselecttraject");
-		form.addField(new Field("address", "From", "fromadd", true, "Mon beau message d'erreur", null));
-		form.addField(new Field("hidden", "", "fromcoord", false, "Mon beau message d'erreur", null));
-		form.addField(new Field("address", "To", "toadd", true, "Mon beau message d'erreur", null));
-		form.addField(new Field("hidden", "", "tocoord", false, "Mon beau message d'erreur", null));
-		form.addField(new Field("datetime-local", "Wished arrival hour", "arrivalTime", true, "Mon beau message d'erreur", null));
-		Field seatsField = new Field("number", "Number of requested seats", "seats", true, "Mon beau message d'erreur", null);
+		form.addField(new Field("address", "From", "fromadd", true, "Incorrect from address", null));
+		form.addField(new Field("hidden", "", "fromcoord", false, "incorrect from address", null));
+		form.addField(new Field("address", "To", "toadd", true, "Incorrect to address", null));
+		form.addField(new Field("hidden", "", "tocoord", false, "Incorrect to address", null));
+		form.addField(new Field("datetime-local", "Wished arrival hour", "arrivalTime", true, "Incorrect arrival time", null));
+		Field seatsField = new Field("number", "Number of requested seats", "seats", true, "Incorrect required seats field", null);
 		seatsField.value = "1";
 		form.addField(seatsField);
-		form.addField(new Field("number", "Tolerance time (min)", "toleranceTime", false, "Mon beau message d'erreur", null));
-		form.addField(new Field("number", "Maximum walking distance (km)", "maxWalkingDistance", false, "Mon beau message d'erreur", null));
-		form.addField(new Field("number", "Maximum price allowed (&euro;)", "maxPrice", false, "Mon beau message d'erreur", null));
+		form.addField(new Field("number", "Tolerance time (min)", "toleranceTime", false, "Invalid tolerance time", null));
+		form.addField(new Field("number", "Maximum walking distance (km)", "maxWalkingDistance", false, "Invalid walking distance", null));
+		form.addField(new Field("number", "Maximum price allowed (&euro;)", "maxPrice", false, "Invalid maximum price", null));
+		form.addField(new Field("submit", "Next step", "", false, "Invalid submit button (!!)", null));
 		
 		return ok(requestcreate.render(sess.getUsername(), null, form));
 	}

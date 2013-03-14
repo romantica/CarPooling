@@ -26,10 +26,14 @@ public class Field {
                  boolean required,
                  String error,
                  String regex) {
-        if(typeinput.equals("address")){
+        if (typeinput.equals("address")) {
             this.typeinput = "input";
             this.placeholder = "Address";
-        }else{
+		} else if (typeinput.equals("submit")) {
+			this.value = name;
+			name = "";
+			this.typeinput = "submit";
+        } else {
             this.typeinput = typeinput;
         }
         this.name = name;

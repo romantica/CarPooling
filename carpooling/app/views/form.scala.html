@@ -19,6 +19,7 @@
                     value="@field.value"
                     @if(field.id != null){ id="@field.id" }
                     @if(field.placeholder != null){ placeholder="@field.placeholder"}
+					@if(field.required){ required="required" }
             />
         </dt>
     }
