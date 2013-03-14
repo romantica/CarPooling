@@ -71,8 +71,17 @@ public class Proposal {
 	public void setItinerary(List<Itinerary> itinerary) {
 		this.itinerary = itinerary;
 	}
-	
-	
-	
-	
+
+
+    @Override
+    public String toString() {
+        return "Proposal{" +
+                "kmCost=" + kmCost +
+                ", availableSeats=" + availableSeats +
+                ", car=" + car +
+                ", user=" + user +
+                ", traject=" + traject +
+                ", itinerary=" + itinerary +
+                '}';
+    }
 }
