@@ -15,7 +15,7 @@ public class FormUI {
     public String id;
 	private Map<String, Field> fields;
 
-    public Form (String action, String meth){
+    public FormUI (String action, String meth){
         this.action = action;
         this.meth = meth;
 		this.fields = new HashMap<String, Field>();
