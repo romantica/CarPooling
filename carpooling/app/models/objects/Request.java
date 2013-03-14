@@ -8,7 +8,7 @@ public class Request {
 	private String departureAddress, arrivalAddress;
 	private Date arrivalTime;
 	private int necessarySeats, toleranceTime, toleranceWalkDistance;
-	private float tolearncePrice;
+	private float tolerancePrice;
 	
 	private User user;
 	private Traject traject;
@@ -16,7 +16,7 @@ public class Request {
 	public Request(Coordinate departureCoordinates,
 			Coordinate arrivalCoordinates, String departureAddress,
 			String arrivalAddress, Date arrivalTime, int necessarySeats,
-			int toleranceTime, int toleranceWalkDistance, float tolearncePrice,
+			int toleranceTime, int toleranceWalkDistance, float tolerancePrice,
 			User user, Traject traject) {
 		super();
 		this.departureCoordinates = departureCoordinates;
@@ -27,7 +27,7 @@ public class Request {
 		this.necessarySeats = necessarySeats;
 		this.toleranceTime = toleranceTime;
 		this.toleranceWalkDistance = toleranceWalkDistance;
-		this.tolearncePrice = tolearncePrice;
+		this.tolerancePrice = tolerancePrice;
 		this.user = user;
 		this.traject = traject;
 	}
@@ -96,12 +96,12 @@ public class Request {
 		this.toleranceWalkDistance = toleranceWalkDistance;
 	}
 
-	public float getTolearncePrice() {
-		return tolearncePrice;
+	public float getTolerancePrice() {
+		return tolerancePrice;
 	}
 
-	public void setTolearncePrice(float tolearncePrice) {
-		this.tolearncePrice = tolearncePrice;
+	public void setTolerancePrice(float tolerancePrice) {
+		this.tolerancePrice = tolerancePrice;
 	}
 
 	public User getUser() {
