@@ -1,4 +1,6 @@
-package views;
+package controllers;
+
+import play.mvc.Controller;
 
 /**
  * 
