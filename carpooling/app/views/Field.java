@@ -11,5 +11,15 @@ class Field {
     String placeholder;
 	String id;
 	
+	String regex;
+	
+	boolean isError;
+	String error;
+	
 	String attr;
+	
+	public Field(String type, String name) {
+		this.type = type;
+		this.name = name;
+	}
 }
