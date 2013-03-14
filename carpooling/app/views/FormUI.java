@@ -9,24 +9,31 @@ import play.data.DynamicForm;
  */
 public class FormUI {
 
-    private String action;
-    private String meth;
+    public String action;
+    public String meth;
     public String name;
     public String id;
-	private Map<String, Field> fields;
+	private List<Field> fields;
 
-    public FormUI (String action, String meth){
+    public FormUI(String action, String meth){
         this.action = action;
         this.meth = meth;
-		this.fields = new HashMap<String, Field>();
+		this.fields = new ArrayList<Field>();
     }
+	
+	public FormUI(String action) {
+		this(action, "post");
+	}
 
     public void setField(Field field){
-		this.fields.put(field.name, field);
+		this.fields.add(field);
     }
 	
 	public Field getField(String name) {
-		return this.fields.get(name);
+		for (Field f : this.fields)
+			if (f.name == name)
+				return f;
+		return null;
 	}
 
     public int getIntField(String name){
@@ -38,7 +45,13 @@ public class FormUI {
     }
 	
 	public void completeForm(DynamicForm data) {
-		for (Field f : this.fields.values())
-			f.value = data.get(f.name);
+		for (Field f : this.fields)
+			if (data.get(f.id).matches(f.regex))
+				f.value = data.get(f.id);
+			else f.isError = true;
+	}
+	
+	public List<Field> getFields() {
+		return this.fields;
 	}
 }

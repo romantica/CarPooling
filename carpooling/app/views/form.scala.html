@@ -1,9 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+@(Form: FormUI)
+<form action="Form.action" method="Form.post" @if(Form.id != null){ id="Form.id"}>
+    <div class="error">
+        <ul>
+            @for(field <- Form.getFields()){
+                @if(field.isError) {
+                <li>field.error</li>
+                }
+            }
+        </ul>
+    </div>
+    <dl>
+    @for(field <- Form.getFields()){
+        <dt>field.name</dt>
+        <dt>
+            <input type="field.type" name="field.id" value="field.value" id="field.id" placeholder="field.placeholder" />
+        </dt>
+    }
+    </dl>
 
-</body>
-</html>
+</form>
