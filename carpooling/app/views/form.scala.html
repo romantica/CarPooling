@@ -1,5 +1,5 @@
 @(Form: FormUI)
-<form action="@Form.action" method="@Form.post" @if(Form.id != null){ id="Form.id"}>
+<form action="@Form.action" method="@Form.meth">
     <div class="error">
         <ul>
             @for(field <- Form.getFields()){
@@ -13,7 +13,7 @@
     @for(field <- Form.getFields()){
         <dt>@field.name</dt>
         <dt>
-            <input type="@field.type" name="@field.id" value="@field.value" id="@field.id" placeholder="@field.placeholder" />
+            <input type="@field.typeinput" name="@field.id" value="@field.value" id="@field.id" placeholder="@field.placeholder" />
         </dt>
     }
     </dl>

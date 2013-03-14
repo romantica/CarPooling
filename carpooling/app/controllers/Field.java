@@ -1,12 +1,10 @@
 package controllers;
 
-import play.mvc.Controller;
-
 /**
  * 
  */
 class Field {
-    public String type;
+    public String typeinput;
     public String name;
     public String value;
     public boolean required;
@@ -21,7 +19,7 @@ class Field {
 	public String attr;
 	
 	public Field(String type, String name) {
-		this.type = type;
+		this.typeinput = type;
 		this.name = name;
 	}
 }
