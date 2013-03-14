@@ -46,10 +46,35 @@ public class Matching
 	private static boolean isAMatch(Proposal proposal, Request request)
 	{
 		//TODO
-		if (proposal.getAvailableSeats() <= request.getNecessarySeats()
-				|| proposal.getKmCost() > request.getTolerancePrice())
+		if ( proposal.getAvailableSeats() < request.getNecessarySeats()
+				|| proposal.getKmCost() > request.getTolerancePrice()
+				|| !isTimingAMatch(proposal, request)
+				|| !isWalkingAMatch(proposal, request)
+		   )
 			return false;
 		
+		return true;
+	}
+	
+	/**
+	 * Determine si une requete et une proposal sont temporellement
+	 * compatibles (en ce comprise la tolerance de temps et le temps de marche)
+	 */
+	private static boolean isTimingAMatch(Proposal proposal, Request request)
+	{
+		//TODO
+		if ( proposal.getItinerary().getFirst().getDepartureTime().after( request.getArrivalTime() )
+				|| proposal.getItinerary().getLast().getArrivalTime().after( request.getArrivalTime() )	)
+			return false;
+		return true;
+	}
+	
+	/**
+	 * 
+	 */
+	private static boolean isWalkingAMatch(Proposal proposal, Request request)
+	{
+		//TODO
 		return true;
 	}
 	
