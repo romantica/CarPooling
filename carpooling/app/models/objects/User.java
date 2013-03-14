@@ -13,7 +13,9 @@ public class User {
 	private List<Proposal> proposals;
 	private List<Traject> trajects;
 	private List<Request> request;
-	
+
+    public User(){}
+
 	public User(String login, String firstName, String name, String email,
 			String pĥoneNumber, int balance, Assessment assessment,
 			List<Car> cars, List<Proposal> proposals, List<Traject> trajects,
