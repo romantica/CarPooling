@@ -1,22 +1,22 @@
 package controllers;
 
 /**
- * 
+ *
  */
-class Field {
+public class Field {
     public String typeinput;
     public String name;
     public String value;
     public boolean required;
     public String placeholder;
-	public String id;
-	
-	public String regex;
-	
-	public boolean isError;
-	public String error;
-	
-	public String attr;
+    public String id;
+
+    public String regex;
+
+    public boolean isError;
+    public String error;
+
+    public String attr;
 
 
 
@@ -26,10 +26,14 @@ class Field {
                  boolean required,
                  String error,
                  String regex) {
-        if(typeinput.equals("address")){
+        if (typeinput.equals("address")) {
             this.typeinput = "input";
             this.placeholder = "Address";
-        }else{
+        } else if (typeinput.equals("submit")) {
+            this.value = name;
+            name = "";
+            this.typeinput = "submit";
+        } else {
             this.typeinput = typeinput;
         }
         this.name = name;
@@ -38,9 +42,10 @@ class Field {
         this.regex = regex;
         this.error = error;
     }
-	
-	public Field(String type, String name) {
-		this.typeinput = type;
-		this.name = name;
-	}
+
+    public Field(String type, String name, String id) {
+        this.typeinput = type;
+        this.name = name;
+        this.id = id;
+    }
 }

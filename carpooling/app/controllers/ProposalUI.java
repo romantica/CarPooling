@@ -3,18 +3,21 @@ package controllers;
 import models.objects.Coordinate;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.mvc.Controller;
 import play.mvc.Result;
 
 import static play.mvc.Results.ok;
 import static play.mvc.Results.redirect;
 
-import views.html.*;
+
+import views.html.proposal.*;
+import models.*;
 
 /**
  * User: sdefauw
  * Date: 13/03/13
  */
-public class ProposalUI {
+public class ProposalUI  extends Controller {
 
     /**
      * @return Initial page to create a new proposal
@@ -23,7 +26,8 @@ public class ProposalUI {
         Login session = new Login();
         if (!session.isLogged())
             return redirect("/");
-        return ok(proposalcreate.render(session.getUsername(),null));
+        FormUI form = formCreate();
+        return ok(create.render(session.getUsername(), null, form));
     }
 
     /**
@@ -41,6 +45,12 @@ public class ProposalUI {
         //Get PickupPoint form manager
         ProposalManager pm = new ProposalManager();
         pm.getPickupPoints(fromCoord, toCoord);
-        return ok(proposalselectpp.render(session.getUsername()));
+        return ok(selectpp.render(session.getUsername()));
+    }
+
+    private static FormUI formCreate(){
+        FormUI form =  new FormUI("proposalselectpp");
+        form.addField(new Field("address", "From", "fromadd", true, "", ""));
+        return form;
     }
 }

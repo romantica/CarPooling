@@ -1,4 +1,4 @@
-@(Username: String, error: String)
+@(Username: String, error: String, Form: FormUI)
 
 @header = {
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/proposal.css")">
@@ -9,7 +9,8 @@
 
 @main(title = "Create Proposal", Username = Username, Header = header) {
         <h1>Create new proposal</h1>
-        <form action="proposalselectpp" method="POST" id="proposalfrom">
+        @form(Form)
+        <!--<form action="proposalselectpp" method="POST" id="proposalfrom">
             @if(error != null){
             <div class="error">@error</div>
             }
@@ -38,6 +39,6 @@
                 <dd><input type="datetime-local" name="arrivalhour" /></dd>
             </dl>
             <input type="button" onclick="nextStep()" value="Next step">
-        </form>
+        </form>-->
 }
 
