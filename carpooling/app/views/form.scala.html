@@ -4,7 +4,7 @@
         <ul>
             @for(field <- Form.getFields()){
                 @if(field.isError) {
-                <li>field.error</li>
+                <li>@field.error</li>
                 }
             }
         </ul>

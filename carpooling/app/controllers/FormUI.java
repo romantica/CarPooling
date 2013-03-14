@@ -47,12 +47,21 @@ public class FormUI {
 	
 	public void completeForm(DynamicForm data) {
 		for (Field f : this.fields)
-			if (f.regex == null || data.get(f.id).matches(f.regex))
-				f.value = data.get(f.id);
-			else f.isError = true;
+			if (!f.typeinput.equals("submit")) {
+				if (f.regex == null || data.get(f.id).matches(f.regex))
+					f.value = data.get(f.id);
+				else f.isError = true;
+			}
 	}
 	
 	public List<Field> getFields() {
 		return this.fields;
+	}
+	
+	public boolean isError() {
+		for (Field f : this.fields)
+			if (f.isError)
+				return true;
+		return false;
 	}
 }
