@@ -39,18 +39,22 @@ public class FormUI {
     public int getIntField(String name){
         return Integer.parseInt(this.getField(name).value);
     }
+    public float getFloatField(String name){
+        return Float.parseFloat(this.getField(name).value);
+    }
 	
 	public String getStringField(String name){
         return this.getField(name).value;
     }
 	
 	public void completeForm(DynamicForm data) {
-		for (Field f : this.fields)
+		for (Field f : this.fields) {
 			if (!f.typeinput.equals("submit")) {
 				if (f.regex == null || data.get(f.id).matches(f.regex))
 					f.value = data.get(f.id);
 				else f.isError = true;
 			}
+        }
 	}
 	
 	public List<Field> getFields() {

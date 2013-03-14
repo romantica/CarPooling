@@ -12,7 +12,9 @@ GET     /logout                     controllers.UserUI.logout()
 
 # Prposal
 GET     /proposal                   controllers.ProposalUI.create()
-POST    /proposalselectpp           controllers.ProposalUI.selectPP()
+GET     /proposal/create            controllers.ProposalUI.create()
+POST    /proposal/create/submit     controllers.ProposalUI.createSubmit()
+GET     /proposal/selectpp          controllers.ProposalUI.selectPP()
 
 # Request
 GET     /request                    controllers.RequestUI.create()
