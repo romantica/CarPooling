@@ -12,7 +12,7 @@ public class FormUI {
     public String action;
     public String meth;
     public String name;
-    public String id;
+    public String id = "1";
 	private List<Field> fields;
 
     public FormUI(String action, String meth){
