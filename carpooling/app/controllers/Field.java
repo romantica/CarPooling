@@ -17,6 +17,27 @@ class Field {
 	public String error;
 	
 	public String attr;
+
+
+
+    public Field(String typeinput,
+                 String name,
+                 String id,
+                 boolean required,
+                 String error,
+                 String regex) {
+        if(typeinput.equals("address")){
+            this.typeinput = "input";
+            this.placeholder = "Address";
+        }else{
+            this.typeinput = typeinput;
+        }
+        this.name = name;
+        this.required = required;
+        this.id = id;
+        this.regex = regex;
+        this.error = error;
+    }
 	
 	public Field(String type, String name) {
 		this.typeinput = type;
