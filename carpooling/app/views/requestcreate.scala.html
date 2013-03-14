@@ -1,0 +1,38 @@
+@(username: String, error: String, Form: FormUI)
+
+@header = {
+
+}
+
+@main(title = "New request", Header = header) {
+    <h1>Create new request</h1>
+	@form(Form)
+	<!--<form action="requestselecttraject" method="POST" id="requestfrom">
+		@if(error != null){
+			<div class="error">@error</div>
+		}
+		<dl>
+			<dt>From: </dt>
+			<dd>
+				<input type="text" name="from" placeholder="Address" id="fromadd" required="required" />
+				<input type="hidden" name="fromcoord" id="fromcoord" value="" />
+			</dd>
+			<dt>To: </dt>
+			<dd>
+				<input type="text" name="to" placeholder="Address" id="toadd" required="required"/>
+				<input type="hidden" name="tocoord" id="tocoord" value="" />
+			</dd>
+			<dt>Wished arrival hour</dt>
+			<dd><input type="datetime-local" name="arrivalTime" required="required" /></dd>
+			<dt>Number of requested seats</dt>
+			<dd><input type="number" name="seats" value="1" /></dd>
+			<dt>Tolerance time (min)</dt>
+			<dd><input type="number" name="toleranceTime" /></dd>
+			<dt>Maximum walking distance (km)</dt>
+			<dd><input type="number" name="maxWalkingDistance" /></dd>
+			<dt>Maximum price allowed (&euro;)</dt>
+			<dd><input type="number" name="maxPrice" /></dd>
+		</dl>
+		<input type="submit" value="Next step" />
+	</form>-->
+}

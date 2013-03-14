@@ -92,4 +92,24 @@ public class Matching
 		//TODO
 		return null;
 	}
+	
+	/**
+	 * Fait appel a Google Maps et renvoie la distance a pied entre deux points
+	 */
+	 public static int gmDistanceWalk(double latitudeStart, double longitudeStart,
+	 					double latitudeEnd, double longitudeEnd)
+	 {
+	 	//TODO
+	 	return 0;
+	 }
+	 
+	 /**
+	 * Fait appel a Google Maps et renvoie la distance en voiture entre deux points 
+	 */
+	 public static int gmDistanceCar(double latitudeStart, double longitudeStart,
+	 					double latitudeEnd, double longitudeEnd)
+	 {
+	 	//TODO
+	 	return 0;
+	 }
 }

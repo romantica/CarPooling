@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
 
-	private String login, firstName, name, email, pĥoneNumber;
+	private String login, firstName, name, email, phoneNumber;
 	private int balance;
 	private Assessment assessment;
 	
@@ -13,9 +13,12 @@ public class User {
 	private List<Proposal> proposals;
 	private List<Traject> trajects;
 	private List<Request> request;
-	
-	public User(String login, String firstName, String name, String email,
-			String pĥoneNumber, int balance, Assessment assessment,
+
+    public User(){}
+
+
+    public User(String login, String firstName, String name, String email,
+			String phoneNumber, int balance, Assessment assessment,
 			List<Car> cars, List<Proposal> proposals, List<Traject> trajects,
 			List<Request> request) {
 		super();
@@ -23,7 +26,7 @@ public class User {
 		this.firstName = firstName;
 		this.name = name;
 		this.email = email;
-		this.pĥoneNumber = pĥoneNumber;
+		this.phoneNumber = phoneNumber;
 		this.balance = balance;
 		this.assessment = assessment;
 		this.cars = cars;
@@ -64,12 +67,12 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPĥoneNumber() {
-		return pĥoneNumber;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPĥoneNumber(String pĥoneNumber) {
-		this.pĥoneNumber = pĥoneNumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public int getBalance() {
@@ -119,6 +122,21 @@ public class User {
 	public void setRequest(List<Request> request) {
 		this.request = request;
 	}
-	
-	
+
+
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", balance=" + balance +
+                ", assessment=" + assessment +
+                ", cars=" + cars +
+                ", proposals=" + proposals +
+                ", trajects=" + trajects +
+                ", request=" + request +
+                '}';
+    }
 }
