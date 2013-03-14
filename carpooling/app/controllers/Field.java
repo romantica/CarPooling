@@ -3,7 +3,7 @@ package controllers;
 /**
  * 
  */
-class Field {
+public class Field {
     public String typeinput;
     public String name;
     public String value;
@@ -39,8 +39,9 @@ class Field {
         this.error = error;
     }
 	
-	public Field(String type, String name) {
+	public Field(String type, String name, String id) {
 		this.typeinput = type;
 		this.name = name;
+		this.id = id;
 	}
 }
