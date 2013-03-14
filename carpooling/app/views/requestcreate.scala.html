@@ -13,18 +13,18 @@
 		<dl>
 			<dt>From: </dt>
 			<dd>
-				<input type="text" name="from" placeholder="Address" id="fromadd"/>
+				<input type="text" name="from" placeholder="Address" id="fromadd" required="required" />
 				<input type="hidden" name="fromcoord" id="fromcoord" value="" />
 			</dd>
 			<dt>To: </dt>
 			<dd>
-				<input type="text" name="to" placeholder="Address" id="toadd"/>
+				<input type="text" name="to" placeholder="Address" id="toadd" required="required"/>
 				<input type="hidden" name="tocoord" id="tocoord" value="" />
 			</dd>
 			<dt>Wished arrival hour</dt>
-			<dd><input type="datetime-local" name="arrivalhour" /></dd>
+			<dd><input type="datetime-local" name="arrivalTime" required="required" /></dd>
 			<dt>Number of requested seats</dt>
-			<dd><input type="number" name="seats" /></dd>
+			<dd><input type="number" name="seats" value="1" /></dd>
 			<dt>Tolerance time (min)</dt>
 			<dd><input type="number" name="toleranceTime" /></dd>
 			<dt>Maximum walking distance (km)</dt>
