@@ -6,19 +6,19 @@ import play.mvc.Controller;
  * 
  */
 class Field {
-    String type;
-    String name;
-    String value;
-    boolean required;
-    String placeholder;
-	String id;
+    public String type;
+    public String name;
+    public String value;
+    public boolean required;
+    public String placeholder;
+	public String id;
 	
-	String regex;
+	public String regex;
 	
-	boolean isError;
-	String error;
+	public boolean isError;
+	public String error;
 	
-	String attr;
+	public String attr;
 	
 	public Field(String type, String name) {
 		this.type = type;
