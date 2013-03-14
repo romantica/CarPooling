@@ -1,5 +1,6 @@
 package models.objects;
 
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -11,10 +12,10 @@ public class Proposal {
 	private Car car;
 	private User user;
 	private List<Traject> traject;
-	private List<Itinerary> itinerary;
+	private LinkedList<Itinerary> itinerary;
 	
 	public Proposal(float kmCost, int availableSeats, Car car, User user,
-			List<Traject> traject, List<Itinerary> itinerary) {
+			List<Traject> traject, LinkedList<Itinerary> itinerary) {
 		super();
 		this.kmCost = kmCost;
 		this.availableSeats = availableSeats;
@@ -64,11 +65,11 @@ public class Proposal {
 		this.traject = traject;
 	}
 
-	public List<Itinerary> getItinerary() {
+	public LinkedList<Itinerary> getItinerary() {
 		return itinerary;
 	}
 
-	public void setItinerary(List<Itinerary> itinerary) {
+	public void setItinerary(LinkedList<Itinerary> itinerary) {
 		this.itinerary = itinerary;
 	}
 
