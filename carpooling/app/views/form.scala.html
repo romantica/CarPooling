@@ -12,7 +12,7 @@
     <dl>
     @for(field <- Form.getFields()){
         @if(field.typeinput == "hidden"){
-        <input type="hidden" name="@field.id" value="@field.value" />
+        <input type="hidden" name="@field.id" value="@field.value"  id="from_@Form.id @field.id" />
         } else {
         <dt>@field.name</dt>
         <dt>
@@ -27,7 +27,7 @@
                     value="@field.value"
                     id="from_@Form.id @field.id"
                     @if(field.placeholder != null){ placeholder="@field.placeholder" }
-                    @if(field.attr != null){ @field.attr }
+                    @if(field.attr != null){ @Html(field.attr) }
                     />
             }
         </dt>
