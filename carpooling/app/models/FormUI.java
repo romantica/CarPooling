@@ -1,8 +1,7 @@
-package controllers;
+package models;
 
 import java.util.*;
 import play.data.DynamicForm;
-import play.mvc.Controller;
 
 /**
  * User: sdefauw

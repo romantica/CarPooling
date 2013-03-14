@@ -4,11 +4,17 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+
+# Login
 GET     /login                      controllers.UserUI.loginPage()
 POST    /login                      controllers.UserUI.login()
 GET     /logout                     controllers.UserUI.logout()
+
+# Prposal
 GET     /proposal                   controllers.ProposalUI.create()
 POST    /proposalselectpp           controllers.ProposalUI.selectPP()
+
+# Request
 GET     /request                    controllers.RequestUI.create()
 POST    /requestselecttraject       controllers.RequestUI.selectTraject()
 

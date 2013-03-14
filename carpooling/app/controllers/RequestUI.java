@@ -7,6 +7,8 @@ import play.mvc.Result;
 
 import views.html.*;
 
+import models.*;
+
 /**
  * User: olivierdeh
  * Date: 13/03/13
