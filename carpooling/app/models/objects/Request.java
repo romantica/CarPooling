@@ -1,9 +1,19 @@
-package models.objects;
+package models;
 
-import java.util.Date;
+import java.util.*;
+import javax.persistence.*;
 
 
-public class Request {
+import play.db.ebean.*;
+import play.data.format.*;
+import play.data.validation.*;
+
+
+
+public class Request extends Model {
+
+	public Long id;
+	
 	private Coordinate departureCoordinates, arrivalCoordinates;
 	private String departureAddress, arrivalAddress;
 	private Date arrivalTime;

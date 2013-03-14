@@ -49,8 +49,8 @@ public class RequestManager implements IRequestManager{
 		public void execute(){
 			if( IMatching.match(request) == null){
 				//restart
-				int timeOut = (request.getArrivalTime() - Date.getTime() > 24*60*60) ? 24*60*60 : 2*60*60;
-				ITimer timer = new ITimer();
+				int timeOut = (request.getArrivalTime().getTime() - new Date().getTime() > 24*60*60) ? 24*60*60 : 2*60*60;
+				ITimer timer = new Timer();
 				timer.WakeInTime(timeOut, this);
 			} 
 			else{

@@ -1,5 +1,8 @@
 package models.objects;
 
+import play.db.ebean.*;
+
+
 public class Traject {
 	
 	private int reservedSeats;
