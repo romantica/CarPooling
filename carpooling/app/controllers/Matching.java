@@ -47,7 +47,7 @@ public class Matching
 	{
 		//TODO
 		if (proposal.getAvailableSeats() <= request.getNecessarySeats()
-				|| proposal.getKmCost() >= request.getTolerancePrice())
+				|| proposal.getKmCost() > request.getTolerancePrice())
 			return false;
 		
 		return true;
