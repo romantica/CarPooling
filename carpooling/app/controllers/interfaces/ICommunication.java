@@ -10,7 +10,11 @@ abstract class ICommunication{
 	 * trajet. Cette methode devra etre appelee pour chaque  
 	 * passager concerne 
 	 */
-	public static void trajectCancelled(User driver, Traject[] t){
+	public static void RequestCancelled(User driver, Traject t){
+		
+	}
+	
+	public static void ProposalCancelled(User passenger, Traject t){
 		
 	}
 	
