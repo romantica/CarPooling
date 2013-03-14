@@ -50,7 +50,20 @@ public class ProposalUI  extends Controller {
 
     private static FormUI formCreate(){
         FormUI form =  new FormUI("proposalselectpp");
-        form.addField(new Field("address", "From", "fromadd", true, "", ""));
+        form.addField(new Field("address", "From", "fromadd", true, null, null));
+        form.addField(new Field("hidden", null , "fromcoord", true, null, null));
+        form.addField(new Field("address", "To", "toadd", true, null, null));
+        form.addField(new Field("hidden", null , "tocoord", true, null, null));
+        Field car = new Field();
+        car.typeinput = "select";
+        car.name = "Car";
+        car.id = "car";
+        car.value = "<option value=\"unknown\" selected>Unknown</option>";
+        form.addField(car);
+        form.addField(new Field("number", "Available seats" , "seats", true, "Invalid format", "[0-9]{0,2}"));
+        form.addField(new Field("datetime-local", "Start Hour", "starthour", true, "Incorrect start time", null));
+        form.addField(new Field("datetime-local", "Arrival Hour", "arrivalhour", true, "Incorrect arrival time", null));
+
         return form;
     }
 }

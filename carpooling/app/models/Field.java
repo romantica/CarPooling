@@ -18,6 +18,8 @@ public class Field {
 
     public String attr;
 
+    public Field() {
+    }
 
     public Field(String typeinput,
                  String name,
