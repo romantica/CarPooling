@@ -1,6 +1,7 @@
 package controllers;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.*;
@@ -20,8 +21,39 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 
 	@Override
 	public List<PickupPoint> getPickupPoints(Coordinate start, Coordinate end) {
+		//TEST
+        // TEST
+        List<PickupPoint> list= new ArrayList<PickupPoint>();
+        list.add(
+                new PickupPoint(
+                        "namefrom",
+                        "descfrom",
+                        "Addressfrom",
+                        start
+                ));
+        list.add(
+                new PickupPoint(
+                        "nameto",
+                        "descto",
+                        "Addressto",
+                        end
+                ));
+        list.add(
+                new PickupPoint(
+                        "name",
+                        "desc",
+                        "Address",
+                        new Coordinate(50.715897,4.7128073)
+                ));
+        list.add(
+                new PickupPoint(
+                        "name2",
+                        "desc2",
+                        "Address2",
+                        new Coordinate(50.717897,4.6138073)
+                ));
 		// TODO Auto-generated method stub
-		return null;
+		return list;
 	}
 
 	@Override

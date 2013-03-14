@@ -29,22 +29,21 @@ public class FormUI {
 		this.fields.add(field);
     }
 	
-	public Field getField(String name) {
+	public Field getField(String id) {
 		for (Field f : this.fields)
-			if (f.name == name)
+			if (f.id.equals(id))
 				return f;
 		return null;
 	}
 
-    public int getIntField(String name){
-        return Integer.parseInt(this.getField(name).value);
+    public int getIntField(String id){
+        return Integer.parseInt(this.getField(id).value);
     }
-    public float getFloatField(String name){
-        return Float.parseFloat(this.getField(name).value);
+    public float getFloatField(String id){
+        return Float.parseFloat(this.getField(id).value);
     }
-	
-	public String getStringField(String name){
-        return this.getField(name).value;
+	public String getStringField(String id){
+        return this.getField(id).value;
     }
 	
 	public void completeForm(DynamicForm data) {

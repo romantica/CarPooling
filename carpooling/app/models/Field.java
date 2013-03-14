@@ -50,4 +50,20 @@ public class Field {
         this.name = name;
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "Field{" +
+                "typeinput='" + typeinput + '\'' +
+                ", name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                ", required=" + required +
+                ", placeholder='" + placeholder + '\'' +
+                ", id='" + id + '\'' +
+                ", regex='" + regex + '\'' +
+                ", isError=" + isError +
+                ", error='" + error + '\'' +
+                ", attr='" + attr + '\'' +
+                '}';
+    }
 }
