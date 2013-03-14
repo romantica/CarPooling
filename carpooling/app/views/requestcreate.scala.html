@@ -1,4 +1,4 @@
-@(username: String, error: String)
+@(username: String, error: String, Form: FormUI)
 
 @header = {
 
@@ -6,7 +6,8 @@
 
 @main(title = "New request", Header = header) {
     <h1>Create new request</h1>
-	<form action="requestselecttraject" method="POST" id="requestfrom">
+	@form(Form)
+	<!--<form action="requestselecttraject" method="POST" id="requestfrom">
 		@if(error != null){
 			<div class="error">@error</div>
 		}
@@ -33,5 +34,5 @@
 			<dd><input type="number" name="maxPrice" /></dd>
 		</dl>
 		<input type="submit" value="Next step" />
-	</form>
+	</form>-->
 }

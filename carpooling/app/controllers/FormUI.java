@@ -26,7 +26,7 @@ public class FormUI {
 		this(action, "post");
 	}
 
-    public void setField(Field field){
+    public void addField(Field field){
 		this.fields.add(field);
     }
 	
@@ -47,7 +47,7 @@ public class FormUI {
 	
 	public void completeForm(DynamicForm data) {
 		for (Field f : this.fields)
-			if (data.get(f.id).matches(f.regex))
+			if (f.regex == null || data.get(f.id).matches(f.regex))
 				f.value = data.get(f.id);
 			else f.isError = true;
 	}

@@ -17,7 +17,10 @@ public class RequestUI extends Controller {
 		Login sess = new Login();
 		// if (!session.isLogged())
            // return redirect("/");
-		return ok(requestcreate.render(sess.getUsername(), null));
+		FormUI form = new FormUI("requestselecttraject");
+		form.addField(new Field("address", "From", "fromadd", true, "Mon beau message d'erreur", null));
+		
+		return ok(requestcreate.render(sess.getUsername(), null, form));
 	}
 	
 	public static Result selectTraject() {
