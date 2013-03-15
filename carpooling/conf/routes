@@ -16,6 +16,8 @@ GET     /proposal/create            controllers.ProposalUI.create()
 POST    /proposal/create/submit     controllers.ProposalUI.createSubmit()
 GET     /proposal/selectpp          controllers.ProposalUI.selectPP()
 POST    /proposal/selectpp/submit   controllers.ProposalUI.selectPPSubmit()
+GET     /proposal/summary           controllers.ProposalUI.summary()
+GET     /proposal/recording         controllers.ProposalUI.recording()
 
 # Request
 GET     /request                    controllers.RequestUI.create()

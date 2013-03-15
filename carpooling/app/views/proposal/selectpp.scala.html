@@ -14,7 +14,8 @@
     <script lang="javascript">
         var pp =[
         @for(pp <- PickupPoints){
-            {"name":"@pp.getName()",
+            {"id":"@pp.getId()",
+             "name":"@pp.getName()",
              "gps_lat":@pp.getCoordinates().getX(),
              "gps_long":@pp.getCoordinates().getY(),
              "Address":"@pp.getAddress()"},
@@ -36,6 +37,7 @@
                         add = results[0].formatted_address;
                     }
                     pp.push({
+                        "id":null,
                         "name":null,
                         "gps_lat":coord.lat(),
                         "gps_long":coord.lng(),

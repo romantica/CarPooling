@@ -23,6 +23,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
         List<PickupPoint> list= new ArrayList<PickupPoint>();
         list.add(
                 new PickupPoint(
+                        1,
                         "namefrom",
                         "descfrom",
                         "Addressfrom",
@@ -30,6 +31,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
                 ));
         list.add(
                 new PickupPoint(
+                        2,
                         "nameto",
                         "descto",
                         "Addressto",
@@ -37,6 +39,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
                 ));
         list.add(
                 new PickupPoint(
+                        3,
                         "name",
                         "desc",
                         "Address",
@@ -44,6 +47,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
                 ));
         list.add(
                 new PickupPoint(
+                        4,
                         "name2",
                         "desc2",
                         "Address2",
