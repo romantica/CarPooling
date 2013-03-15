@@ -72,6 +72,14 @@ public class Proposal {
 	public void setItinerary(LinkedList<Itinerary> itinerary) {
 		this.itinerary = itinerary;
 	}
+	
+	public Itinerary getItinerary(PickupPoint pickupPoint)
+	{
+		for (Itinerary itinerary : this.getItinerary())
+			if (itinerary.getPickupPoint().equals(pickupPoint))
+				return itinerary;
+		return null;
+	}
 
 
     @Override

@@ -7,7 +7,7 @@ public class Traject {
 	
 	private Request request;
 	private User user;
-	private Composition departurePP, ArrivalPP;
+	private Composition departurePP, arrivalPP;
 	private Proposal proposal;
 	
 	public Traject(int reservedSeats, float totalCost, Request request,
@@ -19,7 +19,7 @@ public class Traject {
 		this.request = request;
 		this.user = user;
 		this.departurePP = departurePP;
-		ArrivalPP = arrivalPP;
+		this.arrivalPP = arrivalPP;
 		this.proposal = proposal;
 	}
 
@@ -64,11 +64,11 @@ public class Traject {
 	}
 
 	public Composition getArrivalPP() {
-		return ArrivalPP;
+		return arrivalPP;
 	}
 
 	public void setArrivalPP(Composition arrivalPP) {
-		ArrivalPP = arrivalPP;
+		this.arrivalPP = arrivalPP;
 	}
 
 	public Proposal getProposal() {
