@@ -15,6 +15,8 @@ import views.html.proposal.*;
 import models.*;
 import models.objects.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +48,7 @@ public class ProposalUI  extends Controller {
         if (form.isError())
             return ok(create.render(session.getUsername(), null, form));
         //No error
-        System.out.println("------> IN CACHE");
+        //Create proposal object
         //TODO: assiation correcte de la car
         Car car = new Car();
         User user = UserManager.getUserLogged();
@@ -54,12 +56,36 @@ public class ProposalUI  extends Controller {
                 form.getFloatField("kmcost"),
                 form.getIntField("seats"),
                 car,
-                user,
-                null,
-                null
+                user
         );
-        Cache.set("proposal#"+user.getLogin(), prop, 60*60);
-        return redirect("/proposal/selectpp?fromcoord=" + form.getStringField("fromcoord") + "&tocoord=" + form.getStringField("tocoord"));
+        //Create PP object for departure en arrival
+        PickupPoint departure = new PickupPoint(
+                null,
+                null,
+                form.getStringField("fromadd"),
+                new Coordinate(form.getStringField("fromcoord"))
+        );
+        PickupPoint arrival = new PickupPoint(
+                null,
+                null,
+                form.getStringField("toadd"),
+                new Coordinate(form.getStringField("tocoord"))
+        );
+        //Create Itinerary object
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date startdate = null;
+        Date arrivaldate = null;
+        try{
+            startdate = dateFormat.parse(form.getStringField("starthour").replace('T',' '));
+            arrivaldate = dateFormat.parse(form.getStringField("arrivalhour").replace('T',' '));
+        }catch (Exception e){}
+        Itinerary depItin = new Itinerary(startdate, startdate, departure);
+        Itinerary arrItin = new Itinerary(arrivaldate, arrivaldate, arrival);
+        prop.addItinerary(depItin);
+        prop.addItinerary(arrItin);
+        //Put in cache
+        Cache.set("proposal#"+user.getLogin(), prop, 60*60); //Cache available 1hour
+        return redirect("/proposal/selectpp");
     }
 
     /**
@@ -70,10 +96,11 @@ public class ProposalUI  extends Controller {
         Login session = new Login();
         if (!session.isLogged())
             return redirect("/");
-        //Formulaire
-        DynamicForm requestData = Form.form().bindFromRequest();
-        Coordinate fromCoord = new Coordinate(requestData.get("fromcoord"));
-        Coordinate toCoord = new Coordinate(requestData.get("tocoord"));
+        //Get coord start en arrival PP
+        Proposal prop = (Proposal) Cache.get("proposal#"+session("username"));
+        List<Itinerary> itiList = prop.getItinerary();
+        Coordinate fromCoord = itiList.get(0).getPickupPoint().getCoordinates();
+        Coordinate toCoord = itiList.get(1).getPickupPoint().getCoordinates();
         //Get PickupPoint form manager
         ProposalManager pm = new ProposalManager();
         List<PickupPoint> listpp =  pm.getPickupPoints(fromCoord, toCoord);

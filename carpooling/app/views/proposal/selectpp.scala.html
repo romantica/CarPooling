@@ -9,7 +9,7 @@
 
 @main(title = "Create Proposal", Username = Username, Header = header) {
     <h1>Create new proposal</h1>
-    <h2>Select pickup points where you stop.</h2>
+    <h2>Select pickup points where you want to stop.</h2>
     <div id="map" style="width: 100%; height: 500px;"></div>
     <script lang="javascript">
         var pp =[
@@ -20,12 +20,40 @@
              "Address":"@pp.getAddress()"},
         }
         ];
+        var selectedPP = [];
         window.onload = function(){
             var mapID = "map";
             initMap(mapID);
             startpp = pp[0]
             map.setCenter(new google.maps.LatLng(startpp.gps_lat, startpp.gps_long));
             addTabMarker(pp);
+            activeAddMarkerCick(null);
+            addListenerMarker(function(e){
+                coord = e.latLng;
+                coord_lat = Math.round(coord.lat()*10000000)/10000000;
+                coord_lng = Math.round(coord.lng()*10000000)/10000000;
+                //Search if this pp in pp[]
+                //Add or remove selection pp
+                var toAdd = true;
+                for (var i in selectedPP) {
+                    item = pp[i];
+                    if (item.gps_lat == coord_lat && item.gps_long == coord_lng) {
+                        delete selectedPP[i];
+                        toAdd = false;
+                        break;
+                    }
+                }
+                if (toAdd) {
+                    thispp = null;
+                    for (var i in pp) {
+                        item = pp[i];
+                        if (item.gps_lat == coord_lat && item.gps_long == coord_lng) {
+                            thispp = item;
+                        }
+                    }
+                    if(thispp) selectedPP.push(thispp);
+                }
+            });
         }
     </script>
 }
