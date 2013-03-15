@@ -23,7 +23,7 @@ public class Proposal {
 	private User user;
 	private List<Traject> traject;
 	private LinkedList<Itinerary> itinerary;
-	
+
 	public Proposal(float kmCost, int availableSeats, Car car, User user) {
 		super();
 		this.kmCost = kmCost;
@@ -33,6 +33,11 @@ public class Proposal {
 		this.traject = new ArrayList<Traject>();
 		this.itinerary = new LinkedList<Itinerary>();
 	}
+
+    public Proposal(int id, float kmCost, int availableSeats, Car car, User user) {
+        this(kmCost,availableSeats,car,user);
+        this.id = id;
+    }
 
 	public float getKmCost() {
 		return kmCost;

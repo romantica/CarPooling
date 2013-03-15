@@ -15,7 +15,8 @@ public class PickupPoint {
 	
 	@Constraints.Required
 	private Coordinate coordinates;
-	
+
+    public PickupPoint(){}
 	
 	public PickupPoint(String name, String description, String address,
 			Coordinate coordinates) {
@@ -25,6 +26,16 @@ public class PickupPoint {
 		this.address = address;
 		this.coordinates = coordinates;
 	}
+
+    public PickupPoint(int id, String name, String description, String address,
+                       Coordinate coordinates) {
+        super();
+        this.name = name;
+        this.description = description;
+        this.address = address;
+        this.coordinates = coordinates;
+        this.id = id;
+    }
 
     public int getId() {
         return id;
