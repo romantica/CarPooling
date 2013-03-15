@@ -3,14 +3,23 @@ package models.objects;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import play.data.validation.Constraints;
+import play.db.ebean.Model.Finder;
 
-
+@Entity
 public class Proposal {
+	
+	@Id
+	private int id;
 	
 	private float kmCost;
 	private int availableSeats;
 	
+	@Constraints.Required
 	private Car car;
+	@Constraints.Required
 	private User user;
 	private List<Traject> traject;
 	private LinkedList<Itinerary> itinerary;
@@ -93,7 +102,8 @@ public class Proposal {
 		return null;
 	}
 
-
+	public static Finder<Integer, Proposal> find = new Finder<Integer, Proposal>(Integer.class, Proposal.class);
+	
     @Override
     public String toString() {
         return "Proposal{" +

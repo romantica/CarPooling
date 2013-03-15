@@ -1,6 +1,18 @@
 package models.objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import play.data.validation.Constraints;
+import play.db.ebean.Model.Finder;
+
+
+@Entity
 public class Coordinate {
+	
+	@Id
+	private int id;
+	
+	@Constraints.Required
     private double x, y;
 
     public Coordinate() {
@@ -42,4 +54,5 @@ public class Coordinate {
         return this.x + "," + this.y;
     }
 
+    public static Finder<Integer, Coordinate> find = new Finder<Integer, Coordinate>(Integer.class, Coordinate.class);
 }

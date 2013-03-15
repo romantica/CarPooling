@@ -1,8 +1,19 @@
 package models.objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import play.data.validation.Constraints;
+import play.db.ebean.Model.Finder;
+
+@Entity
 public class PickupPoint {
 	
+	@Id
+	private int id;
+	
 	private String name, description, address;
+	
+	@Constraints.Required
 	private Coordinate coordinates;
 	
 	
@@ -54,14 +65,17 @@ public class PickupPoint {
 	public void setCoordinates(Coordinate coordinates) {
 		this.coordinates = coordinates;
 	}
-
+	
+	public static Finder<Integer, PickupPoint> find = new Finder<Integer, PickupPoint>(Integer.class, PickupPoint.class);
+    
     @Override
     public String toString() {
         return "PickupPoint{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", address='" + address + '\'' +
-                ", coordinates=" + coordinates +
-                '}';
+        "name='" + name + '\'' +
+        ", description='" + description + '\'' +
+        ", address='" + address + '\'' +
+        ", coordinates=" + coordinates +
+        '}';
     }
+
 }

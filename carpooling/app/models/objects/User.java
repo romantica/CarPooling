@@ -1,10 +1,18 @@
 package models.objects;
 
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import play.data.validation.Constraints;
+import play.db.ebean.Model.Finder;
 
-
+@Entity
 public class User {
 
+	@Id
+	private int id;
+	
+	@Constraints.Required
 	private String login, firstName, name, email, phoneNumber;
 	private int balance;
 	private Assessment assessment;
@@ -123,7 +131,8 @@ public class User {
 		this.request = request;
 	}
 
-
+	public static Finder<Integer, User> find = new Finder<Integer, User>(Integer.class, User.class);
+	
     public String toString() {
         return "User{" +
                 "login='" + login + '\'' +
