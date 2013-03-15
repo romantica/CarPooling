@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,7 +72,9 @@ public class RequestUI extends Controller {
 				
 			}
 			@Override public List<Traject> findTrajects(Request request) {
-				return null;
+				List<Traject> temp = new ArrayList<Traject>();
+				temp.add(new Traject(2, 12, request, request.getUser(), null, null, null));
+				return temp;
 			}
 		};
 		
@@ -87,6 +90,6 @@ public class RequestUI extends Controller {
 				arrivalTime, form.getIntField("seats"), form.getIntField("toleranceTime"), form.getIntField("maxWalkingDistance"), form.getFloatField("maxPrice"), 
 				UserManager.getUserLogged(), null));
 		
-		return ok("Data received: time:"+form.getStringField("arrivalTime"));
+		return ok(requestselecttraject.render(sess.getUsername(), null, trajects));//"Data received: time:"+form.getStringField("arrivalTime"));
 	}
 }
