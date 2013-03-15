@@ -14,6 +14,7 @@ import models.objects.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: sdefauw
@@ -79,7 +80,7 @@ public class ProposalUI  extends Controller {
         Itinerary arrItin = new Itinerary(arrivaldate, arrivaldate, arrival);
         prop.addItinerary(depItin);
         prop.addItinerary(arrItin);
-        //Put in cache
+        //TODO: Cache available 1hour
         Cache.set("proposal#"+user.getLogin(), prop, 60*60); //Cache available 1hour
         return redirect("/proposal/selectpp");
     }
@@ -99,9 +100,32 @@ public class ProposalUI  extends Controller {
         Coordinate toCoord = itiList.get(1).getPickupPoint().getCoordinates();
         //Get PickupPoint form manager
         ProposalManager pm = new ProposalManager();
+        //TODO: User ID PP
         List<PickupPoint> listpp =  pm.getPickupPoints(fromCoord, toCoord);
-        System.out.println(listpp);
         return ok(selectpp.render(session.getUsername(),listpp));
+    }
+
+    /**
+     * Add pickup point of itinary in proposal coming from form.
+     */
+    public static Result selectPPSubmit(){
+        Login session = new Login();
+        if (!session.isLogged())
+            return redirect("/");
+        Proposal prop = (Proposal) Cache.get("proposal#"+session("username"));
+        if(prop == null) return redirect("/proposal");
+        //Form
+        DynamicForm form = Form.form().bindFromRequest();
+        Map<String, String> data = form.data();
+        for (Map.Entry<String, String> entry : data.entrySet()){
+            String[] e = entry.getKey().split("_");
+            if(e.length == 1){
+                //TODO FINIR
+                System.out.println(entry.getKey() + "\t-\t" + entry.getValue());
+            }
+        }
+
+        return ok("ok");
     }
 
     /**
