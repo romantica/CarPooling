@@ -6,15 +6,15 @@ import java.util.List;
 
 
 public class Proposal {
-
+	
 	private float kmCost;
 	private int availableSeats;
-
+	
 	private Car car;
 	private User user;
 	private List<Traject> traject;
-	private List<Itinerary> itinerary;
-
+	private LinkedList<Itinerary> itinerary;
+	
 	public Proposal(float kmCost, int availableSeats, Car car, User user) {
 		super();
 		this.kmCost = kmCost;
@@ -22,7 +22,7 @@ public class Proposal {
 		this.car = car;
 		this.user = user;
 		this.traject = new ArrayList<Traject>();
-		this.itinerary = new ArrayList<Itinerary>();
+		this.itinerary = new LinkedList<Itinerary>();
 	}
 
 	public float getKmCost() {
@@ -61,20 +61,30 @@ public class Proposal {
 		return traject;
 	}
 
-	public void addTraject(Traject traject) {
-		this.traject.add(traject);
+	public void addTraject(Traject traj){
+		if(traj == null) return;
+		this.traject.add(traj);
+	}
+	
+	@Deprecated
+	public void setTraject(List<Traject> traject) {
+		this.traject = traject;
 	}
 
-	public List<Itinerary> getItinerary() {
+	public LinkedList<Itinerary> getItinerary() {
 		return itinerary;
 	}
 
-
-	public void addItinerary(Itinerary itinerary) {
-        if (itinerary == null) return;
+	public void addItinerary(Itinerary itinerary){
+		if (itinerary == null) return;
 		this.itinerary.add(itinerary);
-    }
-
+	}
+	
+	@Deprecated
+	public void setItinerary(LinkedList<Itinerary> itinerary) {
+		this.itinerary = itinerary;
+	}
+	
 	public Itinerary getItinerary(PickupPoint pickupPoint)
 	{
 		for (Itinerary itinerary : this.getItinerary())

@@ -1,7 +1,13 @@
 package models.objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Assessment {
 	
+	@Id
+	private Long id;
 	private int rating;
 	private String comment;
 	private boolean Type;
