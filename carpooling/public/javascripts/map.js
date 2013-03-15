@@ -150,9 +150,11 @@ function activeAddMarkerCick(fct){
 
 var listenerMarker = null;
 function addListenerMarker(listener) {
+    /*
     for(var i=0; i<markersArray.length; i++){
         var marker = markersArray[i];
         google.maps.event.addListener(marker, 'click', listener);
     }
+    */
     listenerMarker = listener;
 }

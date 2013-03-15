@@ -26,35 +26,14 @@
             initMap(mapID);
             startpp = pp[0]
             map.setCenter(new google.maps.LatLng(startpp.gps_lat, startpp.gps_long));
+            addListenerMarker(clickMarker);
             addTabMarker(pp);
             activeAddMarkerCick(null);
-            addListenerMarker(function(e){
-                coord = e.latLng;
-                coord_lat = Math.round(coord.lat()*10000000)/10000000;
-                coord_lng = Math.round(coord.lng()*10000000)/10000000;
-                //Search if this pp in pp[]
-                //Add or remove selection pp
-                var toAdd = true;
-                for (var i in selectedPP) {
-                    item = pp[i];
-                    if (item.gps_lat == coord_lat && item.gps_long == coord_lng) {
-                        delete selectedPP[i];
-                        toAdd = false;
-                        break;
-                    }
-                }
-                if (toAdd) {
-                    thispp = null;
-                    for (var i in pp) {
-                        item = pp[i];
-                        if (item.gps_lat == coord_lat && item.gps_long == coord_lng) {
-                            thispp = item;
-                        }
-                    }
-                    if(thispp) selectedPP.push(thispp);
-                }
-            });
         }
     </script>
+    <form action="proposal/sellectpp/submit" method="POST">
+        <div id="pp_form"> </div>
+        <input type="submit" value="Next Step">
+    </form>
 }
 
