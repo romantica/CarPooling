@@ -1,9 +1,20 @@
 package models.objects;
 
-import java.util.List;
+import java.util.*;
+import javax.persistence.*;
 
 
-public class Proposal {
+import play.db.ebean.*;
+import play.data.format.*;
+import play.data.validation.*;
+
+
+@SuppressWarnings("serial")
+@Entity
+public class Proposal extends Model {
+	
+	@Id
+	public Long id;
 	
 	private float kmCost;
 	private int availableSeats;

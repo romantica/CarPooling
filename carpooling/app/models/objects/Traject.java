@@ -1,9 +1,18 @@
 package models.objects;
 
+import java.util.*;
+import javax.persistence.*;
+
+
 import play.db.ebean.*;
+import play.data.format.*;
+import play.data.validation.*;
 
-
-public class Traject {
+@Entity
+public class Traject extends Model {
+	
+	@Id
+	public Long id;
 	
 	private int reservedSeats;
 	private float totalCost;

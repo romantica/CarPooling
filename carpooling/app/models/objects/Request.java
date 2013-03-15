@@ -1,4 +1,4 @@
-package models;
+package models.objects;
 
 import java.util.*;
 import javax.persistence.*;
@@ -9,9 +9,11 @@ import play.data.format.*;
 import play.data.validation.*;
 
 
-
+@SuppressWarnings("serial")
+@Entity
 public class Request extends Model {
 
+	@Id
 	public Long id;
 	
 	private Coordinate departureCoordinates, arrivalCoordinates;
@@ -129,7 +131,6 @@ public class Request extends Model {
 	public void setTraject(Traject traject) {
 		this.traject = traject;
 	}
-		
-	
-	
+			
+	public static Finder<Long, Request> find = new Finder<Long, Request>(Long.class, Request.class);
 }

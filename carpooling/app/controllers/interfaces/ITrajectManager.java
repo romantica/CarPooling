@@ -9,8 +9,9 @@ public interface ITrajectManager{
 	
 	/**
 	 * Enregistre un trajet dans la base de donnees
+	 * @throws Exception 
 	 */
-	public void recordTraject(Traject traj, User user);
+	public void recordTraject(Traject traj, User user) throws Exception;
 
 	/**
 	 * Supprime un trajet de la base de donnee,
