@@ -5,14 +5,14 @@ import java.util.Date;
 
 public class Itinerary {
 	
-	private Date departureTime, ArrivalTime;
+	private Date departureTime, arrivalTime;
 	private PickupPoint pickupPoint;
-	
+
 	public Itinerary(Date departureTime, Date arrivalTime,
 			PickupPoint pickupPoint) {
 		super();
 		this.departureTime = departureTime;
-		ArrivalTime = arrivalTime;
+		this.arrivalTime = arrivalTime;
 		this.pickupPoint = pickupPoint;
 	}
 
@@ -25,11 +25,11 @@ public class Itinerary {
 	}
 
 	public Date getArrivalTime() {
-		return ArrivalTime;
+		return arrivalTime;
 	}
 
 	public void setArrivalTime(Date arrivalTime) {
-		ArrivalTime = arrivalTime;
+		this.arrivalTime = arrivalTime;
 	}
 
 	public PickupPoint getPickupPoint() {
@@ -44,7 +44,7 @@ public class Itinerary {
     public String toString() {
         return "Itinerary{" +
                 "departureTime=" + departureTime +
-                ", ArrivalTime=" + ArrivalTime +
+                ", ArrivalTime=" + arrivalTime +
                 ", pickupPoint=" + pickupPoint +
                 '}';
     }
