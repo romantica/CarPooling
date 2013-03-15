@@ -1,4 +1,4 @@
-@(Username: String)
+@(Username: String, PickupPoints: List[models.objects.PickupPoint])
 
 @header = {
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/proposal.css")">
@@ -12,8 +12,20 @@
     <h2>Select pickup points where you stop.</h2>
     <div id="map" style="width: 100%; height: 500px;"></div>
     <script lang="javascript">
+        var pp =[
+        @for(pp <- PickupPoints){
+            {"name":"@pp.getName()",
+             "gps_lat":@pp.getCoordinates().getX(),
+             "gps_long":@pp.getCoordinates().getY(),
+             "Address":"@pp.getAddress()"},
+        }
+        ];
         window.onload = function(){
-            initMap("map");
+            var mapID = "map";
+            initMap(mapID);
+            startpp = pp[0]
+            map.setCenter(new google.maps.LatLng(startpp.gps_lat, startpp.gps_long));
+            addTabMarker(pp);
         }
     </script>
 }

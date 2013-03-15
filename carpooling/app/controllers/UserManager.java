@@ -43,7 +43,7 @@ public class UserManager implements IUserManager {
         try {
             Statement stmt = conn.createStatement();
             String username =  session("username");
-            if (username != null) return null;
+            if (username == null) return null;
             ResultSet rs = stmt.executeQuery("SELECT * FROM User WHERE Login='" + username + "'");
             if (!rs.first()) return null;
             User user = new User();

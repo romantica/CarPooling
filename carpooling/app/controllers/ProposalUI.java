@@ -1,6 +1,7 @@
 package controllers;
 
 import models.objects.Coordinate;
+import play.cache.Cache;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
@@ -13,6 +14,8 @@ import static play.mvc.Results.redirect;
 import views.html.proposal.*;
 import models.*;
 import models.objects.*;
+
+import java.util.List;
 
 /**
  * User: sdefauw
@@ -31,6 +34,9 @@ public class ProposalUI  extends Controller {
         return ok(create.render(session.getUsername(), null, form));
     }
 
+    /**
+     * Put proposal object un cache with information coming from step 1
+     */
     public static Result createSubmit(){
         Login session = new Login();
         if (!session.isLogged())
@@ -43,16 +49,17 @@ public class ProposalUI  extends Controller {
         System.out.println("------> IN CACHE");
         //TODO: assiation correcte de la car
         Car car = new Car();
+        User user = UserManager.getUserLogged();
         Proposal prop = new Proposal(
                 form.getFloatField("kmcost"),
                 form.getIntField("seats"),
                 car,
-                UserManager.getUserLogged(),
+                user,
                 null,
                 null
         );
-        //TODO: put prop in cache
-        return redirect("/proposal/selectpp");
+        Cache.set("proposal#"+user.getLogin(), prop, 60*60);
+        return redirect("/proposal/selectpp?fromcoord=" + form.getStringField("fromcoord") + "&tocoord=" + form.getStringField("tocoord"));
     }
 
     /**
@@ -69,10 +76,14 @@ public class ProposalUI  extends Controller {
         Coordinate toCoord = new Coordinate(requestData.get("tocoord"));
         //Get PickupPoint form manager
         ProposalManager pm = new ProposalManager();
-        pm.getPickupPoints(fromCoord, toCoord);
-        return ok(selectpp.render(session.getUsername()));
+        List<PickupPoint> listpp =  pm.getPickupPoints(fromCoord, toCoord);
+        System.out.println(listpp);
+        return ok(selectpp.render(session.getUsername(),listpp));
     }
 
+    /**
+     * @return  Form of step 1 (proposal information)
+     */
     private static FormUI formCreate(){
         FormUI form =  new FormUI("proposal/create/submit");
         form.id = "new";

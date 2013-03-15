@@ -16,7 +16,7 @@ public class Itinerary {
 	private Date departureTime, arrivalTime;
 	@Constraints.Required
 	private PickupPoint pickupPoint;
-	
+
 	public Itinerary(Date departureTime, Date arrivalTime,
 			PickupPoint pickupPoint) {
 		super();
