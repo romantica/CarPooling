@@ -2,21 +2,26 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
+DROP SCHEMA IF EXISTS `CarPooling` ;
 CREATE SCHEMA IF NOT EXISTS `CarPooling` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+DROP SCHEMA IF EXISTS `carpooling` ;
+CREATE SCHEMA IF NOT EXISTS `carpooling` DEFAULT CHARACTER SET utf8 ;
 USE `CarPooling` ;
 
 -- -----------------------------------------------------
 -- Table `CarPooling`.`User`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CarPooling`.`User` ;
+
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`User` (
   `ID` INT NOT NULL AUTO_INCREMENT ,
-  `Login` VARCHAR(45) NOT NULL ,
-  `Password` VARCHAR(45) NOT NULL ,
-  `LastName` VARCHAR(45) NOT NULL COMMENT '	' ,
-  `FirstName` VARCHAR(45) NOT NULL ,
+  `Login` VARCHAR(45) ,
+  `Password` VARCHAR(45) ,
+  `LastName` VARCHAR(45) COMMENT '	' ,
+  `FirstName` VARCHAR(45) ,
   `AccountNumber` INT NULL ,
   `PhoneNumber` VARCHAR(45) NULL ,
-  `Email` VARCHAR(45) NOT NULL ,
+  `Email` VARCHAR(45) ,
   PRIMARY KEY (`ID`) ,
   UNIQUE INDEX `Login_UNIQUE` (`Login` ASC) )
 ENGINE = InnoDB;
@@ -25,9 +30,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CarPooling`.`Car`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CarPooling`.`Car` ;
+
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Car` (
   `PlateNumber` VARCHAR(7) NOT NULL ,
-  `UserID` INT NOT NULL ,
+  `UserID` INT ,
   `Model` VARCHAR(45) NULL ,
   `Color` VARCHAR(45) NULL ,
   PRIMARY KEY (`PlateNumber`) ,
@@ -43,12 +50,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CarPooling`.`Proposal`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CarPooling`.`Proposal` ;
+
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Proposal` (
   `ID` INT NOT NULL AUTO_INCREMENT ,
-  `UserID` INT NOT NULL ,
-  `CarID` VARCHAR(7) NOT NULL ,
-  `KmCost` FLOAT NOT NULL ,
-  `AvailableSeats` TINYINT NOT NULL ,
+  `UserID` INT ,
+  `CarID` VARCHAR(7) ,
+  `KmCost` FLOAT ,
+  `AvailableSeats` TINYINT ,
   PRIMARY KEY (`ID`) ,
   INDEX `Proposing_idx` (`UserID` ASC) ,
   INDEX `Using_idx` (`CarID` ASC) ,
@@ -68,10 +77,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CarPooling`.`Account`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CarPooling`.`Account` ;
+
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Account` (
   `UserID` INT NOT NULL ,
-  `Balance` INT NOT NULL ,
+  `Balance` INT ,
   UNIQUE INDEX `UserID_UNIQUE` (`UserID` ASC) ,
+  PRIMARY KEY (`UserID`) ,
   CONSTRAINT `Prossessing`
     FOREIGN KEY (`UserID` )
     REFERENCES `CarPooling`.`User` (`ID` )
@@ -83,12 +95,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CarPooling`.`Assessment`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CarPooling`.`Assessment` ;
+
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Assessment` (
   `UserID` INT NOT NULL ,
-  `Rating` SMALLINT NOT NULL ,
+  `Rating` SMALLINT ,
   `Comment` LONGTEXT NULL ,
-  `Type` TINYINT(1) NOT NULL ,
+  `Type` TINYINT(1) ,
   INDEX `Grading_idx` (`UserID` ASC) ,
+  PRIMARY KEY (`UserID`) ,
   CONSTRAINT `Grading`
     FOREIGN KEY (`UserID` )
     REFERENCES `CarPooling`.`User` (`ID` )
@@ -100,16 +115,18 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CarPooling`.`Request`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CarPooling`.`Request` ;
+
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Request` (
   `ID` INT NOT NULL AUTO_INCREMENT ,
-  `UserID` INT NOT NULL ,
-  `DepartureCoordinateX` DOUBLE NOT NULL ,
-  `DepartureCoordinateY` DOUBLE NOT NULL ,
-  `DepartureAddress` VARCHAR(45) NOT NULL ,
-  `ArrivalCoordinateX` DOUBLE NOT NULL ,
-  `ArrivalCoordinateY` DOUBLE NOT NULL ,
-  `ArrivalAddress` VARCHAR(45) NOT NULL ,
-  `NecessarySeats` TINYINT NOT NULL ,
+  `UserID` INT ,
+  `DepartureCoordinateX` DOUBLE ,
+  `DepartureCoordinateY` DOUBLE ,
+  `DepartureAddress` VARCHAR(45) ,
+  `ArrivalCoordinateX` DOUBLE ,
+  `ArrivalCoordinateY` DOUBLE ,
+  `ArrivalAddress` VARCHAR(45) ,
+  `NecessarySeats` TINYINT ,
   `ToleranceTime` INT NULL ,
   `ToleranceWalkDistance` INT NULL ,
   `TolerancePrice` INT NULL ,
@@ -126,13 +143,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CarPooling`.`Traject`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CarPooling`.`Traject` ;
+
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Traject` (
   `ID` INT NOT NULL AUTO_INCREMENT ,
   `UserID` INT NULL ,
-  `RequestID` INT NOT NULL ,
-  `ProposalID` INT NOT NULL ,
-  `RerservedSeats` TINYINT NOT NULL ,
-  `TotalCost` FLOAT NOT NULL ,
+  `RequestID` INT ,
+  `ProposalID` INT ,
+  `RerservedSeats` TINYINT ,
+  `TotalCost` FLOAT ,
   PRIMARY KEY (`ID`) ,
   INDEX `Chossing_idx` (`UserID` ASC) ,
   INDEX `Corresponding_idx` (`RequestID` ASC) ,
@@ -158,12 +177,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CarPooling`.`PickupPoint`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CarPooling`.`PickupPoint` ;
+
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`PickupPoint` (
   `ID` INT NOT NULL AUTO_INCREMENT ,
   `Name` VARCHAR(45) NULL ,
-  `CoordinateX` DOUBLE NOT NULL ,
-  `CoordinateY` DOUBLE NOT NULL ,
-  `Address` VARCHAR(45) NOT NULL ,
+  `CoordinateX` DOUBLE ,
+  `CoordinateY` DOUBLE ,
+  `Address` VARCHAR(45) ,
   PRIMARY KEY (`ID`) )
 ENGINE = InnoDB;
 
@@ -171,13 +192,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CarPooling`.`Itineray`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `CarPooling`.`Itineray` (
+DROP TABLE IF EXISTS `CarPooling`.`Itinerary` ;
+
+CREATE  TABLE IF NOT EXISTS `CarPooling`.`Itinerary` (
   `PickupPointID` INT NOT NULL ,
   `ProposalID` INT NOT NULL ,
-  `DepartureTime` DATETIME NOT NULL ,
+  `DepartureTime` DATETIME ,
   `ArrivalTime` DATETIME NULL ,
   INDEX `pp_idx` (`PickupPointID` ASC) ,
   INDEX `prop_idx` (`ProposalID` ASC) ,
+  PRIMARY KEY (`PickupPointID`, `ProposalID`) ,
   CONSTRAINT `pp`
     FOREIGN KEY (`PickupPointID` )
     REFERENCES `CarPooling`.`PickupPoint` (`ID` )
@@ -194,13 +218,16 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `CarPooling`.`Composition`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `CarPooling`.`Composition` ;
+
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Composition` (
   `PickupPointID` INT NOT NULL ,
   `TrajectID` INT NOT NULL ,
-  `Type` TINYINT(1) NOT NULL ,
-  `Time` DATETIME NOT NULL ,
+  `Type` TINYINT(1) ,
+  `Time` DATETIME ,
   INDEX `traject_idx` (`TrajectID` ASC) ,
   INDEX `pp_idx` (`PickupPointID` ASC) ,
+  PRIMARY KEY (`PickupPointID`, `TrajectID`) ,
   CONSTRAINT `pp2`
     FOREIGN KEY (`PickupPointID` )
     REFERENCES `CarPooling`.`PickupPoint` (`ID` )
@@ -213,8 +240,7 @@ CREATE  TABLE IF NOT EXISTS `CarPooling`.`Composition` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-USE `CarPooling` ;
-
+USE `carpooling` ;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
