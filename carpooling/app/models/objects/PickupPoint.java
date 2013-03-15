@@ -67,5 +67,15 @@ public class PickupPoint {
 	}
 	
 	public static Finder<Integer, PickupPoint> find = new Finder<Integer, PickupPoint>(Integer.class, PickupPoint.class);
+    
+    @Override
+    public String toString() {
+        return "PickupPoint{" +
+        "name='" + name + '\'' +
+        ", description='" + description + '\'' +
+        ", address='" + address + '\'' +
+        ", coordinates=" + coordinates +
+        '}';
+    }
 
 }

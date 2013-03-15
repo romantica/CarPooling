@@ -50,5 +50,14 @@ public class Itinerary {
 	}
 	
 	public static Finder<Integer, Itinerary> find = new Finder<Integer, Itinerary>(Integer.class, Itinerary.class);
+    
+    @Override
+    public String toString() {
+        return "Itinerary{" +
+        "departureTime=" + departureTime +
+        ", ArrivalTime=" + arrivalTime +
+        ", pickupPoint=" + pickupPoint +
+        '}';
+    }
 	
 }
