@@ -1,5 +1,6 @@
 package models.objects;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,15 +15,14 @@ public class Proposal {
 	private List<Traject> traject;
 	private LinkedList<Itinerary> itinerary;
 	
-	public Proposal(float kmCost, int availableSeats, Car car, User user,
-			List<Traject> traject, LinkedList<Itinerary> itinerary) {
+	public Proposal(float kmCost, int availableSeats, Car car, User user) {
 		super();
 		this.kmCost = kmCost;
 		this.availableSeats = availableSeats;
 		this.car = car;
 		this.user = user;
-		this.traject = traject;
-		this.itinerary = itinerary;
+		this.traject = new ArrayList<Traject>();
+		this.itinerary = new LinkedList<Itinerary>();
 	}
 
 	public float getKmCost() {
@@ -61,6 +61,12 @@ public class Proposal {
 		return traject;
 	}
 
+	public void addTraject(Traject traj){
+		if(traj == null) return;
+		this.traject.add(traj);
+	}
+	
+	@Deprecated
 	public void setTraject(List<Traject> traject) {
 		this.traject = traject;
 	}
@@ -69,6 +75,12 @@ public class Proposal {
 		return itinerary;
 	}
 
+	public void addItinerary(Itinerary itinerary){
+		if (itinerary == null) return;
+		this.itinerary.add(itinerary);
+	}
+	
+	@Deprecated
 	public void setItinerary(LinkedList<Itinerary> itinerary) {
 		this.itinerary = itinerary;
 	}
