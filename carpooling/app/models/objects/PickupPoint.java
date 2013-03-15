@@ -54,7 +54,14 @@ public class PickupPoint {
 	public void setCoordinates(Coordinate coordinates) {
 		this.coordinates = coordinates;
 	}
-	
-	
 
+    @Override
+    public String toString() {
+        return "PickupPoint{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", address='" + address + '\'' +
+                ", coordinates=" + coordinates +
+                '}';
+    }
 }
