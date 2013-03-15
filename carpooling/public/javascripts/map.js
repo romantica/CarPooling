@@ -144,7 +144,7 @@ function focusOver(lat,long,z){
 function activeAddMarkerCick(fct){
     google.maps.event.addListener(map, 'click', function(e) {
         addMarker(e.latLng, null);
-        if(fct) fct();
+        if(fct) fct(e);
     });
 }
 

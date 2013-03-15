@@ -49,7 +49,11 @@ function clickMarker(e){
 function addFormPPSelected(pickuppoint){
     coord = pickuppoint.gps_lat+","+pickuppoint.gps_long;
     var html = '<div id="pp_'+coord+'">';
-    html += '<input type="hidden" name="coord" value="'+coord+'" />';
+    html += '<input type="hidden" name="'+coord+'" value="'+coord+'" />';
+    if(pickuppoint.name == null){
+        html += '<input type="hidden" name="'+coord+'_new" />';
+        html += '<dl>Name of Point:</dl><dd><input type="text" name="'+coord+'_name" /></dd>';
+    }
     html += '<dl>Arrival Time:</dl><dd><input type="datetime-local" name="'+coord+'_arrivaltime" /></dd>';
     html += '<dl>Start Time:</dl><dd><input type="datetime-local" name="'+coord+'_starttime" /></dd>';
     html += "</div>";

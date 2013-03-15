@@ -28,7 +28,21 @@
             map.setCenter(new google.maps.LatLng(startpp.gps_lat, startpp.gps_long));
             addListenerMarker(clickMarker);
             addTabMarker(pp);
-            activeAddMarkerCick(null);
+            activeAddMarkerCick(function(e){
+                coord = e.latLng;
+                geocoder.geocode({'latLng': coord}, function(results, status) {
+                    var add = null;
+                    if (status == google.maps.GeocoderStatus.OK && results[0]) {
+                        add = results[0].formatted_address;
+                    }
+                    pp.push({
+                        "name":null,
+                        "gps_lat":coord.lat(),
+                        "gps_long":coord.lng(),
+                        "Address":add
+                    });
+                });
+            });
         }
     </script>
     <form action="proposal/sellectpp/submit" method="POST">
