@@ -37,9 +37,15 @@ public class FormUI {
 	}
 
     public int getIntField(String id){
-        return Integer.parseInt(this.getField(id).value);
+    	String val = this.getField(id).value;
+    	if (val == null || val.equals(""))
+    		return 0;
+    	else return Integer.parseInt(this.getField(id).value);
     }
     public float getFloatField(String id){
+    	String val = this.getField(id).value;
+    	if (val == null || val.equals(""))
+    		return (float) 0.0;
         return Float.parseFloat(this.getField(id).value);
     }
 	public String getStringField(String id){

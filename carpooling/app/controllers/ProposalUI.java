@@ -1,14 +1,10 @@
 package controllers;
 
-import models.objects.Coordinate;
 import play.cache.Cache;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-
-import static play.mvc.Results.ok;
-import static play.mvc.Results.redirect;
 
 
 import views.html.proposal.*;
