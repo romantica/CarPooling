@@ -60,16 +60,16 @@ public class Proposal {
 		return traject;
 	}
 
-	public void setTraject(List<Traject> traject) {
-		this.traject = traject;
+	public void addTraject(Traject traject) {
+		this.traject.add(traject);
 	}
 
 	public List<Itinerary> getItinerary() {
 		return itinerary;
 	}
 
-	public void setItinerary(List<Itinerary> itinerary) {
-		this.itinerary = itinerary;
+	public void addItinerary(Itinerary itinerary) {
+		this.itinerary.add(itinerary);
 	}
 
 

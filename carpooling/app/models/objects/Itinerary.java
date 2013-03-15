@@ -39,8 +39,13 @@ public class Itinerary {
 	public void setPickupPoint(PickupPoint pickupPoint) {
 		this.pickupPoint = pickupPoint;
 	}
-	
-	
-	
-	
+
+    @Override
+    public String toString() {
+        return "Itinerary{" +
+                "departureTime=" + departureTime +
+                ", ArrivalTime=" + ArrivalTime +
+                ", pickupPoint=" + pickupPoint +
+                '}';
+    }
 }
