@@ -1,11 +1,22 @@
 package models.objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import play.data.validation.Constraints;
+import play.db.ebean.Model.Finder;
+
+@Entity
 public class Traject {
+	
+	@Id
+	private int id;
 	
 	private int reservedSeats;
 	private float totalCost;
 	
+	@Constraints.Required
 	private Request request;
+	@Constraints.Required
 	private User user;
 	private Composition departurePP, arrivalPP;
 	private Proposal proposal;
@@ -79,7 +90,6 @@ public class Traject {
 		this.proposal = proposal;
 	}
 	
-	
-	
+	public static Finder<Integer, Traject> find = new Finder<Integer, Traject>(Integer.class, Traject.class);
 	
 }

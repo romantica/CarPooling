@@ -1,7 +1,17 @@
 package models.objects;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import play.data.validation.Constraints;
+import play.db.ebean.Model.Finder;
+
+@Entity
 public class Car {
 	
+	@Id
+	private int id;
+	
+	@Constraints.Required
 	private String plateNumber;
 	private String model, color;
 
@@ -45,4 +55,6 @@ public class Car {
                 ", color='" + color + '\'' +
                 '}';
     }
+    
+    public static Finder<Integer, Car> find = new Finder<Integer, Car>(Integer.class, Car.class);
 }

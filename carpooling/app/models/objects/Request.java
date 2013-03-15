@@ -1,9 +1,18 @@
 package models.objects;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import play.data.validation.Constraints;
+import play.db.ebean.Model.Finder;
 
-
+@Entity
 public class Request {
+	
+	@Id
+	private int id;
+	
+	@Constraints.Required
 	private Coordinate departureCoordinates, arrivalCoordinates;
 	private String departureAddress, arrivalAddress;
 	private Date arrivalTime;
@@ -120,6 +129,6 @@ public class Request {
 		this.traject = traject;
 	}
 		
-	
+	public static Finder<Integer, Request> find = new Finder<Integer, Request>(Integer.class, Request.class);
 	
 }
