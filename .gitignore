@@ -24,4 +24,10 @@ dist
 /RUNNING_PID
 /.settings
 
+.metadata/*
+RemoteSystemsTempFiles/*
+carpooling/.metadata/*
+carpooling/.target/*
+carpooling/RemoteSystemsTempFiles/*
+
 >>>>>>> e2eb50eed5ce91264d8de995e03895a4e52d85d3

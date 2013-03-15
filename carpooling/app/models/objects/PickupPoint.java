@@ -7,8 +7,8 @@ import play.db.ebean.Model.Finder;
 
 @Entity
 public class PickupPoint {
-	
-	@Id
+
+    @Id
 	private int id;
 	
 	private String name, description, address;
@@ -25,6 +25,10 @@ public class PickupPoint {
 		this.address = address;
 		this.coordinates = coordinates;
 	}
+
+    public int getId() {
+        return id;
+    }
 
 
 	public String getName() {

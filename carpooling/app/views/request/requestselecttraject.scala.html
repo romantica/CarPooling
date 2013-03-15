@@ -1,0 +1,19 @@
+@(username: String, error: String, trajects: List[models.objects.Traject])
+
+@header = {
+
+}
+
+@main(title = "Select a traject", Header = header) {
+	<script type="text/javascript">
+		var trajects = [
+			@for(t <- trajects) {
+				{'user' : "@t.getUser().getLogin().replaceAll("\"", "&quot;")"},
+			}
+		]
+		
+		alert(trajects[0]['user']);
+	</script>
+    <h1>Select a traject</h1>
+	
+}

@@ -19,7 +19,6 @@ function geolocationMe(fct){
         navigator.geolocation.getCurrentPosition(
             function(position) {
                 var myPosition = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-
                 fct(myPosition);
             },
             function() {
@@ -114,6 +113,7 @@ function addMarker(location, iconName) {
         icon: icon
     });
     markersArray.push(marker);
+    if (listenerMarker) google.maps.event.addListener(marker, 'click', listenerMarker);
     return marker;
 }
 
@@ -127,7 +127,7 @@ function addTabMarker(tab){
     for(var i=0; i<tab.length; i++){
         var elem = tab[i];
         var location = new google.maps.LatLng(elem.gps_lat, elem.gps_long);
-        var marker = addMarker(location,true);
+        var marker = addMarker(location,null);
     }
 }
 
@@ -138,4 +138,23 @@ function focusOver(lat,long,z){
         center: new google.maps.LatLng(lat,long)
     };
     map.setOptions(myOptions);
+}
+
+
+function activeAddMarkerCick(fct){
+    google.maps.event.addListener(map, 'click', function(e) {
+        addMarker(e.latLng, null);
+        if(fct) fct(e);
+    });
+}
+
+var listenerMarker = null;
+function addListenerMarker(listener) {
+    /*
+    for(var i=0; i<markersArray.length; i++){
+        var marker = markersArray[i];
+        google.maps.event.addListener(marker, 'click', listener);
+    }
+    */
+    listenerMarker = listener;
 }

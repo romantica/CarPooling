@@ -1,21 +1,20 @@
 package controllers;
 
-import models.objects.Coordinate;
 import play.cache.Cache;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import static play.mvc.Results.ok;
-import static play.mvc.Results.redirect;
-
 
 import views.html.proposal.*;
 import models.*;
 import models.objects.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: sdefauw
@@ -46,7 +45,7 @@ public class ProposalUI  extends Controller {
         if (form.isError())
             return ok(create.render(session.getUsername(), null, form));
         //No error
-        System.out.println("------> IN CACHE");
+        //Create proposal object
         //TODO: assiation correcte de la car
         Car car = new Car();
         User user = UserManager.getUserLogged();
@@ -54,12 +53,36 @@ public class ProposalUI  extends Controller {
                 form.getFloatField("kmcost"),
                 form.getIntField("seats"),
                 car,
-                user,
-                null,
-                null
+                user
         );
-        Cache.set("proposal#"+user.getLogin(), prop, 60*60);
-        return redirect("/proposal/selectpp?fromcoord=" + form.getStringField("fromcoord") + "&tocoord=" + form.getStringField("tocoord"));
+        //Create PP object for departure en arrival
+        PickupPoint departure = new PickupPoint(
+                null,
+                null,
+                form.getStringField("fromadd"),
+                new Coordinate(form.getStringField("fromcoord"))
+        );
+        PickupPoint arrival = new PickupPoint(
+                null,
+                null,
+                form.getStringField("toadd"),
+                new Coordinate(form.getStringField("tocoord"))
+        );
+        //Create Itinerary object
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date startdate = null;
+        Date arrivaldate = null;
+        try{
+            startdate = dateFormat.parse(form.getStringField("starthour").replace('T',' '));
+            arrivaldate = dateFormat.parse(form.getStringField("arrivalhour").replace('T',' '));
+        }catch (Exception e){}
+        Itinerary depItin = new Itinerary(startdate, startdate, departure);
+        Itinerary arrItin = new Itinerary(arrivaldate, arrivaldate, arrival);
+        prop.addItinerary(depItin);
+        prop.addItinerary(arrItin);
+        //TODO: Cache available 1hour
+        Cache.set("proposal#"+user.getLogin(), prop, 60*60); //Cache available 1hour
+        return redirect("/proposal/selectpp");
     }
 
     /**
@@ -70,15 +93,39 @@ public class ProposalUI  extends Controller {
         Login session = new Login();
         if (!session.isLogged())
             return redirect("/");
-        //Formulaire
-        DynamicForm requestData = Form.form().bindFromRequest();
-        Coordinate fromCoord = new Coordinate(requestData.get("fromcoord"));
-        Coordinate toCoord = new Coordinate(requestData.get("tocoord"));
+        //Get coord start en arrival PP
+        Proposal prop = (Proposal) Cache.get("proposal#"+session("username"));
+        List<Itinerary> itiList = prop.getItinerary();
+        Coordinate fromCoord = itiList.get(0).getPickupPoint().getCoordinates();
+        Coordinate toCoord = itiList.get(1).getPickupPoint().getCoordinates();
         //Get PickupPoint form manager
         ProposalManager pm = new ProposalManager();
+        //TODO: User ID PP
         List<PickupPoint> listpp =  pm.getPickupPoints(fromCoord, toCoord);
-        System.out.println(listpp);
         return ok(selectpp.render(session.getUsername(),listpp));
+    }
+
+    /**
+     * Add pickup point of itinary in proposal coming from form.
+     */
+    public static Result selectPPSubmit(){
+        Login session = new Login();
+        if (!session.isLogged())
+            return redirect("/");
+        Proposal prop = (Proposal) Cache.get("proposal#"+session("username"));
+        if(prop == null) return redirect("/proposal");
+        //Form
+        DynamicForm form = Form.form().bindFromRequest();
+        Map<String, String> data = form.data();
+        for (Map.Entry<String, String> entry : data.entrySet()){
+            String[] e = entry.getKey().split("_");
+            if(e.length == 1){
+                //TODO FINIR
+                System.out.println(entry.getKey() + "\t-\t" + entry.getValue());
+            }
+        }
+
+        return ok("ok");
     }
 
     /**
