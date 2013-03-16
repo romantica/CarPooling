@@ -95,6 +95,8 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 			ICommunication.ProposalCancelled(traj.get(i).getUser(), traj.get(i));
 			TrajectManager.cancelTraject(traj.get(i));
 		}
+		// supprimer oldProposal
+		oldProposal.delete();
 		recordProposal(newProposal);
 	}
 
