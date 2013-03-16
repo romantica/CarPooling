@@ -6,8 +6,6 @@ import java.util.List;
 
 import java.sql.*;
 
-import com.avaje.ebean.ExpressionList;
-
 import models.objects.Coordinate;
 import models.objects.PickupPoint;
 import models.objects.Proposal;
@@ -25,7 +23,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 
 	@Override
 	public List<PickupPoint> getPickupPoints(Coordinate start, Coordinate end) {
-	    List<PickupPoint> search = PickupPoint.find.all();
+	    List<PickupPoint> search = PickupPoint.findAll();
 	    List<PickupPoint> result = new ArrayList<PickupPoint>();
 	    double c = distance(start, end);
 	    double a = 1.3*c; // valeur prise "au hazard" => definit la forme de l'ellipse
@@ -45,8 +43,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 	@Override
 	public void recordProposal(Proposal proposal) {
 		// Attention, les PP qui sont déjà en DB ne doivent pas être ajouté (ils n'ont pas d'id), les autres oui !
-		proposal.save();
-		proposal.saveOneToManyAssociations("itinerary");
+		Proposal.create(proposal);
 		
 //		Connection conn = DB.getConnection();
 //		try {
@@ -96,7 +93,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 			TrajectManager.cancelTraject(traj.get(i));
 		}
 		// supprimer oldProposal
-		oldProposal.delete();
+		Proposal.delete(oldProposal);
 		recordProposal(newProposal);
 	}
 

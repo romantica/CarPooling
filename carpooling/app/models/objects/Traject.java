@@ -1,8 +1,6 @@
 package models.objects;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import play.data.validation.Constraints;
 import play.db.ebean.Model.Finder;
@@ -20,7 +18,7 @@ public class Traject {
 	private Request request;
 	@Constraints.Required
 	private User user;
-	@OneToMany
+	@ManyToMany(cascade=CascadeType.ALL)
 	private Composition departurePP, arrivalPP;
 	private Proposal proposal;
 	

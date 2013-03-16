@@ -1,18 +1,12 @@
 package models.objects;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import play.data.validation.Constraints;
-import play.db.ebean.Model.Finder;
+import java.util.*;
+import javax.persistence.*;
+import play.data.validation.*;
+import play.db.ebean.Model;
 
 @Entity
-public class Proposal {
+public class Proposal extends Model{
 	
 	@Id
 	private int id;
@@ -25,9 +19,9 @@ public class Proposal {
 	@Constraints.Required
 	@ManyToOne
 	private User user;
-	@OneToMany
+	@ManyToMany
 	private List<Traject> traject;
-	@OneToMany
+	@ManyToMany
 	private LinkedList<Itinerary> itinerary;
 
 	public Proposal(float kmCost, int availableSeats, Car car, User user) {
@@ -114,6 +108,15 @@ public class Proposal {
 	}
 
 	public static Finder<Integer, Proposal> find = new Finder<Integer, Proposal>(Integer.class, Proposal.class);
+	
+	public static void create(Proposal prop) {
+		prop.save();
+		prop.saveManyToManyAssociations("itinerary");
+	}
+	
+	public static void delete(Proposal prop) {
+		prop.delete();
+	}
 	
     @Override
     public String toString() {

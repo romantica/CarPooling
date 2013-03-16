@@ -14,15 +14,15 @@ public class User {
 	@Constraints.Required
 	private String login, firstName, name, email, phoneNumber;
 	private int balance;
-	@OneToMany
+	@ManyToMany
 	private Assessment assessment;
-	@OneToMany
+	@ManyToMany
 	private List<Car> cars;
-	@OneToMany
+	@ManyToMany
 	private List<Proposal> proposals;
-	@OneToMany
+	@ManyToMany
 	private List<Traject> trajects;
-	@OneToMany
+	@ManyToMany
 	private List<Request> request;
 
     public User(){}

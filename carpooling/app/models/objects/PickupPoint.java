@@ -1,11 +1,16 @@
 package models.objects;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 import play.data.validation.Constraints;
 import play.db.ebean.Model.Finder;
 
 @Entity
+@Table(name="PickupPoint")
 public class PickupPoint {
 
     @Id
@@ -83,6 +88,10 @@ public class PickupPoint {
 	
 	public static Finder<Integer, PickupPoint> find = new Finder<Integer, PickupPoint>(Integer.class, PickupPoint.class);
     
+	public static List<PickupPoint> findAll() {
+		return find.all();
+	}
+	
     @Override
     public String toString() {
         return "PickupPoint{" +
