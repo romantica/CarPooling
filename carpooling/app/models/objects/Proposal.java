@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import play.data.validation.Constraints;
 import play.db.ebean.Model.Finder;
 
@@ -20,8 +23,11 @@ public class Proposal {
 	@Constraints.Required
 	private Car car;
 	@Constraints.Required
+	@ManyToOne
 	private User user;
+	@OneToMany
 	private List<Traject> traject;
+	@OneToMany
 	private LinkedList<Itinerary> itinerary;
 
 	public Proposal(float kmCost, int availableSeats, Car car, User user) {

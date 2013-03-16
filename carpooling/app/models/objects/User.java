@@ -1,8 +1,7 @@
 package models.objects;
 
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import play.data.validation.Constraints;
 import play.db.ebean.Model.Finder;
 
@@ -15,11 +14,15 @@ public class User {
 	@Constraints.Required
 	private String login, firstName, name, email, phoneNumber;
 	private int balance;
+	@OneToMany
 	private Assessment assessment;
-	
+	@OneToMany
 	private List<Car> cars;
+	@OneToMany
 	private List<Proposal> proposals;
+	@OneToMany
 	private List<Traject> trajects;
+	@OneToMany
 	private List<Request> request;
 
     public User(){}
