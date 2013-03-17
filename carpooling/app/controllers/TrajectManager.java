@@ -15,10 +15,9 @@ import controllers.interfaces.ITrajectManager;
  * User: gbriot
  * Date: 14/03/13
  */
-public class TrajectManager implements ITrajectManager {
+public class TrajectManager extends ITrajectManager {
 
-	@Override
-	public void recordTraject(Traject traj, User user) {
+	public static void recordTraject(Traject traj, User user) {
 		// TODO Soit via SQL comme executeUpdate !!!
 		// Soit via ebean et faire une méthode addDB dans Traject qui appelera save de Model!
 		Connection conn = DB.getConnection();
@@ -32,8 +31,7 @@ public class TrajectManager implements ITrajectManager {
 		}
 	}
 
-	@Override
-	public void cancelTraject(Traject traject) {
+	public static void cancelTraject(Traject traject) {
 		Connection conn = DB.getConnection();
 		try {
 			Statement stmt = conn.createStatement();
@@ -45,16 +43,14 @@ public class TrajectManager implements ITrajectManager {
 		// TODO notifier le user avec communication
 	}
 
-	@Override
-	public void cancelTraject(User driver, List<Traject> trajects) {
+	public static void cancelTraject(User driver, List<Traject> trajects) {
 		for(int i = 0; i < trajects.size(); i++) {
 			cancelTraject(trajects.get(i));
 		}
 		// TODO notifier les users fait par cancetTraject(traj) mais pourquoi on a Drive ?
 	}
 
-	@Override
-	public void arrivalNotification(Traject traj, short rating) {
+	public static void arrivalNotification(Traject traj, short rating) {
 		// TODO Soit via SQL comme executeUpdate !!!
 		// Soit via ebean et faire une méthode addDB dans Traject qui appelera save de Model!
 		Connection conn = DB.getConnection();

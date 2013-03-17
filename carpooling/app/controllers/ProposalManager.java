@@ -5,10 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.*;
+
 import models.objects.Coordinate;
 import models.objects.PickupPoint;
 import models.objects.Proposal;
+import models.objects.Traject;
 import models.objects.User;
+import controllers.interfaces.ICommunication;
+import controllers.TrajectManager;
 import play.db.*;
 
 /**
@@ -19,56 +23,37 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 
 	@Override
 	public List<PickupPoint> getPickupPoints(Coordinate start, Coordinate end) {
-        // TEST
-        List<PickupPoint> list= new ArrayList<PickupPoint>();
-        list.add(
-                new PickupPoint(
-                        1,
-                        "namefrom",
-                        "descfrom",
-                        "Addressfrom",
-                        start
-                ));
-        list.add(
-                new PickupPoint(
-                        2,
-                        "nameto",
-                        "descto",
-                        "Addressto",
-                        end
-                ));
-        list.add(
-                new PickupPoint(
-                        3,
-                        "name",
-                        "desc",
-                        "Address",
-                        new Coordinate(50.715897,4.7128073)
-                ));
-        list.add(
-                new PickupPoint(
-                        4,
-                        "name2",
-                        "desc2",
-                        "Address2",
-                        new Coordinate(50.717897,4.6138073)
-                ));
-        return list;
+	    List<PickupPoint> search = PickupPoint.findAll();
+	    List<PickupPoint> result = new ArrayList<PickupPoint>();
+	    double c = distance(start, end);
+	    double a = 1.3*c; // valeur prise "au hazard" => definit la forme de l'ellipse
+		for(int i = 0; i < search.size(); i++){
+			if((distance(search.get(i).getCoordinates(), start) + distance(search.get(i).getCoordinates(), end)) <= (2*a)){
+				result.add(search.get(i));
+			}
+		}
+		
+        return result;
+	}
+	
+	private double distance(Coordinate x1, Coordinate x2) {
+		return Math.sqrt(Math.pow(x1.getX() - x2.getX(), 2) + Math.pow(x1.getY() - x2.getY(), 2));
 	}
 	
 	@Override
 	public void recordProposal(Proposal proposal) {
-		// TODO Soit via SQL comme getProposalList => executeUpdate !!!
-		// Soit via ebean et faire une méthode addDB dans Proposal qui appelera save de Model!
-		Connection conn = DB.getConnection();
-		try {
-			Statement stmt = conn.createStatement();
-			int result = stmt.executeUpdate("INSERT INTO proposals (kmcost, availableSeats, car, user, traject, itinerary) VALUES ('" + proposal.getKmCost() + "', '" + proposal.getAvailableSeats() + "','" + proposal.getCar() + "','" + proposal.getUser() + "','" + proposal.getTraject() + "','" + proposal.getItinerary() + "')");
-			// TODO ? ajout de la proposal à user ou fait implicitement ?
-			conn.close();
-		} catch (SQLException e) {
-			// TODO
-		}
+		// Attention, les PP qui sont déjà en DB ne doivent pas être ajouté (ils n'ont pas d'id), les autres oui !
+		Proposal.create(proposal);
+		
+//		Connection conn = DB.getConnection();
+//		try {
+//			Statement stmt = conn.createStatement();
+//			int result = stmt.executeUpdate("INSERT INTO proposals (kmcost, availableSeats, car, user, traject, itinerary) VALUES ('" + proposal.getKmCost() + "', '" + proposal.getAvailableSeats() + "','" + proposal.getCar() + "','" + proposal.getUser() + "','" + proposal.getTraject() + "','" + proposal.getItinerary() + "')");
+//			// TODO ? ajout de la proposal à user ou fait implicitement ?
+//			conn.close();
+//		} catch (SQLException e) {
+//			// TODO
+//		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -90,17 +75,26 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 
 	@Override
 	public void modifyProposal(Proposal oldProposal, Proposal newProposal) {
-		Connection conn = DB.getConnection();
-		try {
-			Statement stmt = conn.createStatement();
-			int result = stmt.executeUpdate("DELETE FROM proposals WHERE user = '" + oldProposal.getUser() + "' AND ");
-			conn.close();
-		} catch (SQLException e) {
-			// TODO
+//		Connection conn = DB.getConnection();
+//		try {
+//			Statement stmt = conn.createStatement();
+//			int result = stmt.executeUpdate("DELETE FROM proposals WHERE user = '" + oldProposal.getUser() + "' AND ");
+//			conn.close();
+//		} catch (SQLException e) {
+//			// TODO
+//		}
+//		recordProposal(newProposal);
+		
+		// utilise communication pour prevenir les users.
+		// appele cancelTraject pour TOUS les trajets liés
+		List<Traject> traj = Traject.find.where().eq("proposal", oldProposal).findList();
+		for(int i = 0; i < traj.size(); i++){
+			ICommunication.ProposalCancelled(traj.get(i).getUser(), traj.get(i));
+			TrajectManager.cancelTraject(traj.get(i));
 		}
+		// supprimer oldProposal
+		Proposal.delete(oldProposal);
 		recordProposal(newProposal);
-		// TODO utiliser communication pour prévenir les users etc !!
-		// TODO appeler cancelTraject pour TOUS les trajets liés
 	}
 
 }

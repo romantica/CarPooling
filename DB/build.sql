@@ -181,6 +181,7 @@ DROP TABLE IF EXISTS `CarPooling`.`PickupPoint` ;
 
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`PickupPoint` (
   `ID` INT NOT NULL AUTO_INCREMENT ,
+  `Description` VARCHAR(45) NULL ,
   `Name` VARCHAR(45) NULL ,
   `CoordinateX` DOUBLE ,
   `CoordinateY` DOUBLE ,
@@ -197,7 +198,7 @@ DROP TABLE IF EXISTS `CarPooling`.`Itinerary` ;
 CREATE  TABLE IF NOT EXISTS `CarPooling`.`Itinerary` (
   `PickupPointID` INT NOT NULL ,
   `ProposalID` INT NOT NULL ,
-  `DepartureTime` DATETIME ,
+  `DepartureTime` DATETIME NULL ,
   `ArrivalTime` DATETIME NULL ,
   INDEX `pp_idx` (`PickupPointID` ASC) ,
   INDEX `prop_idx` (`ProposalID` ASC) ,
@@ -224,7 +225,7 @@ CREATE  TABLE IF NOT EXISTS `CarPooling`.`Composition` (
   `PickupPointID` INT NOT NULL ,
   `TrajectID` INT NOT NULL ,
   `Type` TINYINT(1) ,
-  `Time` DATETIME ,
+  `Time` DATETIME NULL ,
   INDEX `traject_idx` (`TrajectID` ASC) ,
   INDEX `pp_idx` (`PickupPointID` ASC) ,
   PRIMARY KEY (`PickupPointID`, `TrajectID`) ,

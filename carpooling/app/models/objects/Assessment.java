@@ -1,9 +1,9 @@
 package models.objects;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import play.data.validation.Constraints;
 import play.db.ebean.Model.Finder;
+
 
 @Entity
 public class Assessment {
@@ -49,5 +49,5 @@ public class Assessment {
 	}
 	
 	public static Finder<Integer, Assessment> find = new Finder<Integer, Assessment>(Integer.class, Assessment.class);
-
+	
 }
