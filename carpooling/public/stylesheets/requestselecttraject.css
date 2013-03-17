@@ -1,0 +1,23 @@
+
+div#leftChooseTraject {
+	float: left;
+	width: 250px;
+	height: 500px;
+	background-color: lightgray;
+	margin-right: 5px;
+}
+
+div#leftChooseTraject div#choices {
+	margin: 5px;
+	font-family: "Segoe UI", Calibri, Arial;
+}
+
+div#leftChooseTraject div#static {
+	padding: 5px;
+}
+
+div#leftChooseTraject div#static div#links {
+	text-align: center;
+	font-size: 120%;
+	margin-top: 5px;
+}

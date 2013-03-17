@@ -1,5 +1,5 @@
 @(Form: FormUI)
-<form action="@Form.action" method="@Form.meth" id="from_@Form.id">
+<form action="@Form.action" method="@Form.meth" id="form_@Form.id">
     <div class="error">
         <ul>
             @for(field <- Form.getFields()){

@@ -1,19 +1,39 @@
-@(username: String, error: String, trajects: List[models.objects.Traject])
+@(username: String, error: String, trajects: List[models.objects.Traject], from: models.objects.Coordinate, to: models.objects.Coordinate)
 
 @header = {
-
-}
-
-@main(title = "Select a traject", Header = header) {
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/requestselecttraject.css")">
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/map.js")" charset="utf-8"></script>
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/request.js")" charset="utf-8"></script>
+	<script src="//maps.googleapis.com/maps/api/js?sensor=true"></script>
 	<script type="text/javascript">
+	
+		// Transmission variables server -> client
 		var trajects = [
 			@for(t <- trajects) {
-				{'user' : "@t.getUser().getLogin().replaceAll("\"", "&quot;")"},
+				{
+					'driver' : "@t.getProposal().getUser().getLogin().replaceAll("\"", "&quot;")",
+					'price' : "@t.getTotalCost()",
+				},
 			}
 		]
 		
-		alert(trajects[0]['user']);
+		var center = {
+			'X' : @(from.getX() + to.getX())/2,
+			'Y' : @(from.getY() + to.getY())/2
+		};
 	</script>
+}
+
+@main(title = "Select a traject", Username = username, Header = header) {
     <h1>Select a traject</h1>
-	
+	<div id="leftChooseTraject">
+		<div id="choices"></div>
+		<div id="static">
+			You have'nt found a convenient traject ? You can still use the "Match later function" in order to be alerted when a new traject is encoded:<br />
+			<div id="links">
+				<a href="/pendingrequest">Match later</a>
+			</div>
+		</div>
+	</div>
+	<div id="map" style="height: 500px;"></div>
 }
