@@ -1,26 +1,22 @@
 package models.objects;
 
-import java.util.*;
+import java.util.Date;
 import javax.persistence.*;
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
 
-
-import play.db.ebean.*;
-import play.data.format.*;
-import play.data.validation.*;
-
-
-@SuppressWarnings("serial")
 @Entity
-public class Request extends Model {
-
-	@Id
-	public Long id;
+public class Request extends Model{
 	
+	@Id
+	private int id;
+	
+	@Constraints.Required
 	private Coordinate departureCoordinates, arrivalCoordinates;
 	private String departureAddress, arrivalAddress;
 	private Date arrivalTime;
 	private int necessarySeats, toleranceTime, toleranceWalkDistance;
-	private float tolearncePrice;
+	private float tolerancePrice;
 	
 	private User user;
 	private Traject traject;
@@ -28,7 +24,7 @@ public class Request extends Model {
 	public Request(Coordinate departureCoordinates,
 			Coordinate arrivalCoordinates, String departureAddress,
 			String arrivalAddress, Date arrivalTime, int necessarySeats,
-			int toleranceTime, int toleranceWalkDistance, float tolearncePrice,
+			int toleranceTime, int toleranceWalkDistance, float tolerancePrice,
 			User user, Traject traject) {
 		super();
 		this.departureCoordinates = departureCoordinates;
@@ -39,7 +35,7 @@ public class Request extends Model {
 		this.necessarySeats = necessarySeats;
 		this.toleranceTime = toleranceTime;
 		this.toleranceWalkDistance = toleranceWalkDistance;
-		this.tolearncePrice = tolearncePrice;
+		this.tolerancePrice = tolerancePrice;
 		this.user = user;
 		this.traject = traject;
 	}
@@ -108,12 +104,12 @@ public class Request extends Model {
 		this.toleranceWalkDistance = toleranceWalkDistance;
 	}
 
-	public float getTolearncePrice() {
-		return tolearncePrice;
+	public float getTolerancePrice() {
+		return tolerancePrice;
 	}
 
-	public void setTolearncePrice(float tolearncePrice) {
-		this.tolearncePrice = tolearncePrice;
+	public void setTolerancePrice(float tolerancePrice) {
+		this.tolerancePrice = tolerancePrice;
 	}
 
 	public User getUser() {
@@ -131,6 +127,7 @@ public class Request extends Model {
 	public void setTraject(Traject traject) {
 		this.traject = traject;
 	}
-			
-	public static Finder<Long, Request> find = new Finder<Long, Request>(Long.class, Request.class);
+		
+	public static Finder<Integer, Request> find = new Finder<Integer, Request>(Integer.class, Request.class);
+	
 }

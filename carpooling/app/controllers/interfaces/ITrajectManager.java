@@ -5,30 +5,35 @@ import java.util.List;
 import models.objects.Traject;
 import models.objects.User;
 
-public interface ITrajectManager{
+public abstract class ITrajectManager{
 	
 	/**
 	 * Enregistre un trajet dans la base de donnees
 	 * @throws Exception 
 	 */
-	public void recordTraject(Traject traj, User user) throws Exception;
+	public static void recordTraject(Traject traj, User user) throws Exception{
+		
+	}
 
 	/**
 	 * Supprime un trajet de la base de donnee,
 	 * notifie le conducteur de l'annulation du passager
 	 */
-	public void cancelTraject(Traject traject);
+	public static void cancelTraject(Traject traject) {
+	}
 	
 	
 	/**
 	 * Supprime des trajets de la base de donnee,
 	 * notifie les passager de l'annulation du conducteur
 	 */
-	public void cancelTraject(User driver, List<Traject> trajects);
+	public static void cancelTraject(User driver, List<Traject> trajects) {
+	}
 	
 	/**
 	 * Un utilisateur a envoye un rating pour le trajet 
 	 * traj qu'il a effectue
 	 */
-	public void arrivalNotification(Traject traj, short rating);
+	public static void arrivalNotification(Traject traj, short rating) {
+	}
 }

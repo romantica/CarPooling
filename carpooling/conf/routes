@@ -5,5 +5,23 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+# Login
+GET     /login                      controllers.UserUI.loginPage()
+POST    /login                      controllers.UserUI.login()
+GET     /logout                     controllers.UserUI.logout()
+
+# Prposal
+GET     /proposal                   controllers.ProposalUI.create()
+GET     /proposal/create            controllers.ProposalUI.create()
+POST    /proposal/create/submit     controllers.ProposalUI.createSubmit()
+GET     /proposal/selectpp          controllers.ProposalUI.selectPP()
+POST    /proposal/selectpp/submit   controllers.ProposalUI.selectPPSubmit()
+GET     /proposal/summary           controllers.ProposalUI.summary()
+GET     /proposal/recording         controllers.ProposalUI.recording()
+
+# Request
+GET     /request                    controllers.RequestUI.create()
+POST    /requestselecttraject       controllers.RequestUI.selectTraject()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

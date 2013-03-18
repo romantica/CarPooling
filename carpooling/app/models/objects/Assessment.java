@@ -1,8 +1,19 @@
 package models.objects;
 
+import javax.persistence.*;
+import play.data.validation.Constraints;
+import play.db.ebean.Model.Finder;
+
+
+@Entity
 public class Assessment {
 	
+	@Id
+	private int id;
+	
+	@Constraints.Required
 	private int rating;
+	
 	private String comment;
 	private boolean Type;
 	
@@ -37,6 +48,6 @@ public class Assessment {
 		Type = type;
 	}
 	
+	public static Finder<Integer, Assessment> find = new Finder<Integer, Assessment>(Integer.class, Assessment.class);
 	
-
 }

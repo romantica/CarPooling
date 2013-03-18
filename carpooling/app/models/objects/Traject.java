@@ -1,25 +1,25 @@
 package models.objects;
 
-import java.util.*;
 import javax.persistence.*;
 
-
-import play.db.ebean.*;
-import play.data.format.*;
-import play.data.validation.*;
+import play.data.validation.Constraints;
+import play.db.ebean.Model.Finder;
 
 @Entity
-public class Traject extends Model {
+public class Traject {
 	
 	@Id
-	public Long id;
+	private int id;
 	
 	private int reservedSeats;
 	private float totalCost;
 	
+	@Constraints.Required
 	private Request request;
+	@Constraints.Required
 	private User user;
-	private Composition departurePP, ArrivalPP;
+	@ManyToMany(cascade=CascadeType.ALL)
+	private Composition departurePP, arrivalPP;
 	private Proposal proposal;
 	
 	public Traject(int reservedSeats, float totalCost, Request request,
@@ -31,7 +31,7 @@ public class Traject extends Model {
 		this.request = request;
 		this.user = user;
 		this.departurePP = departurePP;
-		ArrivalPP = arrivalPP;
+		this.arrivalPP = arrivalPP;
 		this.proposal = proposal;
 	}
 
@@ -76,11 +76,11 @@ public class Traject extends Model {
 	}
 
 	public Composition getArrivalPP() {
-		return ArrivalPP;
+		return arrivalPP;
 	}
 
 	public void setArrivalPP(Composition arrivalPP) {
-		ArrivalPP = arrivalPP;
+		this.arrivalPP = arrivalPP;
 	}
 
 	public Proposal getProposal() {
@@ -91,7 +91,6 @@ public class Traject extends Model {
 		this.proposal = proposal;
 	}
 	
-	
-	
+	public static Finder<Integer, Traject> find = new Finder<Integer, Traject>(Integer.class, Traject.class);
 	
 }

@@ -8,7 +8,9 @@ import views.html.*;
 public class Application extends Controller {
   
     public static Result index() {
-        return ok(index.render("Your new application is ready."));
+        Login login = new Login();
+        login.isLogged();
+        return ok(index.render(login.getUsername()));
     }
   
 }

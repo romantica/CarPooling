@@ -2,38 +2,42 @@ package models.objects;
 
 import java.util.*;
 import javax.persistence.*;
-
-
-import play.db.ebean.*;
-import play.data.format.*;
 import play.data.validation.*;
+import play.db.ebean.Model;
 
-
-@SuppressWarnings("serial")
 @Entity
-public class Proposal extends Model {
+public class Proposal extends Model{
 	
 	@Id
-	public Long id;
+	private int id;
 	
 	private float kmCost;
 	private int availableSeats;
 	
+	@Constraints.Required
 	private Car car;
+	@Constraints.Required
+	@ManyToOne
 	private User user;
+	@ManyToMany
 	private List<Traject> traject;
-	private List<Itinerary> itinerary;
-	
-	public Proposal(float kmCost, int availableSeats, Car car, User user,
-			List<Traject> traject, List<Itinerary> itinerary) {
+	@ManyToMany
+	private LinkedList<Itinerary> itinerary;
+
+	public Proposal(float kmCost, int availableSeats, Car car, User user) {
 		super();
 		this.kmCost = kmCost;
 		this.availableSeats = availableSeats;
 		this.car = car;
 		this.user = user;
-		this.traject = traject;
-		this.itinerary = itinerary;
+		this.traject = new ArrayList<Traject>();
+		this.itinerary = new LinkedList<Itinerary>();
 	}
+
+    public Proposal(int id, float kmCost, int availableSeats, Car car, User user) {
+        this(kmCost,availableSeats,car,user);
+        this.id = id;
+    }
 
 	public float getKmCost() {
 		return kmCost;
@@ -71,19 +75,58 @@ public class Proposal extends Model {
 		return traject;
 	}
 
+	public void addTraject(Traject traj){
+		if(traj == null) return;
+		this.traject.add(traj);
+	}
+	
+	@Deprecated
 	public void setTraject(List<Traject> traject) {
 		this.traject = traject;
 	}
 
-	public List<Itinerary> getItinerary() {
+	public LinkedList<Itinerary> getItinerary() {
 		return itinerary;
 	}
 
-	public void setItinerary(List<Itinerary> itinerary) {
+	public void addItinerary(Itinerary itinerary){
+		if (itinerary == null) return;
+		this.itinerary.add(itinerary);
+	}
+	
+	@Deprecated
+	public void setItinerary(LinkedList<Itinerary> itinerary) {
 		this.itinerary = itinerary;
 	}
 	
+	public Itinerary getItinerary(PickupPoint pickupPoint)
+	{
+		for (Itinerary itinerary : this.getItinerary())
+			if (itinerary.getPickupPoint().equals(pickupPoint))
+				return itinerary;
+		return null;
+	}
+
+	public static Finder<Integer, Proposal> find = new Finder<Integer, Proposal>(Integer.class, Proposal.class);
 	
+	public static void create(Proposal prop) {
+		prop.save();
+		prop.saveManyToManyAssociations("itinerary");
+	}
 	
+	public static void delete(Proposal prop) {
+		prop.delete();
+	}
 	
+    @Override
+    public String toString() {
+        return "Proposal{" +
+                "kmCost=" + kmCost +
+                ", availableSeats=" + availableSeats +
+                ", car=" + car +
+                ", user=" + user +
+                ", traject=" + traject +
+                ", itinerary=" + itinerary +
+                '}';
+    }
 }

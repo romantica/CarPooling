@@ -1,18 +1,27 @@
 package models.objects;
 
 import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import play.data.validation.Constraints;
+import play.db.ebean.Model.Finder;
 
-
+@Entity
 public class Itinerary {
 	
-	private Date departureTime, ArrivalTime;
-	private PickupPoint pickupPoint;
+	@Id
+	private int id;
 	
+	@Constraints.Required
+	private Date departureTime, arrivalTime;
+	@Constraints.Required
+	private PickupPoint pickupPoint;
+
 	public Itinerary(Date departureTime, Date arrivalTime,
 			PickupPoint pickupPoint) {
 		super();
 		this.departureTime = departureTime;
-		ArrivalTime = arrivalTime;
+		this.arrivalTime = arrivalTime;
 		this.pickupPoint = pickupPoint;
 	}
 
@@ -25,11 +34,11 @@ public class Itinerary {
 	}
 
 	public Date getArrivalTime() {
-		return ArrivalTime;
+		return arrivalTime;
 	}
 
 	public void setArrivalTime(Date arrivalTime) {
-		ArrivalTime = arrivalTime;
+		this.arrivalTime = arrivalTime;
 	}
 
 	public PickupPoint getPickupPoint() {
@@ -40,7 +49,15 @@ public class Itinerary {
 		this.pickupPoint = pickupPoint;
 	}
 	
-	
-	
+	public static Finder<Integer, Itinerary> find = new Finder<Integer, Itinerary>(Integer.class, Itinerary.class);
+    
+    @Override
+    public String toString() {
+        return "Itinerary{" +
+        "departureTime=" + departureTime +
+        ", ArrivalTime=" + arrivalTime +
+        ", pickupPoint=" + pickupPoint +
+        '}';
+    }
 	
 }
