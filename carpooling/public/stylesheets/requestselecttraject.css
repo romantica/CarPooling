@@ -12,8 +12,19 @@ div#leftChooseTraject div#choices {
 	font-family: "Segoe UI", Calibri, Arial;
 }
 
+div#leftChooseTraject div#choices div.choice {
+	cursor: pointer;
+	padding: 5px;
+}
+
+div#leftChooseTraject div#choices div.choice:hover {
+	background-color: darkgray;
+}
+
 div#leftChooseTraject div#static {
 	padding: 5px;
+	text-align: justify;
+	line-height: 150%;
 }
 
 div#leftChooseTraject div#static div#links {

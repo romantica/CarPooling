@@ -13,7 +13,9 @@ import play.mvc.Result;
 import views.html.request.*;
 
 import models.*;
+import models.objects.Composition;
 import models.objects.Coordinate;
+import models.objects.PickupPoint;
 import models.objects.Proposal;
 import models.objects.Request;
 import models.objects.Traject;
@@ -76,7 +78,14 @@ public class RequestUI extends Controller {
 			}
 			@Override public List<Traject> findTrajects(Request request) {
 				List<Traject> temp = new ArrayList<Traject>();
-				temp.add(new Traject(2, 12, request, request.getUser(), null, null, new Proposal((float) 0.2, 4, null, request.getUser())));
+				temp.add(new Traject(2, 12, request, request.getUser(), 
+						new Composition(true, null, new PickupPoint("Louvain plein centre", "Super point de pick up", "Louvain", new Coordinate(4.704328000000032, 50.877571))), 
+						new Composition(true, null, new PickupPoint("Bruxelles plein centre", "Super point de pick up", "Bruxelles", new Coordinate(4.351710300000036, 50.8503396))), 
+						new Proposal((float) 0.2, 4, null, request.getUser())));
+				temp.add(new Traject(1, 15, request, request.getUser(), 
+						new Composition(true, null, new PickupPoint("Liège plein centre", "Super point de pick up", "Liège", new Coordinate(5.57966620000002, 50.6325574))), 
+						new Composition(true, null, new PickupPoint("Arlon plein centre", "Super point de pick up", "Arlon", new Coordinate(5.816666700000042, 49.6833333))), 
+						new Proposal((float) 0.2, 4, null, request.getUser())));
 				return temp;
 			}
 		};

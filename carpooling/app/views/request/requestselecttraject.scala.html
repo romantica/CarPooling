@@ -11,12 +11,21 @@
 		var trajects = [
 			@for(t <- trajects) {
 				{
-					'driver' : "@t.getProposal().getUser().getLogin().replaceAll("\"", "&quot;")",
-					'price' : "@t.getTotalCost()",
+					driver : 	"@t.getProposal().getUser().getLogin().replaceAll("\"", "&quot;")",
+					price : 	"@t.getTotalCost()",
+					from : 		new google.maps.LatLng(@t.getDeparturePP().getPickupPoint().getCoordinates().getY() , @t.getDeparturePP().getPickupPoint().getCoordinates().getX()),
+					to : 		new google.maps.LatLng(@t.getArrivalPP().getPickupPoint().getCoordinates().getY() , @t.getArrivalPP().getPickupPoint().getCoordinates().getX()),
+					fromName : 	"@t.getDeparturePP().getPickupPoint().getName()",
+					toName : 	"@t.getArrivalPP().getPickupPoint().getName()"
 				},
 			}
 		]
 		
+		for (i in trajects)
+			trajects[i].id = i;
+		
+		var from = new google.maps.LatLng(@from.getY(),@from.getX());
+		var to   = new google.maps.LatLng(@to.getY(),  @to.getX());
 		var center = {
 			'X' : @(from.getX() + to.getX())/2,
 			'Y' : @(from.getY() + to.getY())/2
