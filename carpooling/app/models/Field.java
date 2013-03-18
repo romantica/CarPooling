@@ -30,10 +30,10 @@ public class Field {
         if (typeinput.equals("address")) {
             this.typeinput = "input";
             this.placeholder = "Address";
-        } else if (typeinput.equals("submit")) {
+        } else if (typeinput.equals("submit") || typeinput.equals("button")) {
             this.value = name;
             name = "";
-            this.typeinput = "submit";
+            this.typeinput = typeinput;
         } else {
             this.typeinput = typeinput;
         }

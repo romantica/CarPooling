@@ -1,0 +1,34 @@
+
+div#leftChooseTraject {
+	float: left;
+	width: 250px;
+	height: 500px;
+	background-color: lightgray;
+	margin-right: 5px;
+}
+
+div#leftChooseTraject div#choices {
+	margin: 5px;
+	font-family: "Segoe UI", Calibri, Arial;
+}
+
+div#leftChooseTraject div#choices div.choice {
+	cursor: pointer;
+	padding: 5px;
+}
+
+div#leftChooseTraject div#choices div.choice:hover {
+	background-color: darkgray;
+}
+
+div#leftChooseTraject div#static {
+	padding: 5px;
+	text-align: justify;
+	line-height: 150%;
+}
+
+div#leftChooseTraject div#static div#links {
+	text-align: center;
+	font-size: 120%;
+	margin-top: 5px;
+}
