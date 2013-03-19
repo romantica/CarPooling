@@ -26,13 +26,37 @@ import static org.fest.assertions.Assertions.*;
 *
 */
 public class ApplicationTest {
+    
+    @Test 
+    public void objectModelCheck() {
+				Assessment assessTest = new Assessment(3,"Test",true);
+
+				assertThat(assessTest.getRating()).isEqualTo(3);
+				assertThat(assessTest.getComment()).isEqualTo("Test");
+				assertThat(assessTest.isType()).isEqualTo(true);
+
+				Car carTest = new Car("Test-Plate", "model1", "red");
+				assertThat(carTest.getPlateNumber()).isEqualTo("Test-Plate");
+				assertThat(carTest.getModel()).isEqualTo("model1");
+				assertThat(carTest.getColor()).isEqualTo("red");
+
+				User userTest = new User("loginTest", "Mister", "Nobody", "test@test.com",
+						"0123-456", 0, assessTest,
+						null, null, null,
+						null);
+
+				//Proposal pTest = new Proposal(float kmCost, int availableSeats, Car car, User user);
+
+    }	
 
     @Test 
-    public void simpleCheck() {
-        int a = 1 + 1;
-        assertThat(a).isEqualTo(2);
-    }
-    
+    public void insertAndGetTrajectCheck() {
+			// But = insérer une nouvelle proposition et rechercher ensuite un trajet similaire 
+			// 				à celui inséré juste avant
+
+
+		}	
+
     @Test
     public void renderTemplate() {
         Content html = views.html.index.render("Your new application is ready.");
