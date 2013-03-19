@@ -3,10 +3,12 @@ package models.objects;
 import javax.persistence.*;
 
 import play.data.validation.Constraints;
-import play.db.ebean.Model.Finder;
+import java.util.Date;
+import javax.persistence.*;
+import play.db.ebean.Model;
 
 @Entity
-public class Traject {
+public class Traject extends Model{
 	
 	@Id
 	private int id;

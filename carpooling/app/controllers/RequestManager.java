@@ -21,6 +21,13 @@ public class RequestManager implements IRequestManager{
 	public void recordRequest(Request request){
 		request.save();
 	}
+	
+	/**
+	 * Supprime la requete dans la base de donnees
+	 */
+	public void deleteRequest(Request request){
+		request.delete();
+	}
 
 	/**
 	 * Lance le matching pour la requete et renvoie
@@ -37,6 +44,8 @@ public class RequestManager implements IRequestManager{
 		MatchLaterHandler mlh = new MatchLaterHandler(request);
 		mlh.execute();
 	}
+	
+	
 
 	public class MatchLaterHandler implements IHandler{
 
@@ -59,11 +68,6 @@ public class RequestManager implements IRequestManager{
 			}
 		}
 
-		@Override
-		public void execute(Object... objs) {
-			// TODO Auto-generated method stub
-			
-		}
 	}
 }
 
