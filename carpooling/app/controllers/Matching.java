@@ -15,12 +15,16 @@ public class Matching
 	/**
 	 * Sur base d'une requete et en accedant a la base de donnees, renvoie une
 	 * liste de trajets qui seront propose au passager pour qu'il fasse son
-	 * choix. Les trajets sont tries sur un critere de temps.
+	 * choix. Les trajets sont tries selon un critere de temps.
+	 * 
+	 * @param requete : une requete pour laquelle on cherche des Traject possibles
+	 * @return une arrayList de Traject triee selon le temps de depart,
+	 * 			null si aucun Traject n'est trouve
 	 */
 	public static ArrayList<Traject> match(Request request)
 	{
 		if (request.getToleranceWalkDistance() >= distance(request.getDepartureCoordinates(), request.getArrivalCoordinates()))
-			return null;
+			return null; //Renvoie null si la tolerance de marche est plus grande que la distance a couvrir
 
 		ArrayList<Proposal> proposals = getProposals();
 		ArrayList<Traject> result = new ArrayList<Traject>();
@@ -40,21 +44,28 @@ public class Matching
 	/**
 	 * Renvoie la liste des toutes les proposals contenues dans la base de
 	 * donnees
+	 * 
+	 * @return un arrayList des Proposals contenues dans la DB
 	 */
 	private static ArrayList<Proposal> getProposals()
 	{
 		List<Proposal> proposals = new Model.Finder<Integer,Proposal>(Integer.class,Proposal.class).all();
-		return  new ArrayList<Proposal>(proposals);
+		return new ArrayList<Proposal>(proposals);
 	}
 
 	/**
 	 * Determine si une proposal est compatible avec une requete et donc si un
 	 * trajet peut etre cree a partir de celles-ci
+	 * 
+	 * @param proposal : la Proposal que l'on evalue
+	 * @param request : la Request qui donne les criteres
+	 * @param pickupPoints : les PickupPoints de depart et d'arrivee (null au depart, calcules en cours de methode)
+	 * @return un booleen qui determine si un Traject peut etre cree a partir de la Proposal
 	 */
 	private static boolean isAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
 		if ( !isSeatsRequestAMatch(proposal, request) || !isArrivalTimeAMatch(proposal, request) )
-			return false;
+			return false; //Test des sieges et du temps d'arrivee
 		else
 		{
 			pickupPoints = getPickupPoints(proposal, request);
@@ -68,10 +79,15 @@ public class Matching
 	/**
 	 * Determine si l'heure d'arrivee (+/- la tolerance de temps) d'une requete
 	 * est comprise dans la "fenetre" temporelle d'une offre
+	 * 
+	 * @param proposal : la Proposal que l'on evalue
+	 * @param request : la Request qui donne les criteres
+	 * @return un boolean qui determine si l'arrivee est dans la fenetre
 	 */
 	private static boolean isArrivalTimeAMatch(Proposal proposal, Request request)
 	{
-		if (proposal.getItinerary().getFirst().getDepartureTime().after(getDatePlusTolerance(request.getArrivalTime(), request.getToleranceTime())) || proposal.getItinerary().getLast().getArrivalTime().before(getDateMinusTolerance(request.getArrivalTime(), request.getToleranceTime())))
+		if (proposal.getItinerary().getFirst().getDepartureTime().after(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), true))
+				|| proposal.getItinerary().getLast().getArrivalTime().before(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), false)))
 			return false;
 		else
 			return true;
@@ -79,6 +95,11 @@ public class Matching
 
 	/**
 	 * Determine si un prix est inferieur a la tolerance de la requete
+	 * 
+	 * @param proposal : la Proposal que l'on evalue
+	 * @param request : la Request qui donne les criteres
+	 * @param pickupPoints : les PickupPoints de depart et d'arrivee
+	 * @return un booleen qui determine si le prix d'un eventuel Traject est dans la tolerance
 	 */
 	private static boolean isPriceAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
@@ -88,6 +109,10 @@ public class Matching
 	/**
 	 * Determine si le nombre de sieges demandes dans une requete est disponible
 	 * dans une offre
+	 * 
+	 * @param proposal : la Proposal que l'on evalue
+	 * @param request : la Request qui donne les criteres
+	 * @return un boolean qui determine si le nombre de sieges requis est disponible
 	 */
 	private static boolean isSeatsRequestAMatch(Proposal proposal, Request request)
 	{
@@ -95,40 +120,46 @@ public class Matching
 	}
 
 	/**
-	 * Renvoie un objet Date incremente d'un certain temps
+	 * Renvoie un objet Date incremente ou decremente d'un certain temps
+	 * 
+	 * @param date : une Date a modifier
+	 * @param timeTolerance : la tolerance de temps en millisecondes
+	 * @param plusMinus : ajouter ou retirer la tolerance
+	 * @return une Date modifiee
 	 */
-	private static Date getDatePlusTolerance(Date date, int timeTolerance)
+	private static Date getDateAndTolerance(Date date, int timeTolerance, boolean plusMinus)
 	{
-		date.setTime(date.getTime() + timeTolerance);
-		return date;
-	}
-
-	/**
-	 * Renvoie un objet Date decremente d'un certain temps
-	 */
-	private static Date getDateMinusTolerance(Date date, int timeTolerance)
-	{
-		date.setTime(date.getTime() - timeTolerance);
+		if (plusMinus)
+			date.setTime(date.getTime() + timeTolerance);
+		else
+			date.setTime(date.getTime() - timeTolerance);
 		return date;
 	}
 	
 	/**
-	 * Determine si l'arrivee reelle se trouve dans la tolerance demandee
+	 * Determine si le temps de l'arrivee reelle se trouve dans la tolerance demandee
+	 * 
+	 * @param proposal : la Proposal que l'on evalue
+	 * @param request : la Request qui donne les criteres
+	 * @param pickupPoints : les PickupPoints de depart et d'arrivee
+	 * @return un boolean qui determine si l'heure d'arrivee est dans les criteres de la requete
 	 */
 	private static boolean isTimingAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
 		Date realArrival = proposal.getItinerary(pickupPoints[1]).getArrivalTime();
 		realArrival.setTime(realArrival.getTime() + distance(pickupPoints[1].getCoordinates(), request.getArrivalCoordinates()) * 1000);
 		
-		if (getDatePlusTolerance(request.getArrivalTime(), request.getToleranceTime()).before(realArrival)
-				|| getDateMinusTolerance(request.getArrivalTime(), request.getToleranceTime()).after(realArrival))		
-			return false;
-		else
-			return true;
+		return !(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), true).before(realArrival)
+					|| getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), false).after(realArrival));
 	}
 
 	/**
 	 * Cree un trajet a partir d'une proposal correspondant a une requete
+	 * 
+	 * @param proposal : la Proposal que l'on evalue
+	 * @param request : la Request qui donne les criteres
+	 * @param pickupPoints : les PickupPoints de depart et d'arrivee (null au depart, calcules en cours de methode)
+	 * @return un Traject cree a partir d'une proposal selon le Request et les PickupPoints donnes
 	 */
 	private static Traject createTraject(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
@@ -144,14 +175,18 @@ public class Matching
 	/**
 	 * Trie une liste de trajets selon le critère de temps (le plus proche dans
 	 * le temps en premier)
+	 * 
+	 * @param list : une arrayList de Traject a trier
+	 * @return une arrayList de Trajects triee selon le temps
 	 */
 	public static ArrayList<Traject> sortByTime(ArrayList<Traject> list)
 	{
 		ArrayList<Traject> result = new ArrayList<Traject>();
-		Traject temp = list.get(0);
+		Traject temp;
 		
 		while (!list.isEmpty())
 		{
+			temp = list.get(0);
 			for (Traject traject : list)
 			{
 				if (traject.getDeparturePP().getTime().before(temp.getDeparturePP().getTime()))
@@ -187,8 +222,10 @@ public class Matching
 	}
 
 	/**
-	 * Fait appel a Google Maps et renvoie la distance en metres a pied entre
-	 * deux points
+	 * Renvoie la distance en metres entre deux points
+	 * 
+	 * @param start, end : les coordonnees des deux points
+	 * @return une distance en metres
 	 */
 	private static int distance(Coordinate start, Coordinate end)
 	{
@@ -204,7 +241,11 @@ public class Matching
 	}
 
 	/**
-	 * Renvoie la longueur d'un trajet en metres en fonction d'un itineraire
+	 * Renvoie la longueur d'un trajet en metres en fonction d'un itineraire donne
+	 * 
+	 * @param itinerary : une linkedList representant un itineraire, contenant tous les points de passage
+	 * @param start, end : les PickupPoints de depart et d'arrivee
+	 * @return une distance en metres
 	 */
 	private static int getTrajectLength(LinkedList<Itinerary> itinerary, PickupPoint start, PickupPoint end)
 	{
@@ -231,16 +272,22 @@ public class Matching
 	/**
 	 * Renvoie les deux PickupPoint de depart et d'arrivee pour un trajet, null
 	 * si il n'en existe pas dans les criteres de recherche
+	 * 
+	 * @param proposal : la Proposal que l'on evalue
+	 * @param request : la Request qui donne les criteres
+	 * @return un array de 2 PickupPoints si ils existent, null sinon
 	 */
 	private static PickupPoint[] getPickupPoints(Proposal proposal, Request request)
 	{
 		PickupPoint[] result = new PickupPoint[2];
 		result[0] = null;
 		result[1] = null;
+		
 		LinkedList<PickupPoint> startList = new LinkedList<PickupPoint>();
 		ArrayList<Integer> startDistance = new ArrayList<Integer>();
 		LinkedList<PickupPoint> endList = new LinkedList<PickupPoint>();
 		ArrayList<Integer> endDistance = new ArrayList<Integer>();
+		
 		int distance;
 
 		for (Itinerary itinerary : proposal.getItinerary())
@@ -264,14 +311,14 @@ public class Matching
 		else
 		{
 			ListIterator<PickupPoint> startIterator = startList.listIterator(startList.size());
-			ListIterator<PickupPoint> endIterator = endList.listIterator();
+			ListIterator<PickupPoint> endIterator;
 			PickupPoint start;
 			PickupPoint end;
 
 			while (startIterator.hasPrevious())
 			{
 				start = startIterator.previous();
-				endIterator = endList.listIterator();
+				endIterator = endList.listIterator(0);
 				while (endIterator.hasNext())
 				{
 					end = endIterator.next();
