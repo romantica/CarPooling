@@ -7,7 +7,7 @@ import play.db.ebean.Model.Finder;
 
 
 @Entity
-public class Coordinate {
+public class Coordinate extends Model {
 	
 	@Id
 	private int id;
