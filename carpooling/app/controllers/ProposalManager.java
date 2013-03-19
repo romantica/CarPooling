@@ -23,17 +23,23 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 
 	@Override
 	public List<PickupPoint> getPickupPoints(Coordinate start, Coordinate end) {
-	    List<PickupPoint> search = PickupPoint.findAll();
-	    List<PickupPoint> result = new ArrayList<PickupPoint>();
-	    double c = distance(start, end);
-	    double a = 1.3*c; // valeur prise "au hazard" => definit la forme de l'ellipse
-		for(int i = 0; i < search.size(); i++){
-			if((distance(search.get(i).getCoordinates(), start) + distance(search.get(i).getCoordinates(), end)) <= (2*a)){
-				result.add(search.get(i));
-			}
-		}
-		
-        return result;
+        // TEST
+        List<PickupPoint> list= new ArrayList<PickupPoint>();
+        list.add(
+                new PickupPoint(
+                        "name",
+                        "desc",
+                        "Address",
+                        new Coordinate(50.715897,4.7128073)
+                ));
+        list.add(
+                new PickupPoint(
+                        "name2",
+                        "desc2",
+                        "Address2",
+                        new Coordinate(50.717897,4.6138073)
+                ));
+        return list;
 	}
 	
 	private double distance(Coordinate x1, Coordinate x2) {

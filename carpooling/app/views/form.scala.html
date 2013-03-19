@@ -18,7 +18,9 @@
             <span>@field.name</span>
             @if(field.typeinput == "select") {
             <select name="@field.id" id="form_@Form.id @field.id" />
-                @Html(field.value)
+            @for(select <- field.selection){
+                <option value="@select" @if(field.value != null && field.value == select){ selected }>@select</option>
+            }
             </select>
             } else {
             @if(field.typeinput != "button" && field.typeinput != "submit") {

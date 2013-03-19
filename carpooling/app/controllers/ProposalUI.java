@@ -30,7 +30,7 @@ public class ProposalUI extends Controller {
         Login session = new Login();
         if (!session.isLogged())
             return redirect("/");
-        FormUI form = formCreate();
+        FormUI form = formCreate("/proposal/create/submit");
         return ok(create.render(session.getUsername(), null, form));
     }
 
@@ -41,10 +41,11 @@ public class ProposalUI extends Controller {
         Login session = new Login();
         if (!session.isLogged())
             return redirect("/");
-        FormUI form = formCreate();
+        FormUI form = formCreate("/proposal/create/submit");
         form.completeForm(Form.form().bindFromRequest());
-        if (form.isError())
+        if (form.isError()){
             return ok(create.render(session.getUsername(), null, form));
+        }
         //No error
         //Create proposal object
         //TODO: assiation correcte de la car
@@ -103,7 +104,7 @@ public class ProposalUI extends Controller {
         ProposalManager pm = new ProposalManager();
         List<PickupPoint> listpp = pm.getPickupPoints(fromCoord, toCoord);
         Cache.set("listpp#" + session("username"), listpp, 60 * 60); //Cache available 1hour
-        return ok(selectpp.render(session.getUsername(), listpp));
+        return ok(selectpp.render(session.getUsername(), listpp, fromCoord, toCoord));
     }
 
     /**
@@ -122,8 +123,12 @@ public class ProposalUI extends Controller {
             String[] e = entry.getKey().split("_");
             if (e.length == 1) {
                 String id = entry.getKey();
+                //Check if date-hour are wrong
+                String regex = "^20[0-9]{2}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]$";
+                if (!form.get(id + "_starttime").matches(regex) ||
+                        !form.get(id + "_arrivaltime").matches(regex))
+                    return redirect("/proposal/selectpp");
                 //Itinerary Time
-                //TODO: Check if date-hour are wrong et redirect page
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Date startdate = null;
                 Date arrivaldate = null;
@@ -137,6 +142,7 @@ public class ProposalUI extends Controller {
                     PickupPoint p = new PickupPoint();
                     p.setName(form.get(id + "_name"));
                     p.setCoordinates(new Coordinate(form.get(id + "_coord")));
+                    p.setAddress(form.get(id + "_address"));
                     //Add Pickup Point to Itinerary to Proposal
                     Itinerary Itin = new Itinerary(startdate, arrivaldate, p);
                     prop.addItinerary(Itin);
@@ -171,8 +177,6 @@ public class ProposalUI extends Controller {
             return redirect("/");
         Proposal prop = (Proposal) Cache.get("proposal#" + session("username"));
         if (prop == null) return redirect("/proposal");
-        ProposalManager pm = new ProposalManager();
-        pm.recordProposal(prop);
         return ok(summary.render(session.getUsername(), prop));
     }
 
@@ -186,6 +190,8 @@ public class ProposalUI extends Controller {
             return redirect("/");
         Proposal prop = (Proposal) Cache.get("proposal#" + session("username"));
         if (prop == null) return ok("Timeout :(");
+        ProposalManager pm = new ProposalManager();
+        pm.recordProposal(prop);
         return ok(recorded.render(session.getUsername(), "Proposal Recorded"));
     }
 
@@ -193,23 +199,23 @@ public class ProposalUI extends Controller {
     /**
      * @return Form of step 1 (proposal information)
      */
-    private static FormUI formCreate() {
-        FormUI form = new FormUI("proposal/create/submit");
+    private static FormUI formCreate(String sendDirectory) {
+        FormUI form = new FormUI(sendDirectory);
         form.id = "new";
         form.addField(new Field("address", "From", "fromadd", true, null, null));
         form.addField(new Field("hidden", null, "fromcoord", true, null, null));
         form.addField(new Field("address", "To", "toadd", true, null, null));
         form.addField(new Field("hidden", null, "tocoord", true, null, null));
-        form.addField(new Field("datetime-local", "Start Hour", "starthour", true, "Incorrect start time", null));
-        form.addField(new Field("datetime-local", "Arrival Hour", "arrivalhour", true, "Incorrect arrival time", null));
+        form.addField(new Field("datetime-local", "Start Hour", "starthour", true, "Incorrect start time", "^20[0-9]{2}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]$"));
+        form.addField(new Field("datetime-local", "Arrival Hour", "arrivalhour", true, "Incorrect arrival time", "^20[0-9]{2}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]$"));
         Field car = new Field();
         car.typeinput = "select";
         car.name = "Car";
         car.id = "car";
-        car.value = "<option value=\"unknown\" selected>Unknown</option>";
+        car.selection  = new String[]{"Unknown"};
         form.addField(car);
-        form.addField(new Field("number", "Available seats", "seats", true, "Invalid format", "[0-9]{0,2}"));
-        form.addField(new Field("number", "Cost in km", "kmcost", true, "Invalid format", "[0-9]{0,2}"));
+        form.addField(new Field("number", "Available seats", "seats", true, "Invalid format", "[0-9]{1,2}"));
+        form.addField(new Field("number", "Cost in km", "kmcost", true, "Invalid format", "[0-9]{1,2}"));
         Field nextButton = new Field();
         nextButton.value = "Next step";
         nextButton.id = "nextstep";

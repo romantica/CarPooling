@@ -63,14 +63,18 @@ function addFormPPSelected(pickuppoint){
         id = "new#"+count;
         count++;
     }
-    var html = '<div id="pp_'+id+'">';
+    var html = '<div id="pp_'+id+'" class="field pp_item" style="height:175px; width:200px;">';
     html += '<input type="hidden" name="'+id+'" value="'+(pickuppoint.id == null ? "new" : id)+'" />';
+    if(pickuppoint.Address != null){
+        html += '<div class="address">'+pickuppoint.Address+'</div>';
+        html += '<input type="hidden" name="'+id+'_address" value="'+(pickuppoint.Address)+'" />';
+    }
     if(pickuppoint.name == null){
         html += '<input type="hidden" name="'+id+'_coord" value="'+coord+'" />';
         html += '<dl>Name of Point:</dl><dd><input type="text" name="'+id+'_name" /></dd>';
     }
-    html += '<dl>Arrival Time:</dl><dd><input type="datetime-local" name="'+id+'_arrivaltime" /></dd>';
-    html += '<dl>Start Time:</dl><dd><input type="datetime-local" name="'+id+'_starttime" /></dd>';
+    html += '<dd><span>Arrival Time:</span><input type="datetime-local" name="'+id+'_arrivaltime" /></dd>';
+    html += '<dd><span>Start Time:</span><input type="datetime-local" name="'+id+'_starttime" /></dd>';
     html += "</div>";
     var form = document.getElementById("pp_form");
     form.innerHTML += html;

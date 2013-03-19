@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 /**
  *
  */
@@ -17,6 +19,8 @@ public class Field {
     public String error;
 
     public String attr;
+
+    public String[] selection;
 
     public Field() {
     }

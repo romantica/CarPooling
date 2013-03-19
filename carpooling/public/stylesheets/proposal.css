@@ -1,0 +1,20 @@
+
+.pp_form .pp_item{
+    display:block;
+    padding:10px;
+    margin:10px 0px;
+    -webkit-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -moz-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -o-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -ms-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    background:#EEE;
+    border-radius: 5px;
+    padding-right: 25px;
+}
+.pp_form .pp_item .address{
+    display: block;
+    padding: 3px;
+    color: #333;
+    text-shadow: #FFF 0px 1px 0px;
+}
