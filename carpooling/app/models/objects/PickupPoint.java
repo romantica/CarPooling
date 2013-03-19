@@ -2,16 +2,13 @@ package models.objects;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import play.data.validation.Constraints;
-import play.db.ebean.Model.Finder;
+import javax.persistence.*;
+import play.data.validation.*;
+import play.db.ebean.Model;
 
 @Entity
 @Table(name="PickupPoint")
-public class PickupPoint {
+public class PickupPoint extends Model {
 
     @Id
 	private int id;

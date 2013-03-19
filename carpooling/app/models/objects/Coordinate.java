@@ -3,7 +3,7 @@ package models.objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import play.data.validation.Constraints;
-import play.db.ebean.Model.Finder;
+import play.db.ebean.Model;
 
 
 @Entity
