@@ -15,6 +15,6 @@ public abstract class ITimer extends java.util.Timer{
 	 * Appel la methode execute de l'object handler au 
 	 * moment ou le compte a rebour (timout) arrive a echeance.
 	 */
-	public abstract void WakeInTime(Date timeout, IHandler handler);
+	public abstract void WakeInTime(long timeout, IHandler handler);
 
 }
