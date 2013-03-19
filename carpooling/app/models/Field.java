@@ -28,7 +28,7 @@ public class Field {
                  String error,
                  String regex) {
         if (typeinput.equals("address")) {
-            this.typeinput = "input";
+            this.typeinput = "text";
             this.placeholder = "Address";
         } else if (typeinput.equals("submit") || typeinput.equals("button")) {
             this.value = name;

@@ -1,7 +1,17 @@
 function nextStep() {
-    var idForm = "from_new";
+    var idForm = "form_new";
     var fromAddress = document.getElementById(idForm+" fromadd").value;
     var toAddress = document.getElementById(idForm+" toadd").value;
+    var error_div = document.getElementById(idForm+" error");
+    error_div.innerHTML = "";
+    if(fromAddress == ""){
+        error_div.innerHTML = "<ul><li>Empty address from no permit!</li></ul>";
+        return;
+    }
+    if(fromAddress == ""){
+        error_div.innerHTML = "<ul><li>Empty address to no permit!</li></ul>";
+        return;
+    }
     getGPScoord(fromAddress,
         function (fromCoordinate) {
             getGPScoord(toAddress,
