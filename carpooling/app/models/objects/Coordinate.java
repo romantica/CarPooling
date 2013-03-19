@@ -3,11 +3,11 @@ package models.objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
+//import play.db.ebean.Model;
 
 
 @Entity
-public class Coordinate extends Model {
+public class Coordinate {
 	
 	@Id
 	private int id;
@@ -54,5 +54,5 @@ public class Coordinate extends Model {
         return this.x + "," + this.y;
     }
 
-    public static Finder<Integer, Coordinate> find = new Finder<Integer, Coordinate>(Integer.class, Coordinate.class);
+    //public static Finder<Integer, Coordinate> find = new Finder<Integer, Coordinate>(Integer.class, Coordinate.class);
 }

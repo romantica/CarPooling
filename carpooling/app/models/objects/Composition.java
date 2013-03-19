@@ -2,10 +2,12 @@ package models.objects;
 
 import java.util.Date;
 import javax.persistence.*;
+
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 @Entity
+@Table(name="Composition")
 public class Composition extends Model {
 	
 	@Id

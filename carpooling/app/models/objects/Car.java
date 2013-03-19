@@ -1,11 +1,12 @@
 package models.objects;
 
-import javax.persistence.Entity;
 import javax.persistence.*;
+
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 @Entity
+@Table(name="Car")
 public class Car extends Model {
 	
 	@Id
