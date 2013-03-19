@@ -28,7 +28,7 @@ import static org.fest.assertions.Assertions.*;
 public class ApplicationTest {
     
     @Test 
-    public void objectModelCheck() {
+    public void carpoolingCheck() {
 				Assessment assessTest = new Assessment(3,"Test",true);
 
 				assertThat(assessTest.getRating()).isEqualTo(3);
@@ -45,17 +45,25 @@ public class ApplicationTest {
 						null, null, null,
 						null);
 
-				//Proposal pTest = new Proposal(float kmCost, int availableSeats, Car car, User user);
+			Proposal propTest = new Proposal(float kmCost, int availableSeats, carTest, userTest);
+
+
+			// TEST GLOBAUX 
+			// ============
+			// -ProposalManager
+			// => utiliser proposalManager.recordProposal(propTest) ; getProposalList(propTest.user) ;  vérifier que 
+			//		la liste retournée est ok = Itérer 1 fois et assertEqual() puis tenter de voir l'élément suivant et 
+			//		assertNull()
+			// 
+
+			// -TrajectManager
+			//
+			//
+			//
+			//
 
     }	
 
-    @Test 
-    public void insertAndGetTrajectCheck() {
-			// But = insérer une nouvelle proposition et rechercher ensuite un trajet similaire 
-			// 				à celui inséré juste avant
-
-
-		}	
 
     @Test
     public void renderTemplate() {
