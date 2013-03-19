@@ -13,10 +13,10 @@
 		function submitForm() {
 			getGPScoord(form.fromadd.value, function(posFrom) {
 				getGPScoord(form.toadd.value, function(posTo) {
-					form.fromcoordX.value = posFrom.nb;
-					form.fromcoordY.value = posFrom.mb;
-					form.tocoordX.value = posTo.nb;
-					form.tocoordY.value = posTo.mb;
+					form.fromcoordX.value = posFrom.lng();
+					form.fromcoordY.value = posFrom.lat();
+					form.tocoordX.value = posTo.lng();
+					form.tocoordY.value = posTo.lat();
 					form.submit();
 				});
 			});
