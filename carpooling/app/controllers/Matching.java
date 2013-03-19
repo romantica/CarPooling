@@ -3,7 +3,10 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ListIterator;
+
+import play.db.ebean.Model;
 
 import models.objects.*;
 
@@ -16,7 +19,7 @@ public class Matching
 	 */
 	public static ArrayList<Traject> match(Request request)
 	{
-		if (request.getToleranceWalkDistance() >= gmDistanceWalk(request.getDepartureCoordinates(), request.getArrivalCoordinates()))
+		if (request.getToleranceWalkDistance() >= distance(request.getDepartureCoordinates(), request.getArrivalCoordinates()))
 			return null;
 
 		ArrayList<Proposal> proposals = getProposals();
@@ -40,8 +43,8 @@ public class Matching
 	 */
 	private static ArrayList<Proposal> getProposals()
 	{
-		// TODO
-		return null;
+		List<Proposal> proposals = new Model.Finder<Integer,Proposal>(Integer.class,Proposal.class).all();
+		return  new ArrayList<Proposal>(proposals);
 	}
 
 	/**
@@ -115,7 +118,7 @@ public class Matching
 	private static boolean isTimingAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
 		Date realArrival = proposal.getItinerary(pickupPoints[1]).getArrivalTime();
-		realArrival.setTime(realArrival.getTime() + gmDistanceWalk(pickupPoints[1].getCoordinates(), request.getArrivalCoordinates()) * 1000);
+		realArrival.setTime(realArrival.getTime() + distance(pickupPoints[1].getCoordinates(), request.getArrivalCoordinates()) * 1000);
 		
 		if (getDatePlusTolerance(request.getArrivalTime(), request.getToleranceTime()).before(realArrival)
 				|| getDateMinusTolerance(request.getArrivalTime(), request.getToleranceTime()).after(realArrival))		
@@ -187,20 +190,17 @@ public class Matching
 	 * Fait appel a Google Maps et renvoie la distance en metres a pied entre
 	 * deux points
 	 */
-	private static int gmDistanceWalk(Coordinate start, Coordinate end)
+	private static int distance(Coordinate start, Coordinate end)
 	{
-		// TODO
-		return 0;
-	}
+		// conversion en radian
+		double lat1 = Math.toRadians(start.getX());
+		double long1 = Math.toRadians(start.getY());
+		double lat2 = Math.toRadians(end.getX());
+		double long2 = Math.toRadians(end.getY());
+		int R = 6371000; // rayon de la terre en metre
 
-	/**
-	 * Fait appel a Google Maps et renvoie la distance en metres en voiture entre
-	 * deux points
-	 */
-	private static int gmDistanceCar(Coordinate start, Coordinate end)
-	{
-		// TODO
-		return 0;
+		return (int) (Math.acos(Math.sin(lat1) * Math.sin(lat2)
+				+ Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1 - long2)) * R);
 	}
 
 	/**
@@ -221,7 +221,7 @@ public class Matching
 		while (iterator.hasNext() && !p2.equals(end))
 		{
 			p2 = iterator.next().getPickupPoint();
-			length += gmDistanceCar(p1.getCoordinates(), p2.getCoordinates());
+			length += distance(p1.getCoordinates(), p2.getCoordinates());
 			p1 = p2;
 		}
 
@@ -245,13 +245,13 @@ public class Matching
 
 		for (Itinerary itinerary : proposal.getItinerary())
 		{
-			distance = gmDistanceWalk(itinerary.getPickupPoint().getCoordinates(), request.getDepartureCoordinates());
+			distance = distance(itinerary.getPickupPoint().getCoordinates(), request.getDepartureCoordinates());
 			if (distance <= request.getToleranceWalkDistance())
 			{
 				startList.add(itinerary.getPickupPoint());
 				startDistance.add(distance);
 			}
-			distance = gmDistanceWalk(itinerary.getPickupPoint().getCoordinates(), request.getArrivalCoordinates());
+			distance = distance(itinerary.getPickupPoint().getCoordinates(), request.getArrivalCoordinates());
 			if (distance <= request.getToleranceWalkDistance())
 			{
 				endList.add(itinerary.getPickupPoint());
