@@ -1,0 +1,27 @@
+@(Prop: models.objects.Proposal)
+
+<div class="view">
+
+<div class="block">
+    <dt>km cost</dt>
+    <dd>@Prop.getKmCost()</dd>
+    <dt>Available seats</dt>
+    <dd>@Prop.getAvailableSeats()</dd>
+</div>
+
+<div class="block">
+    <pre>/!\ CAR /!\</pre>
+</div>
+
+@if(Prop.getItinerary() !=null){
+<div class="block">
+    @for(Iti <- Prop.getItinerary()){
+    <div class="selection">
+        <div class="title">Crossing points</div>
+        <div class="data">@traject.view_itinerary(Iti)</div>
+    </div>
+    }
+</div>
+}
+
+</div>

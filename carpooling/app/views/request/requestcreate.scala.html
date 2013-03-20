@@ -1,10 +1,30 @@
 @(username: String, error: String, Form: FormUI)
 
 @header = {
-
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/edit.css")">
+	<script type="text/javascript" src="@routes.Assets.at("javascripts/map.js")" charset="utf-8"></script>
+	<script src="//maps.googleapis.com/maps/api/js?sensor=true"></script>
+	<script type="text/javascript">
+		var form;
+		window.onload = function() {
+			form = document.getElementById('form_1');
+		}
+		
+		function submitForm() {
+			getGPScoord(form.fromadd.value, function(posFrom) {
+				getGPScoord(form.toadd.value, function(posTo) {
+					form.fromcoordX.value = posFrom.lng();
+					form.fromcoordY.value = posFrom.lat();
+					form.tocoordX.value = posTo.lng();
+					form.tocoordY.value = posTo.lat();
+					form.submit();
+				});
+			});
+		}
+	</script>
 }
 
-@main(title = "New request", Header = header) {
+@main(title = "New request", Username = username, Header = header) {
     <h1>Create new request</h1>
 	@form(Form)
 }
