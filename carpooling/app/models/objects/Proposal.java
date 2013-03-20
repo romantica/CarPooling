@@ -2,10 +2,12 @@ package models.objects;
 
 import java.util.*;
 import javax.persistence.*;
+
 import play.data.validation.*;
 import play.db.ebean.Model;
 
 @Entity
+@Table(name="Proposal")
 public class Proposal extends Model{
 	
 	@Id
