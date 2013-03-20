@@ -37,4 +37,12 @@ public interface IProposalManager{
 	 * associes a l'ancienne offre (idem).
 	 */
 	public void modifyProposal(Proposal oldProposal, Proposal newProposal);
+	
+	/**
+	 * Supprime la proposale prop de la base de donnee,
+	 * previent tous les passagers de la suppression de leur trajet lie a celle-ci,
+	 * (appel de cancelTraject de TrajectManager), supprime les trajets
+	 * associes a cette offre.
+	 */
+	public void deleteProposal(Proposal prop);
 }

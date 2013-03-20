@@ -7,6 +7,7 @@ import java.util.List;
 import java.sql.*;
 
 import models.objects.Coordinate;
+import models.objects.Itinerary;
 import models.objects.PickupPoint;
 import models.objects.Proposal;
 import models.objects.Traject;
@@ -47,6 +48,10 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 	@Override
 	public void recordProposal(Proposal proposal) {
 		// Attention, les PP qui sont déjà en DB ne doivent pas être ajouté (ils n'ont pas d'id), les autres oui !
+		List<Itinerary> listIti = proposal.getItinerary();
+		for(int i = 0; i < listIti.size(); i++){
+			PickupPoint.create(listIti.get(i).getPickupPoint());
+		}
 		Proposal.create(proposal);
 		
 //		Connection conn = DB.getConnection();
@@ -89,16 +94,21 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 //		}
 //		recordProposal(newProposal);
 		
+		deleteProposal(oldProposal);
+		recordProposal(newProposal);
+	}
+	
+	@Override
+	public void deleteProposal(Proposal prop) {
 		// utilise communication pour prevenir les users.
 		// appele cancelTraject pour TOUS les trajets liés
-		List<Traject> traj = Traject.find.where().eq("proposal", oldProposal).findList();
+		List<Traject> traj = Traject.find.where().eq("proposal", prop).findList();
 		for(int i = 0; i < traj.size(); i++){
 			ICommunication.ProposalCancelled(traj.get(i).getUser(), traj.get(i));
 			TrajectManager.cancelTraject(traj.get(i));
 		}
 		// supprimer oldProposal
-		Proposal.delete(oldProposal);
-		recordProposal(newProposal);
+		Proposal.delete(prop);
 	}
 
 }

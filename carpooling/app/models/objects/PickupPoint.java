@@ -3,6 +3,9 @@ package models.objects;
 import java.util.List;
 
 import javax.persistence.*;
+
+import com.avaje.ebean.Ebean;
+
 import play.data.validation.*;
 import play.db.ebean.Model;
 
@@ -20,7 +23,8 @@ public class PickupPoint extends Model {
 	
 	@Constraints.Required
 	private Coordinate coordinates;
-
+	private static double PRECISION = 0.5;
+	
     public PickupPoint(){}
 	
 	public PickupPoint(String name, String description, String address,
@@ -116,8 +120,34 @@ public class PickupPoint extends Model {
 		return find.all();
 	}
 	
+	/**
+	 * Stocke le PickupPoint pp dans la base de donnee,
+	 * si ce pp est déjà dedans, on ne le sauve pas.
+	 * 
+	 * Critere de comparaison:
+	 * coordonnee avec ± PRECISION
+	 * description identique (? TODO voir comment en tenir compte)
+	 * 
+	 * @param pp
+	 */
 	public static void create(PickupPoint pp) {
-		pp.save();
+		PickupPoint search = null;
+		try {
+			search = Ebean.find(PickupPoint.class, pp.getId());
+		} catch (NullPointerException e) {}
+		if(search != null){
+			return;
+		}
+		List<PickupPoint> all = PickupPoint.findAll();
+		boolean add = true;
+		for(int i = 0; i < all.size() && add; i++){
+			if((Math.abs(all.get(i).getCoordinateX()-pp.getCoordinateX()) < PRECISION || Math.abs(all.get(i).getCoordinateY() - pp.getCoordinateY()) < PRECISION)) {
+				add = false;
+			}
+		}
+		if(add) {
+			pp.save();
+		}
 	}
 	
 	public static void delete(PickupPoint pp) {
