@@ -32,7 +32,8 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 	    double a = 1.3*c; // valeur prise "au hazard" => definit la forme de l'ellipse
 		for(int i = 0; i < search.size(); i++){
 			Coordinate x = new Coordinate(search.get(i).getCoordinateX(), search.get(i).getCoordinateY());
-			if((distance(x, start) + distance(x, end)) <= (2*a)){
+			// verifier de ne pas ajouter le pp correspondant a start et end
+			if((distance(x, start) + distance(x, end)) <= (2*a) && start.getX() != x.getX() && start.getY() != x.getY()){
 				result.add(search.get(i));
 			}
 		}
