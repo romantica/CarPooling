@@ -23,5 +23,8 @@ GET     /proposal/recording         controllers.ProposalUI.recording()
 GET     /request                    controllers.RequestUI.create()
 POST    /requestselecttraject       controllers.RequestUI.selectTraject()
 
+# Trajects
+GET     /traject                    controllers.TrajectUI.main()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

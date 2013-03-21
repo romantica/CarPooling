@@ -61,8 +61,8 @@ public class ApplicationTest {
 			// TESTS GLOBAUX 
 			// =============
 			// -ProposalManager
-			// => utiliser proposalManager.recordProposal(propTest) ; getProposalList(propTest.user) ;  vÈrifier que 
-			//		la liste retournÈe est ok = ItÈrer 1 fois et assertEqual() puis tenter de voir l'ÈlÈment suivant et 
+			// => utiliser proposalManager.recordProposal(propTest) ; getProposalList(propTest.user) ;  v√©rifier que 
+			//		la liste retourn√©e est ok = It√©rer 1 fois et assertEqual() puis tenter de voir l'√©l√©ment suivant et 
 			//		assertNull()
 			// 
 
