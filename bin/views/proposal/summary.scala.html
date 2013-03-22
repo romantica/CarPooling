@@ -1,0 +1,14 @@
+@(Username: String, Prop: models.objects.Proposal)
+
+@header = {
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/proposal.css")">
+}
+
+@main(title = "Create Proposal", Username = Username, Header = header) {
+<h1>Create new proposal</h1>
+<h2>Summary</h2>
+<pre>
+    @Prop.toString()
+</pre>
+<input type="button" onclick="document.location.href='recording'" value="Record">
+}

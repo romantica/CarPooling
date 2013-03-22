@@ -2,7 +2,6 @@ package controllers;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 import controllers.interfaces.IMatching;
 import controllers.interfaces.IRequestManager;
@@ -58,9 +57,9 @@ public class RequestManager implements IRequestManager{
 		public void execute(){
 			if( IMatching.match(request) == null){
 				//restart
-				int timeOut = (request.getArrivalTime().getTime() - new Date().getTime() > 24*60*60) ? 24*60*60 : 2*60*60;
-				ITimer timer = new Timer();
-				timer.WakeInTime(timeOut, this);
+				long timeOut = (request.getArrivalTime().getTime() - new Date().getTime() > 24*60*60) ? 24*60*60 : 2*60*60;
+				ITimer timer = new TimerCP();
+				timer.wakeInTime(timeOut, this);
 			} 
 			else{
 				//Communicate

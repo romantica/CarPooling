@@ -1,0 +1,19 @@
+@(username: String, error: String)
+
+@header = {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/login.css")">
+}
+
+@main(title = "Login", Header = header) {
+    <div class="loginpanel">
+    @if(error != null){
+        <div class="error">@error</div>
+    }
+        <form action="login"  method="POST">
+            <input type="text" name="username" placeholder="Username" value="@username">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" name="send" value="Login" class="grayButton send">
+            <div class="clearfix"></div>
+        </form>
+    </div>
+}

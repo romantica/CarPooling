@@ -22,7 +22,6 @@ public abstract class ITrajectManager{
 	public static void cancelTraject(Traject traject) {
 	}
 	
-	
 	/**
 	 * Supprime des trajets de la base de donnee,
 	 * notifie les passager de l'annulation du conducteur

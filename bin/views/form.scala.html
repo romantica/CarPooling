@@ -1,0 +1,38 @@
+@(Form: FormUI)
+<form action="@Form.action" method="@Form.meth" id="from_@Form.id">
+    <div class="error">
+        <ul>
+            @for(field <- Form.getFields()){
+                @if(field.isError) {
+                <li>@field.name : @field.error</li>
+                }
+            }
+        </ul>
+    </div>
+    <dl>
+    @for(field <- Form.getFields()){
+        @if(field.typeinput == "hidden"){
+        <input type="hidden" name="@field.id" value="@field.value"  id="from_@Form.id @field.id" />
+        } else {
+        <dt>@field.name</dt>
+        <dt>
+            @if(field.typeinput == "select") {
+            <select name="@field.id" id="from_@Form.id @field.id" />
+                @Html(field.value)
+            </select>
+            } else {
+            <input
+                    type="@field.typeinput"
+                    name="@field.id"
+                    value="@field.value"
+                    id="from_@Form.id @field.id"
+                    @if(field.placeholder != null){ placeholder="@field.placeholder" }
+                    @if(field.attr != null){ @Html(field.attr) }
+                    />
+            }
+        </dt>
+        }
+    }
+    </dl>
+
+</form>
