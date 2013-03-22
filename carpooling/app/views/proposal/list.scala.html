@@ -1,0 +1,26 @@
+@(Username: String, PropList: List[models.objects.Proposal])
+
+@header = {
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/traject.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/proposal.css")">
+}
+
+@main(title = "Create Proposal", Username = Username, Header = header) {
+<ul class="bar">
+    <li class="selected"><a href="/traject/driver" style="border-right: #CCC solid 1px;" >Driver</a></li>
+    <li><a href="/traject/passager">Passager</a></li>
+</ul>
+
+@if(PropList == null){
+<div style="font-size: 14px; margin: 20px; text-align: center;">
+    We have no way of proposal. You can create <a href="/proposal">here</a>.
+</div>
+} else {
+    @for(prop <- PropList){
+        <div style="padding: 20px; border-bottom: #CCC 1px solid;">
+        @view(prop)
+        </div>
+    }
+}
+
+}

@@ -225,4 +225,18 @@ public class ProposalUI extends Controller {
 
         return form;
     }
+
+
+
+
+
+    public static Result driverList(){
+        Login sess = new Login();
+        if (!sess.isLogged())
+            return redirect("/");
+        ProposalManager PM = new ProposalManager();
+        List<Proposal> propList = PM.getProposalList(UserManager.getUserLogged());
+        System.out.println(propList);
+        return ok(list.render(sess.getUsername(), propList));
+    }
 }

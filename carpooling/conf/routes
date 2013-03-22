@@ -25,6 +25,7 @@ POST    /requestselecttraject       controllers.RequestUI.selectTraject()
 
 # Trajects
 GET     /traject                    controllers.TrajectUI.main()
+GET     /traject/driver             controllers.ProposalUI.driverList()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
