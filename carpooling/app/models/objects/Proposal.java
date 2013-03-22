@@ -113,7 +113,7 @@ public class Proposal extends Model{
 	
 	public static void create(Proposal prop) {
 		prop.save();
-		prop.saveManyToManyAssociations("itinerary");
+		//prop.saveManyToManyAssociations("itinerary");
 	}
 	
 	public static void delete(Proposal prop) {

@@ -1,0 +1,55 @@
+@(Username: String, PickupPoints: List[models.objects.PickupPoint])
+
+@header = {
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/proposal.css")">
+<script type="text/javascript" src="@routes.Assets.at("javascripts/proposal.js")" charset="utf-8"></script>
+<script type="text/javascript" src="@routes.Assets.at("javascripts/map.js")" charset="utf-8"></script>
+<script src="//maps.googleapis.com/maps/api/js?sensor=true"></script>
+}
+
+@main(title = "Create Proposal", Username = Username, Header = header) {
+    <h1>Create new proposal</h1>
+    <h2>Select pickup points where you want to stop.</h2>
+    <div id="map" style="width: 100%; height: 500px;"></div>
+    <script lang="javascript">
+        var pp =[
+        @for(pp <- PickupPoints){
+            {"id":"@pp.getId()",
+             "name":"@pp.getName()",
+             "gps_lat":@pp.getCoordinates().getX(),
+             "gps_long":@pp.getCoordinates().getY(),
+             "Address":"@pp.getAddress()"},
+        }
+        ];
+        var selectedPP = [];
+        window.onload = function(){
+            var mapID = "map";
+            initMap(mapID);
+            startpp = pp[0]
+            map.setCenter(new google.maps.LatLng(startpp.gps_lat, startpp.gps_long));
+            addListenerMarker(clickMarker);
+            addTabMarker(pp);
+            activeAddMarkerCick(function(e){
+                coord = e.latLng;
+                geocoder.geocode({'latLng': coord}, function(results, status) {
+                    var add = null;
+                    if (status == google.maps.GeocoderStatus.OK && results[0]) {
+                        add = results[0].formatted_address;
+                    }
+                    pp.push({
+                        "id":null,
+                        "name":null,
+                        "gps_lat":coord.lat(),
+                        "gps_long":coord.lng(),
+                        "Address":add
+                    });
+                });
+            });
+        }
+    </script>
+    <form action="selectpp/submit" method="POST">
+        <div id="pp_form"> </div>
+        <input type="submit" value="Next Step">
+    </form>
+}
+
