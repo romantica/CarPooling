@@ -13,7 +13,7 @@ public abstract class ICommunication{
 	 * trajet. Cette methode devra etre appelee pour chaque  
 	 * passager concerne 
 	 */
-	public static void RequestCancelled(User driver, Traject t){
+	public static void requestCancelled(User driver, Traject t){
 		String dest = driver.getEmail();
 		String subject = "[UCL Carpooling] Request cancelled";
 		String message = "";
@@ -24,7 +24,7 @@ public abstract class ICommunication{
 		mail.send(message);
 	}
 	
-	public static void ProposalCancelled(User passenger, Traject t){
+	public static void proposalCancelled(User passenger, Traject t){
 		String dest = passenger.getEmail();
 		String subject = "[UCL Carpooling] Proposal cancelled";
 		String message = "";
@@ -40,7 +40,7 @@ public abstract class ICommunication{
 	 * conducteur recoivent un rappel contenant les infos du 
 	 * trajet.
 	 */
-	public static void trajectReminder(User[] passenger, User driver, Traject t){
+	public static void trajectReminder(Proposal prop)){
 		String subject = "[UCL Carpooling] Traject Reminder";
 		String message = "";
 		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
@@ -99,16 +99,9 @@ public abstract class ICommunication{
 	}
 	
 	/**
-	 * Contact le staff en cas de rating negatif.
+	 * Contact le satff en cas de rating negatif.
 	 */
-	public static void helpMeStaff(Traject t){
-		String dest = "staff@carpooling.uclouvain.be";
-		String subject = "[UCL Carpooling] Traject conflict";
-		String message = "";
-		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
-		mail.setSubject(subject);
-		mail.addRecipient(dest);
-		mail.addFrom(sender);
-		mail.send(message);
+	public static void helpMeSatff(Traject t){
+		
 	}
 }
