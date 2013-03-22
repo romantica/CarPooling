@@ -235,8 +235,34 @@ public class ProposalUI extends Controller {
         if (!sess.isLogged())
             return redirect("/");
         ProposalManager PM = new ProposalManager();
-        List<Proposal> propList = PM.getProposalList(UserManager.getUserLogged());
-        System.out.println(propList);
+        User user = UserManager.getUserLogged();
+        List<Proposal> propList = PM.getProposalList(user);
+        Cache.set("proplist#" + user.getLogin(), propList, 10 * 60);
         return ok(list.render(sess.getUsername(), propList));
+    }
+
+    public static Result remove(){
+        Login sess = new Login();
+        if (!sess.isLogged())
+            return redirect("/");
+        //Get id coming from get
+        DynamicForm form = Form.form().bindFromRequest();
+        int id = Integer.parseInt(form.get("id"));
+        //Get cache
+        List<Proposal> propList = (List<Proposal>) Cache.get("proplist#" + session("username"));
+        //Search proposal to remove in cache with ID
+        Proposal thisprop = null;
+        for(Proposal prop: propList){
+            if(prop.getId() == id){
+                thisprop = prop;
+            }
+        }
+        //If id is not in cache so it's a fake remove propsal
+        if (thisprop == null)
+            return ok("FAKE");
+        //Remove proposal
+        ProposalManager PM = new ProposalManager();
+        PM.deleteProposal(thisprop);
+        return redirect("/traject/driver");
     }
 }

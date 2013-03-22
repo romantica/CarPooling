@@ -3,6 +3,7 @@
 @header = {
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/traject.css")">
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/proposal.css")">
+<script type="text/javascript" src="@routes.Assets.at("javascripts/traject.js")" charset="utf-8"></script>
 }
 
 @main(title = "Create Proposal", Username = Username, Header = header) {
@@ -17,8 +18,20 @@
 </div>
 } else {
     @for(prop <- PropList){
-        <div style="padding: 20px; border-bottom: #CCC 1px solid;">
-        @view(prop)
+        <div class="trajectlist">
+            <div class="summary" onclick="listdisplay('@prop.getId()')" id="list_sum_@prop.getId()">
+                <span class="from">FROM</span>
+                <span class="to">TO</span>
+                <div class="clearfix"></div>
+            </div>
+            <div class="datalist" id="list_@prop.getId()" style="display:none;">
+                <ul class="functionbar">
+                    <li><a href="/proposal/remove?id=@prop.getId()">Remove</a></li>
+                </ul>
+                <div>
+                    @view(prop)
+                </div>
+            </div>
         </div>
     }
 }
