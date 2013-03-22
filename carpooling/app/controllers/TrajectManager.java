@@ -9,6 +9,7 @@ import models.objects.Traject;
 import models.objects.User;
 import controllers.interfaces.ICommunication;
 import controllers.interfaces.IHandler;
+import controllers.interfaces.IPayment;
 import controllers.interfaces.ITimer;
 import controllers.interfaces.ITrajectManager;
 
@@ -42,7 +43,6 @@ public class TrajectManager extends ITrajectManager {
 	 * notifie le conducteur de l'annulation du passager
 	 */
 	public static void cancelTraject(Traject traj) {
-
 		ICommunication.requestCancelled(traj.getUser(), traj);
 		traj.delete();
 
@@ -63,9 +63,12 @@ public class TrajectManager extends ITrajectManager {
 	}
 
 	public static void arrivalNotification(Traject traj, short rating) {
-
-		traj.getProposal().getUser().getAssessment().setRating(traj.getProposal().getUser().getAssessment().getRating() + rating);
+		User driver = traj.getProposal().getUser();
+		User passenger = traj.getUser();
+		driver.getAssessment().setRating(driver.getAssessment().getRating()+rating);
+		IPayment.credit(driver, traj.getTotalCost());
 		traj.delete();
+		
 	}
 
 

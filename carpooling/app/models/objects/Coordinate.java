@@ -3,7 +3,7 @@ package models.objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import play.data.validation.Constraints;
-import play.db.ebean.Model.Finder;
+//import play.db.ebean.Model;
 
 
 @Entity
@@ -54,5 +54,5 @@ public class Coordinate {
         return this.x + "," + this.y;
     }
 
-    public static Finder<Integer, Coordinate> find = new Finder<Integer, Coordinate>(Integer.class, Coordinate.class);
+    //public static Finder<Integer, Coordinate> find = new Finder<Integer, Coordinate>(Integer.class, Coordinate.class);
 }

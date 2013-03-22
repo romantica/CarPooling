@@ -6,7 +6,8 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 @Entity
-public class Request extends Model{
+@Table(name="Request")
+public class Request extends Model {
 	
 	@Id
 	private int id;

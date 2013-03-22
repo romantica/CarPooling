@@ -1,6 +1,6 @@
 @(Form: FormUI)
-<form action="@Form.action" method="@Form.meth" id="from_@Form.id">
-    <div class="error">
+<form action="@Form.action" method="@Form.meth" id="form_@Form.id" class="custom_form">
+    <div class="error"  id="form_@Form.id error">
         <ul>
             @for(field <- Form.getFields()){
                 @if(field.isError) {
@@ -9,30 +9,51 @@
             }
         </ul>
     </div>
-    <dl>
+    <div class="field_container">
     @for(field <- Form.getFields()){
         @if(field.typeinput == "hidden"){
-        <input type="hidden" name="@field.id" value="@field.value"  id="from_@Form.id @field.id" />
+        <input type="hidden" name="@field.id" value="@field.value"  id="form_@Form.id @field.id" />
         } else {
-        <dt>@field.name</dt>
-        <dt>
+        <dd class="field">
+            <span>@field.name</span>
             @if(field.typeinput == "select") {
-            <select name="@field.id" id="from_@Form.id @field.id" />
-                @Html(field.value)
+            <select name="@field.id" id="form_@Form.id @field.id" />
+            @for(select <- field.selection){
+                <option value="@select" @if(field.value != null && field.value == select){ selected }>@select</option>
+            }
             </select>
             } else {
+            @if(field.typeinput != "button" && field.typeinput != "submit") {
             <input
                     type="@field.typeinput"
                     name="@field.id"
                     value="@field.value"
-                    id="from_@Form.id @field.id"
+                    id="form_@Form.id @field.id"
+                    @if(field.typeinput == "text"){ class="text" }
                     @if(field.placeholder != null){ placeholder="@field.placeholder" }
                     @if(field.attr != null){ @Html(field.attr) }
                     />
             }
-        </dt>
+            }
+        </dd>
         }
     }
-    </dl>
+    </div>
+    <div class="clearfix"></div>
+    @for(field <- Form.getFields()){
+        @if(field.typeinput == "button" || field.typeinput == "submit") {
+
+    <input
+            type="@field.typeinput"
+            name="@field.id"
+            value="@field.value"
+            id="from_@Form.id @field.id"
+            class="grayButton send"
+            @if(field.attr != null){ @Html(field.attr) }
+            />
+        }
+    }
+    <div class="clearfix"></div>
+
 
 </form>

@@ -99,13 +99,13 @@ function deleteOverlays() {
 }
 
 var iconURL = {
-    "start":"",
-    "end":"",
+    "start":"../assets/images/map/map_cursor_green.png",
+    "end":"../assets/images/map/map_cursor_green.png",
     "default":"../assets/images/map/map_cursor.png"
 };
 function addMarker(location, iconName) {
     var icon;
-    if (iconURL[iconName])	icon = SandwicherieIcon;
+    if (iconURL[iconName])	icon = iconURL[iconName];
     else icon = iconURL["default"];
     var marker = new google.maps.Marker({
         map: map,

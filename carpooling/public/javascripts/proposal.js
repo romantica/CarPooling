@@ -1,7 +1,17 @@
 function nextStep() {
-    var idForm = "from_new";
+    var idForm = "form_new";
     var fromAddress = document.getElementById(idForm+" fromadd").value;
     var toAddress = document.getElementById(idForm+" toadd").value;
+    var error_div = document.getElementById(idForm+" error");
+    error_div.innerHTML = "";
+    if(fromAddress == ""){
+        error_div.innerHTML = "<ul><li>Empty address from no permit!</li></ul>";
+        return;
+    }
+    if(fromAddress == ""){
+        error_div.innerHTML = "<ul><li>Empty address to no permit!</li></ul>";
+        return;
+    }
     getGPScoord(fromAddress,
         function (fromCoordinate) {
             getGPScoord(toAddress,
@@ -53,14 +63,18 @@ function addFormPPSelected(pickuppoint){
         id = "new#"+count;
         count++;
     }
-    var html = '<div id="pp_'+id+'">';
+    var html = '<div id="pp_'+id+'" class="field pp_item" style="height:175px; width:200px;">';
     html += '<input type="hidden" name="'+id+'" value="'+(pickuppoint.id == null ? "new" : id)+'" />';
+    if(pickuppoint.Address != null){
+        html += '<div class="address">'+pickuppoint.Address+'</div>';
+        html += '<input type="hidden" name="'+id+'_address" value="'+(pickuppoint.Address)+'" />';
+    }
     if(pickuppoint.name == null){
         html += '<input type="hidden" name="'+id+'_coord" value="'+coord+'" />';
         html += '<dl>Name of Point:</dl><dd><input type="text" name="'+id+'_name" /></dd>';
     }
-    html += '<dl>Arrival Time:</dl><dd><input type="datetime-local" name="'+id+'_arrivaltime" /></dd>';
-    html += '<dl>Start Time:</dl><dd><input type="datetime-local" name="'+id+'_starttime" /></dd>';
+    html += '<dd><span>Arrival Time:</span><input type="datetime-local" name="'+id+'_arrivaltime" /></dd>';
+    html += '<dd><span>Start Time:</span><input type="datetime-local" name="'+id+'_starttime" /></dd>';
     html += "</div>";
     var form = document.getElementById("pp_form");
     form.innerHTML += html;

@@ -1,13 +1,14 @@
 package models.objects;
 
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import play.data.validation.Constraints;
-import play.db.ebean.Model.Finder;
+import play.db.ebean.Model;
 
 @Entity
-public class Composition {
+@Table(name="Composition")
+public class Composition extends Model {
 	
 	@Id
 	private int id;

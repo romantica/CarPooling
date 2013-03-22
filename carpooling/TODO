@@ -1,0 +1,21 @@
+------------   TODO   ------------
+UserUI
+UserManager
+(Paypal simulator)
+TrajectUI
+Payment
+
+
+------------   DONE   ------------
+ProposalUI              Sebastien
+Login                   Sebastien
+
+-------   IN DEVELOPMENT   -------
+TEST                    Maxime
+RequestUI               Olivier
+PropsalManager          Gaettan
+TrajectManager          Denis
+RequestManager          Denis
+Communication           Amaury
+Timer                   Amaury
+Matching                Bastien,Parfait

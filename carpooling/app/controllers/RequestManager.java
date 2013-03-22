@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import models.objects.Request;
 import models.objects.Traject;
 
 public class RequestManager implements IRequestManager{
+	
+	private ArrayList<MatchLaterHandler> timers;
 
 	/**
 	 * Enregistre la requete dans la base de donnees
@@ -25,6 +28,14 @@ public class RequestManager implements IRequestManager{
 	 * Supprime la requete dans la base de donnees
 	 */
 	public void deleteRequest(Request request){
+		MatchLaterHandler r = null;
+		for(MatchLaterHandler t : timers){
+			if(t.getRequest() == request){
+				t.stop();
+				timers.remove(t);
+				break;
+			}
+		}
 		request.delete();
 	}
 
@@ -41,6 +52,7 @@ public class RequestManager implements IRequestManager{
 	 */
 	public void matchLater(Request request){
 		MatchLaterHandler mlh = new MatchLaterHandler(request);
+		timers.add(mlh);
 		mlh.execute();
 	}
 	
@@ -49,12 +61,15 @@ public class RequestManager implements IRequestManager{
 	public class MatchLaterHandler implements IHandler{
 
 		private Request request;
+		private boolean stop;
 
 		public MatchLaterHandler(Request request){
 			this.request = request;
+			stop = false;
 		}
 
 		public void execute(){
+			if(stop) return;
 			if( IMatching.match(request) == null){
 				//restart
 				long timeOut = (request.getArrivalTime().getTime() - new Date().getTime() > 24*60*60) ? 24*60*60 : 2*60*60;
@@ -65,6 +80,12 @@ public class RequestManager implements IRequestManager{
 				//Communicate
 				ICommunication.trajectFound(request.getUser());
 			}
+		}
+		
+		public Request getRequest(){ return request; }
+		
+		public void stop(){
+			stop = true;
 		}
 
 	}

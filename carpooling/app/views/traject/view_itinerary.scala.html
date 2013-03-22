@@ -1,0 +1,15 @@
+@(Iti: models.objects.Itinerary)
+<div class="block">
+    <dt>Departure time</dt>
+    <dd>@Iti.getDepartureTime()</dd>
+    <dt>Arrival time</dt>
+    <dd>@Iti.getArrivalTime()</dd>
+    @if(Iti.getPickupPoint() != null){
+    <div class="selection">
+        <div class="title">Place</div>
+        <div class="data">
+        @traject.view_pp(Iti.getPickupPoint())
+        </div>
+    </div>
+    }
+</div>
