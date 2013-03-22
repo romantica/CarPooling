@@ -40,7 +40,7 @@ public abstract class ICommunication{
 	 * conducteur recoivent un rappel contenant les infos du 
 	 * trajet.
 	 */
-	public static void trajectReminder(User[] passenger, User driver, Traject t){
+	public static void trajectReminder(Proposal prop)){
 		String subject = "[UCL Carpooling] Traject Reminder";
 		String message = "";
 		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();

@@ -28,7 +28,6 @@ public class RequestManager implements IRequestManager{
 	 * Supprime la requete dans la base de donnees
 	 */
 	public void deleteRequest(Request request){
-		MatchLaterHandler r = null;
 		for(MatchLaterHandler t : timers){
 			if(t.getRequest() == request){
 				t.stop();
