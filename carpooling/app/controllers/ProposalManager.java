@@ -69,6 +69,10 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Proposal> getProposalList(User user) {
+        /* TODO: NE FONCTIONNE PAS
+          Il faut avoir tt les information de toutes les proposals de l'utilisateur
+          Donc il faut qu'il y ai les objects, Car, User, Initenray, PickupPoint, Trajects pour chaque proposal
+         */
 		Connection conn = DB.getConnection();
         try {
             Statement stmt = conn.createStatement();
@@ -105,7 +109,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 		// appele cancelTraject pour TOUS les trajets liés
 		List<Traject> traj = Traject.find.where().eq("proposal", prop).findList();
 		for(int i = 0; i < traj.size(); i++){
-			ICommunication.ProposalCancelled(traj.get(i).getUser(), traj.get(i));
+			//ICommunication.ProposalCancelled(traj.get(i).getUser(), traj.get(i));
 			TrajectManager.cancelTraject(traj.get(i));
 		}
 		// supprimer oldProposal
