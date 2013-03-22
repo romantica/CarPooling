@@ -83,10 +83,7 @@ public class ApplicationTest {
 			else if (ret.getItem(0) != propTest){fail("Returned proposal not = to initially inserted proposal");}
 
 			// -TrajectManager
-			// => 
-			//
-			//
-			//
+			
 
     }	
 
