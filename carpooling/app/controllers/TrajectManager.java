@@ -69,8 +69,9 @@ public class TrajectManager extends ITrajectManager {
 					break;
 				}
 			}
-			
 		}
+		
+		IPayment.credit(traj.getUser(), traj.getTotalCost());
 		ICommunication.requestCancelled(traj.getUser(), traj);
 		traj.delete();
 
@@ -78,6 +79,7 @@ public class TrajectManager extends ITrajectManager {
 
 	public static void proposalCancelled(Proposal prop){
 		for(Traject t : prop.getTraject()){
+			IPayment.credit(t.getUser(), t.getTotalCost());
 			ICommunication.proposalCancelled(t.getUser(), t);
 			t.delete();
 		}
