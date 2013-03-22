@@ -7,6 +7,7 @@ import java.util.List;
 import java.sql.*;
 
 import models.objects.Coordinate;
+import models.objects.Itinerary;
 import models.objects.PickupPoint;
 import models.objects.Proposal;
 import models.objects.Traject;
@@ -25,10 +26,14 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 	public List<PickupPoint> getPickupPoints(Coordinate start, Coordinate end) {
 	    List<PickupPoint> search = PickupPoint.findAll();
 	    List<PickupPoint> result = new ArrayList<PickupPoint>();
+//	    System.out.println(start + " et " + end);
+//	    System.out.println("Size of list: "+search.size());
 	    double c = distance(start, end);
 	    double a = 1.3*c; // valeur prise "au hazard" => definit la forme de l'ellipse
 		for(int i = 0; i < search.size(); i++){
-			if((distance(search.get(i).getCoordinates(), start) + distance(search.get(i).getCoordinates(), end)) <= (2*a)){
+			Coordinate x = new Coordinate(search.get(i).getCoordinateX(), search.get(i).getCoordinateY());
+			// verifier de ne pas ajouter le pp correspondant a start et end
+			if((distance(x, start) + distance(x, end)) <= (2*a) && start.getX() != x.getX() && start.getY() != x.getY()){
 				result.add(search.get(i));
 			}
 		}
@@ -37,12 +42,17 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 	}
 	
 	private double distance(Coordinate x1, Coordinate x2) {
+//		System.out.println(x1 + " et " + x2);
 		return Math.sqrt(Math.pow(x1.getX() - x2.getX(), 2) + Math.pow(x1.getY() - x2.getY(), 2));
 	}
 	
 	@Override
 	public void recordProposal(Proposal proposal) {
 		// Attention, les PP qui sont déjà en DB ne doivent pas être ajouté (ils n'ont pas d'id), les autres oui !
+		List<Itinerary> listIti = proposal.getItinerary();
+		for(int i = 0; i < listIti.size(); i++){
+			PickupPoint.create(listIti.get(i).getPickupPoint());
+		}
 		Proposal.create(proposal);
 		
 //		Connection conn = DB.getConnection();
@@ -85,16 +95,21 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 //		}
 //		recordProposal(newProposal);
 		
+		deleteProposal(oldProposal);
+		recordProposal(newProposal);
+	}
+	
+	@Override
+	public void deleteProposal(Proposal prop) {
 		// utilise communication pour prevenir les users.
 		// appele cancelTraject pour TOUS les trajets liés
-		List<Traject> traj = Traject.find.where().eq("proposal", oldProposal).findList();
+		List<Traject> traj = Traject.find.where().eq("proposal", prop).findList();
 		for(int i = 0; i < traj.size(); i++){
 			ICommunication.ProposalCancelled(traj.get(i).getUser(), traj.get(i));
 			TrajectManager.cancelTraject(traj.get(i));
 		}
 		// supprimer oldProposal
-		Proposal.delete(oldProposal);
-		recordProposal(newProposal);
+		Proposal.delete(prop);
 	}
 
 }

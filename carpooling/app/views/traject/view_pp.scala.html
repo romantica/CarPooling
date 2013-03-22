@@ -1,0 +1,17 @@
+@(pp: models.objects.PickupPoint)
+<div class="bock" style="margin-left:20px;">
+    <img src="http://maps.googleapis.com/maps/api/staticmap?center=@pp.getCoordinates().getX(),@pp.getCoordinates().getY()&zoom=15&size=150x150&markers=color:green%7C@pp.getCoordinates().getX(),@pp.getCoordinates().getY()&sensor=false" class="map"/>
+    <div style="margin-left: 175px">
+        @if(pp.getName() != null){
+        <dt>Name</dt>
+        <dd>@pp.getName()</dd>
+        }
+        @if(pp.getDescription() != null){
+        <dt>Description</dt>
+        <dd>@pp.getDescription()</dd>
+        }
+        <dt>Address</dt>
+        <dd>@pp.getAddress()</dd>
+        <div class="clearfix"></div>
+    </div>
+</div>

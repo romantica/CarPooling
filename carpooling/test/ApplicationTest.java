@@ -30,7 +30,7 @@ public class ApplicationTest {
     @Test 
     public void carpoolingCheck() {
 				Assessment assessTest = new Assessment(3,"Test",true);
-
+				
 				assertThat(assessTest.getRating()).isEqualTo(3);
 				assertThat(assessTest.getComment()).isEqualTo("Test");
 				assertThat(assessTest.isType()).isEqualTo(true);
@@ -45,11 +45,21 @@ public class ApplicationTest {
 						null, null, null,
 						null);
 
-			Proposal propTest = new Proposal(float kmCost, int availableSeats, carTest, userTest);
+				Proposal propTest = new Proposal(1.2, 2, carTest, userTest);
+				assertThat(propTest.getkmCost()).isEqualTo(1.2);
+				assertThat(propTest.getAvailableSeats()).isEqualTo(2);
+				assertThat(propTest.getCar()).isEqualTo(carTest);
+				assertThat(propTest.getUser()).isEqualTo(userTest);
+
+				Coordinate coorATest = new Coordinate(1.5,2.5);
+				assertThat(propTest.getX()).isEqualTo(1.5);
+				assertThat(propTest.getY()).isEqualTo(2.5);
+
+				Coordinate coorBTest = new Coordinate(3.5,4.5);
 
 
-			// TEST GLOBAUX 
-			// ============
+			// TESTS GLOBAUX 
+			// =============
 			// -ProposalManager
 			// => utiliser proposalManager.recordProposal(propTest) ; getProposalList(propTest.user) ;  vérifier que 
 			//		la liste retournée est ok = Itérer 1 fois et assertEqual() puis tenter de voir l'élément suivant et 
@@ -57,7 +67,7 @@ public class ApplicationTest {
 			// 
 
 			// -TrajectManager
-			//
+			// => 
 			//
 			//
 			//

@@ -2,10 +2,12 @@ package models.objects;
 
 import java.util.*;
 import javax.persistence.*;
+
 import play.data.validation.*;
 import play.db.ebean.Model;
 
 @Entity
+@Table(name="Proposal")
 public class Proposal extends Model{
 	
 	@Id
@@ -111,7 +113,7 @@ public class Proposal extends Model{
 	
 	public static void create(Proposal prop) {
 		prop.save();
-		prop.saveManyToManyAssociations("itinerary");
+		//prop.saveManyToManyAssociations("itinerary");
 	}
 	
 	public static void delete(Proposal prop) {

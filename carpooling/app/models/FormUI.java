@@ -54,7 +54,7 @@ public class FormUI {
 	
 	public void completeForm(DynamicForm data) {
 		for (Field f : this.fields) {
-			if (!f.typeinput.equals("submit")) {
+			if (!f.typeinput.equals("submit") && !f.typeinput.equals("button")) {
 				if (f.regex == null || data.get(f.id).matches(f.regex))
 					f.value = data.get(f.id);
 				else f.isError = true;

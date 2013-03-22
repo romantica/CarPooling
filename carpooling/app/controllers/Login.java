@@ -2,6 +2,8 @@ package controllers;
 
 import play.db.DB;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 import static play.mvc.Controller.session;
@@ -24,6 +26,36 @@ public class Login {
         this.username = username;
         this.pwd = password;
     }
+
+    /**
+     * Encrypt a item in MD5
+     *
+     * @param elem item to encrypt
+     * @return item encrypted
+     */
+    private static String encoderMD5(String elem) {
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+        byte[] elemlocked = digest.digest(elem.getBytes());
+
+        StringBuilder code = new StringBuilder();
+        for (int i = 0; i < elemlocked.length; i++) {
+            String hex = Integer.toHexString(elemlocked[i]);
+            if (hex.length() == 1) {
+                code.append('0');
+                code.append(hex.charAt(hex.length() - 1));
+            } else
+                code.append(hex.substring(hex.length() - 2));
+        }
+
+        return code.toString();
+    }
+
     public String getUsername() {
         return username;
     }
@@ -35,13 +67,13 @@ public class Login {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT Password FROM User WHERE Login='" + this.username + "'");
             if (!rs.first()) return false;
-            return rs.getString("Password").equals(this.pwd);
+            return rs.getString("Password").equals(encoderMD5(this.pwd));
         } catch (SQLException e) {
             return false;
         }
     }
 
-    public void logout(){
+    public void logout() {
         session().remove("username");
         session().remove("password");
     }

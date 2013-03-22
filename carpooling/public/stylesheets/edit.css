@@ -1,0 +1,43 @@
+/*      CUSTOM custom_form         */
+
+
+.custom_form .field_container{
+    display:block;
+    margin:10px 0px;
+    width: 600px;
+}
+.custom_form .field_container .field{
+    display:block;
+    position: relative;
+    width:44%;
+    height:40px;
+    float:left;
+    margin:5px 15px;
+}
+.custom_form .field_container .field input,
+.custom_form .field_container .field select{
+    width:100%;
+    margin-left: 5px;
+    color: #666;
+}
+.custom_form .field_container .field span{
+    display:block;
+    color:#666;
+}
+
+.custom_form input.send{
+    float: right;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.custom_form .error{
+    font-size: 12px;
+    font-weight: bold;
+    color:#AD0000;
+    display: block;
+    text-shadow: #FFF 0px 1px 0px;
+}
+.custom_form .error li{
+    margin-left: 20px;
+}

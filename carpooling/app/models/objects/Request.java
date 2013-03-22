@@ -2,11 +2,13 @@ package models.objects;
 
 import java.util.Date;
 import javax.persistence.*;
+
 import play.data.validation.Constraints;
-import play.db.ebean.Model.Finder;
+import play.db.ebean.Model;
 
 @Entity
-public class Request {
+@Table(name="Request")
+public class Request extends Model {
 	
 	@Id
 	private int id;
