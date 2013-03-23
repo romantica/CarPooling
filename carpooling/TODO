@@ -9,10 +9,10 @@ Payment
 ------------   DONE   ------------
 ProposalUI              Sebastien
 Login                   Sebastien
+RequestUI               Olivier
 
 -------   IN DEVELOPMENT   -------
 TEST                    Maxime
-RequestUI               Olivier
 PropsalManager          Gaettan
 TrajectManager          Denis
 RequestManager          Denis

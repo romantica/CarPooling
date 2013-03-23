@@ -24,7 +24,8 @@ import models.objects.Traject;
 
 public class RequestUI extends Controller {
 	
-	// TODO: replace by true request manager
+	// TODO: enable the following line and disable the next to use DB instead of hard-coded samples
+	//private static IRequestManager requestManager = new controllers.RequestManager();
 	private static IRequestManager requestManager = new IRequestManager() {
 		@Override public void recordRequest(Request request) {
 			
@@ -140,13 +141,13 @@ public class RequestUI extends Controller {
 		List<Traject> trajects = requestManager.findTrajects(request);
 		
 		// Save matched trajects and request
-		if (trajects.size() != 0)
+		if (trajects != null && trajects.size() != 0)
 			Cache.set("TRJ_"+sess.getUsername(), trajects);
 		Cache.set("REQ_"+sess.getUsername(), request);
 		Cache.set("FRM_"+sess.getUsername(), form);
 		
 		// And redirect to the appropriate page
-		if (trajects.size() == 0)
+		if (trajects == null || trajects.size() == 0)
 			return redirect("/pendingrequest");
 		else return ok(requestselecttraject.render(sess.getUsername(), null, trajects, from, to));//"Data received: time:"+form.getStringField("arrivalTime"));
 	}
@@ -169,7 +170,11 @@ public class RequestUI extends Controller {
         Cache.remove("REQ_"+sess.getUsername());
         Cache.remove("FRM_"+sess.getUsername());
         
-		TrajectManager.recordTraject(selectedTraject, UserManager.getUserLogged());
+		try {
+			TrajectManager.recordTraject(selectedTraject, UserManager.getUserLogged());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		requestManager.recordRequest(request);
         
 		return redirect("/traject");
