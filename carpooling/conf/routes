@@ -23,6 +23,9 @@ GET     /proposal/remove            controllers.ProposalUI.remove()
 # Request
 GET     /request                    controllers.RequestUI.create()
 POST    /requestselecttraject       controllers.RequestUI.selectTraject()
+GET     /requestselectedtraject		controllers.RequestUI.trajectSelected(selected: String)
+GET     /recordingpendingrequest	controllers.RequestUI.recordingPendingRequest()
+GET     /pendingrequest				controllers.RequestUI.pendingRequest()
 
 # Trajects
 GET     /traject                    controllers.TrajectUI.main()

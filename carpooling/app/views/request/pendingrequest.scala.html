@@ -1,0 +1,16 @@
+@(username: String, error: String)
+
+@header = {
+
+}
+
+@main(title = "Match later", Username = username, Header = header) {
+    <h1>Match your request later</h1>
+	<p>
+		With this option, your request will be saved in our servers. 
+		You will be informed when a driver submits a new potentially interesting proposal.
+	</p>
+	<p style="text-align: center;">
+		<a href="/recordingpendingrequest">Confirm matching</a> - <a href="javascript:history.back()">Cancel</a>
+	</p>
+}
