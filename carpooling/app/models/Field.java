@@ -47,6 +47,31 @@ public class Field {
         this.regex = regex;
         this.error = error;
     }
+    
+    public Field(String typeinput,
+    			 String name,
+    			 String id,
+    			 boolean required,
+    			 String error,
+    			 String regex,
+    			 String value){
+    	if (typeinput.equals("address")) {
+            this.typeinput = "text";
+            this.placeholder = "Address";
+        } else if (typeinput.equals("submit") || typeinput.equals("button")) {
+            this.value = name;
+            name = "";
+            this.typeinput = typeinput;
+        } else {
+            this.typeinput = typeinput;
+        }
+        this.name = name;
+        this.required = required;
+        this.id = id;
+        this.regex = regex;
+        this.error = error;
+        this.value = value;
+    }
 
 
     public Field(String type, String name, String id) {

@@ -1,0 +1,21 @@
+@(Username: String, user: models.objects.User)
+
+@header = { 
+
+}
+
+@main(title = "User", Username = Username, Header = header) {
+        <h1>user</h1>
+        login : @user.getLogin() <br>
+        first name : @user.getFirstName() <br>
+        last name : @user.getName() <br>
+        email : @user.getEmail() <br>
+        phone number : @user.getPhoneNumber() <br>
+        <h1>cars</h1>
+        <ul>
+        @for(c <- user.getCars()) {
+        	<li>@car.view(c)</li>
+        }
+        </ul>
+        <a href="/user/car">Add a car</a>
+}
