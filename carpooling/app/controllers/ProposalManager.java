@@ -1,17 +1,12 @@
 package controllers;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import java.sql.*;
+import java.util.Date;
 
-import models.objects.Coordinate;
-import models.objects.Itinerary;
-import models.objects.PickupPoint;
-import models.objects.Proposal;
-import models.objects.Traject;
-import models.objects.User;
+import models.objects.*;
 import controllers.interfaces.ICommunication;
 import controllers.TrajectManager;
 import play.db.*;
@@ -73,6 +68,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
           Il faut avoir tt les information de toutes les proposals de l'utilisateur
           Donc il faut qu'il y ai les objects, Car, User, Initenray, PickupPoint, Trajects pour chaque proposal
          */
+        /*
 		Connection conn = DB.getConnection();
         try {
             Statement stmt = conn.createStatement();
@@ -84,7 +80,98 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
             return null;
         } catch (ClassCastException e) {
         	return null;
-        }
+        }*/
+
+        List<Proposal> l = new ArrayList<Proposal>();
+        User u = UserManager.getUserLogged();
+        Car c = new Car();
+        Proposal p = new Proposal(1,1.0F,2,c,u);
+        p.addItinerary(new Itinerary(
+                new Date(),
+                new Date(),
+                new PickupPoint(
+                        "name",
+                        "desc",
+                        "Address",
+                        new Coordinate(50.715897,4.7128073)
+                )
+        ));
+        p.addItinerary(new Itinerary(
+                new Date(),
+                new Date(),
+                new PickupPoint(
+                        "name2",
+                        "desc2",
+                        "Address2",
+                        new Coordinate(50.725897,4.7228073)
+                )
+        ));
+        l.add(p);
+        Proposal p2 = new Proposal(2,3.0F,4,c,u);
+        p2.addItinerary(new Itinerary(
+                new Date(),
+                new Date(),
+                new PickupPoint(
+                        "name",
+                        "desc",
+                        "Address",
+                        new Coordinate(50.715897,4.7128073)
+                )
+        ));
+        p2.addItinerary(new Itinerary(
+                new Date(),
+                new Date(),
+                new PickupPoint(
+                        "name2",
+                        "desc2",
+                        "Address2",
+                        new Coordinate(50.725897,4.7228073)
+                )
+        ));
+        p2.addItinerary(new Itinerary(
+                new Date(),
+                new Date(),
+                new PickupPoint(
+                        "name",
+                        "desc",
+                        "Address",
+                        new Coordinate(50.715897,4.7128073)
+                )
+        ));
+        p2.addItinerary(new Itinerary(
+                new Date(),
+                new Date(),
+                new PickupPoint(
+                        "name2",
+                        "desc2",
+                        "Address2",
+                        new Coordinate(50.725897,4.7228073)
+                )
+        ));
+        l.add(p2);
+        Proposal p3 = new Proposal(3,4.0F,5,c,u);
+        p3.addItinerary(new Itinerary(
+                new Date(),
+                new Date(),
+                new PickupPoint(
+                        "name",
+                        "desc",
+                        "Address",
+                        new Coordinate(50.715897,4.7128073)
+                )
+        ));
+        p3.addItinerary(new Itinerary(
+                new Date(),
+                new Date(),
+                new PickupPoint(
+                        "name2",
+                        "desc2",
+                        "Address2",
+                        new Coordinate(50.725897,4.7228073)
+                )
+        ));
+        l.add(p3);
+        return l;
 	}
 
 	@Override
