@@ -15,6 +15,7 @@ div#leftChooseTraject div#choices {
 div#leftChooseTraject div#choices div.choice {
 	cursor: pointer;
 	padding: 5px;
+	border: 1px solid transparent;
 }
 
 div#leftChooseTraject div#choices div.choice:hover {

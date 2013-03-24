@@ -1,0 +1,39 @@
+@(Username: String, PropList: List[models.objects.Proposal])
+
+@header = {
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/traject.css")">
+<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/proposal.css")">
+<script type="text/javascript" src="@routes.Assets.at("javascripts/traject.js")" charset="utf-8"></script>
+}
+
+@main(title = "Create Proposal", Username = Username, Header = header) {
+<ul class="bar">
+    <li class="selected"><a href="/traject/driver" style="border-right: #CCC solid 1px;" >Driver</a></li>
+    <li><a href="/traject/passager">Passager</a></li>
+</ul>
+
+@if(PropList == null){
+<div style="font-size: 14px; margin: 20px; text-align: center;">
+    We have no way of proposal. You can create <a href="/proposal">here</a>.
+</div>
+} else {
+    @for(prop <- PropList){
+        <div class="trajectlist">
+            <div class="summary" onclick="listdisplay('@prop.getId()')" id="list_sum_@prop.getId()">
+                <span class="from">FROM</span>
+                <span class="to">TO</span>
+                <div class="clearfix"></div>
+            </div>
+            <div class="datalist" id="list_@prop.getId()" style="display:none;">
+                <ul class="functionbar">
+                    <li><a href="/proposal/remove?id=@prop.getId()">Remove</a></li>
+                </ul>
+                <div>
+                    @view(prop)
+                </div>
+            </div>
+        </div>
+    }
+}
+
+}
