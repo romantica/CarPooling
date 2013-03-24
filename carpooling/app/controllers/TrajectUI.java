@@ -12,4 +12,11 @@ public class TrajectUI  extends Controller {
             return redirect("/");
         return redirect("/traject/driver");
     }
+
+    public static Result passanger(){
+        Login sess = new Login();
+        if (!sess.isLogged())
+            return redirect("/");
+        return ok(list.render(sess.getUsername(),null));
+    }
 }

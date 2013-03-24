@@ -1,0 +1,6 @@
+@(Comp: models.objects.Composition)
+<dt>Time</dt>
+<dd>@Comp.getTime()</dd>
+<div>
+    @traject.view_pp(Comp.getPickupPoint())
+</div>

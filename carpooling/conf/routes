@@ -30,6 +30,7 @@ GET     /pendingrequest				controllers.RequestUI.pendingRequest()
 # Trajects
 GET     /traject                    controllers.TrajectUI.main()
 GET     /traject/driver             controllers.ProposalUI.driverList()
+GET     /traject/passanger          controllers.TrajectUI.passanger()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

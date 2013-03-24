@@ -1,0 +1,48 @@
+@(Traj: models.objects.Traject)
+
+<div class="view">
+
+
+    <div class="block">
+        <div class="selection">
+            <div class="title">Driver</div>
+            <div class="data">
+                @user.view(Traj.getProposal().getUser())
+            </div>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="selection">
+            <div class="title">Car</div>
+            <div class="data"><pre>/!\ CAR -> via PRPOSAL /!\</pre></div>
+        </div>
+    </div>
+
+    <div class="block">
+        <dt>Reserved Seats</dt>
+        <dd>@Traj.getReservedSeats()</dd>
+        <dt>Total cost</dt>
+        <dd>@Traj.getTotalCost()</dd>
+    </div>
+
+
+    <div class="block">
+        <div class="selection">
+            <div class="title">Departure</div>
+            <div class="data">
+                @traject.view_composition(Traj.getDeparturePP())
+            </div>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="selection">
+            <div class="title">Arrival</div>
+            <div class="data">
+                @traject.view_composition(Traj.getArrivalPP())
+            </div>
+        </div>
+    </div>
+
+</div>
