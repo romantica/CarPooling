@@ -33,7 +33,7 @@ public class Login {
      * @param elem item to encrypt
      * @return item encrypted
      */
-    private static String encoderMD5(String elem) {
+    public static String encoderMD5(String elem) {
         MessageDigest digest;
         try {
             digest = MessageDigest.getInstance("MD5");
@@ -65,7 +65,7 @@ public class Login {
         Connection conn = DB.getConnection();
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT Password FROM User WHERE Login='" + this.username + "'");
+            ResultSet rs = stmt.executeQuery("SELECT password FROM User WHERE Login='" + this.username + "'");
             if (!rs.first()) return false;
             return rs.getString("Password").equals(encoderMD5(this.pwd));
         } catch (SQLException e) {

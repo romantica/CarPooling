@@ -10,6 +10,13 @@ GET     /login                      controllers.UserUI.loginPage()
 POST    /login                      controllers.UserUI.login()
 GET     /logout                     controllers.UserUI.logout()
 
+# User
+GET		/user						controllers.UserUI.main()
+GET     /user/create                controllers.UserUI.create()
+POST	/user/create				controllers.UserUI.createSubmit()
+GET		/user/car					controllers.UserUI.addCar()
+POST	/user/car					controllers.UserUI.recordCar()
+
 # Prposal
 GET     /proposal                   controllers.ProposalUI.create()
 GET     /proposal/create            controllers.ProposalUI.create()

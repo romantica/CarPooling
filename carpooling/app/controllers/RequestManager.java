@@ -10,6 +10,7 @@ import controllers.interfaces.ITimer;
 import controllers.interfaces.IHandler;
 import controllers.interfaces.ICommunication;
 
+import models.objects.Coordinate;
 import models.objects.Request;
 import models.objects.Traject;
 
@@ -53,6 +54,12 @@ public class RequestManager implements IRequestManager{
 		MatchLaterHandler mlh = new MatchLaterHandler(request);
 		timers.add(mlh);
 		mlh.execute();
+	}
+	
+	public static void test(){
+		RequestManager rm = new RequestManager();
+		Request r = new Request(new Coordinate(), new Coordinate(), "a", "b", new Date(), 5, 10, 10, 10, null, null);
+		rm.recordRequest(r);
 	}
 	
 	

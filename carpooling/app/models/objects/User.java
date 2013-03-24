@@ -14,7 +14,7 @@ public class User extends Model {
 	private int id;
 	
 	@Constraints.Required
-	private String login, firstName, name, email, phoneNumber;
+	private String login, firstName, name, email, phoneNumber, password;
 	private int balance;
 	@ManyToMany
 	private Assessment assessment;
@@ -95,6 +95,16 @@ public class User extends Model {
 	public void setBalance(int balance) {
 		this.balance = balance;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 
 	public Assessment getAssessment() {
 		return assessment;
@@ -110,6 +120,10 @@ public class User extends Model {
 
 	public void setCars(List<Car> cars) {
 		this.cars = cars;
+	}
+	
+	public void addCar(Car car){
+		cars.add(car);
 	}
 
 	public List<Proposal> getProposals() {
