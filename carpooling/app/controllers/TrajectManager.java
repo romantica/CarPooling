@@ -54,12 +54,20 @@ public class TrajectManager extends ITrajectManager {
 		l.unlock();
 
 	}
+
+    /**
+     * Retourne le liste des traject de l'utilisateur.
+     */
+    public static List<Traject> getTrajects(User user){
+        //TODO:  ???   On ne sais pas recuperer la liste des traject de l'utilisateur !
+        return null;
+    }
 	
 	//TODO : argent pour les annulation!
 
 	/**
 	 * Supprime un trajet de la base de donnee,
-	 * notifie le conducteur de l'annulation du passager	 * 
+	 * notifie le conducteur de l'annulation du passager
 	 */
 	public static void cancelTraject(Traject traj) {
 		if(traj.getProposal().getTraject().size()-1 > 0){
