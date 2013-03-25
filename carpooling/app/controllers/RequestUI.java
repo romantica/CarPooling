@@ -25,8 +25,8 @@ import models.objects.Traject;
 public class RequestUI extends Controller {
 	
 	// TODO: enable the following line and disable the next to use DB instead of hard-coded samples
-	//private static IRequestManager requestManager = new controllers.RequestManager();
-	private static IRequestManager requestManager = new IRequestManager() {
+	private static IRequestManager requestManager = new controllers.RequestManager();
+	/*private static IRequestManager requestManager = new IRequestManager() {
 		@Override public void recordRequest(Request request) {
 			
 		}
@@ -45,7 +45,7 @@ public class RequestUI extends Controller {
 					new Proposal((float) 0.2, 4, null, request.getUser())));
 			return temp;
 		}
-	};
+	};*/
 
 	public static Result create() {
 		
