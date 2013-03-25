@@ -86,6 +86,7 @@ function addFormPPSelected(pickuppoint){
 
 function removeFormPPSlected(pickuppoint){
     var form = document.getElementById("pp_form");
+    //TODO: bug: new pp have id null
     var divF = document.getElementById("pp_"+pickuppoint.id);
     form.removeChild(divF)
 }
