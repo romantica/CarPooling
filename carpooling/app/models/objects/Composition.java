@@ -13,7 +13,7 @@ public class Composition extends Model {
 	@Id
 	private int id;
 	
-	private boolean type;
+	private boolean type;// TRUE = departure ; FALSE = arrival
 	private Date time;
 	
 	@Constraints.Required

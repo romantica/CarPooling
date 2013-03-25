@@ -72,6 +72,10 @@ public class ApplicationTest {
 				assertThat(iterTest.getDepartureTime()).isEqualTo(new Date(20,03,2013));
 				assertThat(iterTest.getArrivalTime()).isEqualTo(new Date(20,03,2013));
 				assertThat(iterTest.getPickupPoint()).isEqualTo(new Date(20,03,2013));
+				
+				/*Traject trajectTest = new Traject(int reservedSeats, float totalCost, Request request,
+			User user, Composition departurePP, Composition arrivalPP,
+			Proposal proposal)*/
 
 				
 			// TESTS GLOBAUX 
@@ -86,6 +90,65 @@ public class ApplicationTest {
 			
 
     }	
+
+		@Test
+		public void matchingBBTest(){
+		
+		/*
+		====================================================
+		BLACK BOX TEST  : SEE /Z/report/report.pdf,  page 16
+		====================================================
+		*/
+
+		Coordinate coorATest = new Coordinate(50.669715,4.602624);
+		Coordinate coorBTest = new Coordinate(50.667892,4.619073);
+		User userTest = new User("loginTest", "Mister", "Nobody", "test@test.com",
+															"0123-456", 0, null,
+															null, null, null,
+															null);
+		Date arrTimeTest = new Date(2013,01,04,15,00);
+		Traject trajectTest = new Traject(1, //Seats
+																		float totalCost, //TotalCost
+																		null, // Request
+																		userTest, //User
+																		Composition departurePP, //Dep PP
+																		Composition arrivalPP, //Arr PP
+																		null); // Proposal
+		Request reqTest = new Request(
+													coorATest, //Coor departure
+													coorBTest, //Coor arrival
+													"Place Galilée 6 1348 Louvain-La-Neuve", // Adress departure
+													"Cour des Fleurets 1348 Louvain-La-Neuve",// Adress arrival 	
+													arrTimeTest, //Arrival time
+													1, //Seats
+													60, //Time tolerance
+													3000, //Walk tolerance in m
+													5,//Price tolerance
+													userTest, //User
+													trajectTest);//Traject
+		trajectTest.setRequest(reqTest);
+
+		ArrayList<Traject> response = controllers.Matching.match(reqTest);
+
+		for(Traject traj : response){
+				// BB Test : msg-5	
+				int walkBegin = Matching.distance(coorATest,traj.getDeparturePP().getPickupPoint()
+				if(walkBegin + walkEnd > 3000){Assert.fail("La tolerance de distance de marche n’est pas respectee");}
+
+				// BB Test : msg-6
+				Date maxiTime = new Date(2013,01,04,16,00); 
+				if(traj.getArrivalPP().getTime() > maxiTime){Assert.fail("L’heure d’arrivee du passager depasse la tolerance d’heure d’arrivee de la requete");}
+
+				// BB Test : msg-7
+				if(traj.getReservedSeats() - 1 < 0){Assert.fail("Il n’y a pas assez de sieges libres dans la proposition pour satisfaire la requete");}
+
+				// BB Test : msg-8
+				if(traj.getTotalCost() > 5){Assert.fail("Tolerance en cout non respectee.");} 
+			}
+
+		//Encore a tester : pickup point arrival + departure IN PP de la DB
+
+		}
 
 
 
