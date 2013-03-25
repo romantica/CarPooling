@@ -4,8 +4,6 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.sql.*;
-
 import models.objects.Coordinate;
 import models.objects.Itinerary;
 import models.objects.PickupPoint;
@@ -14,7 +12,6 @@ import models.objects.Traject;
 import models.objects.User;
 import controllers.interfaces.ICommunication;
 import controllers.TrajectManager;
-import play.db.*;
 
 /**
  * User: gbriot
@@ -50,10 +47,13 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 	public void recordProposal(Proposal proposal) {
 		// Attention, les PP qui sont déjà en DB ne doivent pas être ajouté (ils n'ont pas d'id), les autres oui !
 		List<Itinerary> listIti = proposal.getItinerary();
-		for(int i = 0; i < listIti.size(); i++){
-			PickupPoint.create(listIti.get(i).getPickupPoint());
+		for(Itinerary i: listIti){
+			PickupPoint.create(i.getPickupPoint());
+			Itinerary.create(i);
 		}
+		proposal.getUser().addProposal(proposal);
 		Proposal.create(proposal);
+		proposal.getUser().save();
 		
 //		Connection conn = DB.getConnection();
 //		try {
