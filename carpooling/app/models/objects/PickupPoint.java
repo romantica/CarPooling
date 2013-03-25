@@ -168,9 +168,10 @@ public class PickupPoint extends Model {
     }
     
     @Override
-    public boolean equals(Object p)
-    {
-   	 return ( this.coordinates == ((PickupPoint) p).coordinates );
+    public boolean equals(Object p) {
+    	if (p == this) return true;
+    	if (!(p instanceof PickupPoint)) return false;
+    	return (this.getCoordinates().equals(((PickupPoint) p).getCoordinates()));
     }
 
 }
