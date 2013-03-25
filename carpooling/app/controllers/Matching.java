@@ -86,8 +86,17 @@ public class Matching
 	 */
 	public static boolean isArrivalTimeAMatch(Proposal proposal, Request request)
 	{
-		return !(proposal.getItinerary().getFirst().getDepartureTime().after(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), true))
-				|| proposal.getItinerary().getLast().getArrivalTime().before(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), false)));
+		/* Super tests...
+		Itinerary pfrom = proposal.getItinerary().getFirst();
+		Itinerary pto = proposal.getItinerary().getLast();
+		long tt = 60000 * request.getToleranceTime();
+		Date test = new Date(new Date().getTime() + 60000 * request.getToleranceTime());
+		Date maxallowed1 = getDateAndTolerance(request.getArrivalTime(), 60000 * request.getToleranceTime(), true);
+		Date maxallowed2 = getDateAndTolerance(request.getArrivalTime(), 60000 * request.getToleranceTime(), false);
+		boolean r = !(proposal.getItinerary().getFirst().getDepartureTime().after(getDateAndTolerance(request.getArrivalTime(), 60000 * request.getToleranceTime(), true))
+				|| proposal.getItinerary().getLast().getArrivalTime().before(getDateAndTolerance(request.getArrivalTime(), 60000 * request.getToleranceTime(), false)));*/
+		return !(proposal.getItinerary().getFirst().getDepartureTime().after(getDateAndTolerance(request.getArrivalTime(), 60000 * request.getToleranceTime(), true))
+				|| proposal.getItinerary().getLast().getArrivalTime().before(getDateAndTolerance(request.getArrivalTime(), 60000 * request.getToleranceTime(), false)));
 	}
 
 	/**
@@ -124,14 +133,14 @@ public class Matching
 	 * @param plusMinus : ajouter ou retirer la tolerance
 	 * @return une Date modifiee
 	 */
-	public static Date getDateAndTolerance(Date date, int timeTolerance, boolean plusMinus)
+	public static Date getDateAndTolerance(Date date, long timeTolerance, boolean plusMinus)
 	{
-		Date result = new Date();
+		Date result;
 		
 		if (plusMinus)
-			result.setTime(date.getTime() + timeTolerance);
+			result = new Date(date.getTime() + timeTolerance);
 		else
-			result.setTime(date.getTime() - timeTolerance);
+			result = new Date(date.getTime() - timeTolerance);
 		return result;
 	}
 	
