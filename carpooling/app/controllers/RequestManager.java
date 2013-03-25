@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import controllers.interfaces.IMatching;
 import controllers.interfaces.IRequestManager;
 import controllers.interfaces.ITimer;
 import controllers.interfaces.IHandler;
@@ -44,7 +43,7 @@ public class RequestManager implements IRequestManager{
 	 * une liste de trajets
 	 */
 	public List<Traject> findTrajects(Request request){
-		return IMatching.match(request);
+		return Matching.match(request);
 	}
 
 	/**
@@ -76,7 +75,7 @@ public class RequestManager implements IRequestManager{
 
 		public void execute(){
 			if(stop) return;
-			if( IMatching.match(request) == null){
+			if( Matching.match(request) == null){
 				//restart
 				long timeOut = (request.getArrivalTime().getTime() - new Date().getTime() > 24*60*60) ? 24*60*60 : 2*60*60;
 				ITimer timer = new TimerCP();
