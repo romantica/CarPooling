@@ -17,6 +17,10 @@ public class RequestManager implements IRequestManager{
 	
 	private ArrayList<MatchLaterHandler> timers;
 
+    public RequestManager(){
+        timers = new ArrayList<MatchLaterHandler>();
+    }
+
 	/**
 	 * Enregistre la requete dans la base de donnees
 	 */
