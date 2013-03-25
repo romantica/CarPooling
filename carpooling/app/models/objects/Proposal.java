@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import play.cache.Cache;
 import play.data.validation.*;
 import play.db.ebean.Model;
 
@@ -154,4 +155,8 @@ public class Proposal extends Model{
                 ", itinerary=" + itinerary +
                 '}';
     }
+
+	public List<Itinerary> getItineraryList() {
+		return this.itinerary;
+	}
 }
