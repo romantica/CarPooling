@@ -9,8 +9,10 @@ public abstract class ITrajectManager{
 	
 	/**
 	 * Enregistre un trajet dans la base de donnees
+	 * @throws Exception 
 	 */
-	public static void recordTraject(Traject traj, User user) {
+	public static void recordTraject(Traject traj, User user) throws Exception{
+		
 	}
 
 	/**
@@ -19,7 +21,6 @@ public abstract class ITrajectManager{
 	 */
 	public static void cancelTraject(Traject traject) {
 	}
-	
 	
 	/**
 	 * Supprime des trajets de la base de donnee,

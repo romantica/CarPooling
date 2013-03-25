@@ -36,7 +36,15 @@ public class Traject extends Model {
 		this.proposal = proposal;
 	}
 
-	public int getReservedSeats() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getReservedSeats() {
 		return reservedSeats;
 	}
 

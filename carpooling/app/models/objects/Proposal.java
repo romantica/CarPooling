@@ -42,7 +42,15 @@ public class Proposal extends Model{
         this.id = id;
     }
 
-	public float getKmCost() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public float getKmCost() {
 		return kmCost;
 	}
 

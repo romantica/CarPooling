@@ -3,27 +3,27 @@
 
 # --- !Ups
 
-create table assessment (
+create table Assessment (
   id                        integer auto_increment not null,
   rating                    integer,
   comment                   varchar(255),
   type                      tinyint(1) default 0,
-  constraint pk_assessment primary key (id))
+  constraint pk_Assessment primary key (id))
 ;
 
-create table car (
+create table Car (
   id                        integer auto_increment not null,
   plate_number              varchar(255),
   model                     varchar(255),
   color                     varchar(255),
-  constraint pk_car primary key (id))
+  constraint pk_Car primary key (id))
 ;
 
-create table composition (
+create table Composition (
   id                        integer auto_increment not null,
   type                      tinyint(1) default 0,
   time                      datetime,
-  constraint pk_composition primary key (id))
+  constraint pk_Composition primary key (id))
 ;
 
 create table coordinate (
@@ -33,11 +33,11 @@ create table coordinate (
   constraint pk_coordinate primary key (id))
 ;
 
-create table itinerary (
+create table Itinerary (
   id                        integer auto_increment not null,
   departure_time            datetime,
   arrival_time              datetime,
-  constraint pk_itinerary primary key (id))
+  constraint pk_Itinerary primary key (id))
 ;
 
 create table PickupPoint (
@@ -45,18 +45,20 @@ create table PickupPoint (
   name                      varchar(255),
   description               varchar(255),
   address                   varchar(255),
+  coordinatex               double,
+  coordinatey               double,
   constraint pk_PickupPoint primary key (id))
 ;
 
-create table proposal (
+create table Proposal (
   id                        integer auto_increment not null,
   km_cost                   float,
   available_seats           integer,
   user_id                   integer,
-  constraint pk_proposal primary key (id))
+  constraint pk_Proposal primary key (id))
 ;
 
-create table request (
+create table Request (
   id                        integer auto_increment not null,
   departure_address         varchar(255),
   arrival_address           varchar(255),
@@ -65,17 +67,17 @@ create table request (
   tolerance_time            integer,
   tolerance_walk_distance   integer,
   tolerance_price           float,
-  constraint pk_request primary key (id))
+  constraint pk_Request primary key (id))
 ;
 
-create table traject (
+create table Traject (
   id                        integer auto_increment not null,
   reserved_seats            integer,
   total_cost                float,
-  constraint pk_traject primary key (id))
+  constraint pk_Traject primary key (id))
 ;
 
-create table user (
+create table User (
   id                        integer auto_increment not null,
   login                     varchar(255),
   first_name                varchar(255),
@@ -83,97 +85,97 @@ create table user (
   email                     varchar(255),
   phone_number              varchar(255),
   balance                   integer,
-  constraint pk_user primary key (id))
+  constraint pk_User primary key (id))
 ;
 
 
-create table proposal_traject (
-  proposal_id                    integer not null,
-  traject_id                     integer not null,
-  constraint pk_proposal_traject primary key (proposal_id, traject_id))
+create table Proposal_Traject (
+  Proposal_id                    integer not null,
+  Traject_id                     integer not null,
+  constraint pk_Proposal_Traject primary key (Proposal_id, Traject_id))
 ;
 
-create table user_car (
-  user_id                        integer not null,
-  car_id                         integer not null,
-  constraint pk_user_car primary key (user_id, car_id))
+create table User_Car (
+  User_id                        integer not null,
+  Car_id                         integer not null,
+  constraint pk_User_Car primary key (User_id, Car_id))
 ;
 
-create table user_proposal (
-  user_id                        integer not null,
-  proposal_id                    integer not null,
-  constraint pk_user_proposal primary key (user_id, proposal_id))
+create table User_Proposal (
+  User_id                        integer not null,
+  Proposal_id                    integer not null,
+  constraint pk_User_Proposal primary key (User_id, Proposal_id))
 ;
 
-create table user_traject (
-  user_id                        integer not null,
-  traject_id                     integer not null,
-  constraint pk_user_traject primary key (user_id, traject_id))
+create table User_Traject (
+  User_id                        integer not null,
+  Traject_id                     integer not null,
+  constraint pk_User_Traject primary key (User_id, Traject_id))
 ;
 
-create table user_request (
-  user_id                        integer not null,
-  request_id                     integer not null,
-  constraint pk_user_request primary key (user_id, request_id))
+create table User_Request (
+  User_id                        integer not null,
+  Request_id                     integer not null,
+  constraint pk_User_Request primary key (User_id, Request_id))
 ;
-alter table proposal add constraint fk_proposal_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_proposal_user_1 on proposal (user_id);
+alter table Proposal add constraint fk_Proposal_user_1 foreign key (user_id) references User (id) on delete restrict on update restrict;
+create index ix_Proposal_user_1 on Proposal (user_id);
 
 
 
-alter table proposal_traject add constraint fk_proposal_traject_proposal_01 foreign key (proposal_id) references proposal (id) on delete restrict on update restrict;
+alter table Proposal_Traject add constraint fk_Proposal_Traject_Proposal_01 foreign key (Proposal_id) references Proposal (id) on delete restrict on update restrict;
 
-alter table proposal_traject add constraint fk_proposal_traject_traject_02 foreign key (traject_id) references traject (id) on delete restrict on update restrict;
+alter table Proposal_Traject add constraint fk_Proposal_Traject_Traject_02 foreign key (Traject_id) references Traject (id) on delete restrict on update restrict;
 
-alter table user_car add constraint fk_user_car_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table User_Car add constraint fk_User_Car_User_01 foreign key (User_id) references User (id) on delete restrict on update restrict;
 
-alter table user_car add constraint fk_user_car_car_02 foreign key (car_id) references car (id) on delete restrict on update restrict;
+alter table User_Car add constraint fk_User_Car_Car_02 foreign key (Car_id) references Car (id) on delete restrict on update restrict;
 
-alter table user_proposal add constraint fk_user_proposal_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table User_Proposal add constraint fk_User_Proposal_User_01 foreign key (User_id) references User (id) on delete restrict on update restrict;
 
-alter table user_proposal add constraint fk_user_proposal_proposal_02 foreign key (proposal_id) references proposal (id) on delete restrict on update restrict;
+alter table User_Proposal add constraint fk_User_Proposal_Proposal_02 foreign key (Proposal_id) references Proposal (id) on delete restrict on update restrict;
 
-alter table user_traject add constraint fk_user_traject_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table User_Traject add constraint fk_User_Traject_User_01 foreign key (User_id) references User (id) on delete restrict on update restrict;
 
-alter table user_traject add constraint fk_user_traject_traject_02 foreign key (traject_id) references traject (id) on delete restrict on update restrict;
+alter table User_Traject add constraint fk_User_Traject_Traject_02 foreign key (Traject_id) references Traject (id) on delete restrict on update restrict;
 
-alter table user_request add constraint fk_user_request_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table User_Request add constraint fk_User_Request_User_01 foreign key (User_id) references User (id) on delete restrict on update restrict;
 
-alter table user_request add constraint fk_user_request_request_02 foreign key (request_id) references request (id) on delete restrict on update restrict;
+alter table User_Request add constraint fk_User_Request_Request_02 foreign key (Request_id) references Request (id) on delete restrict on update restrict;
 
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
 
-drop table assessment;
+drop table Assessment;
 
-drop table car;
+drop table Car;
 
-drop table composition;
+drop table Composition;
 
 drop table coordinate;
 
-drop table itinerary;
+drop table Itinerary;
 
 drop table PickupPoint;
 
-drop table proposal;
+drop table Proposal;
 
-drop table proposal_traject;
+drop table Proposal_Traject;
 
-drop table request;
+drop table Request;
 
-drop table traject;
+drop table Traject;
 
-drop table user;
+drop table User;
 
-drop table user_car;
+drop table User_Car;
 
-drop table user_proposal;
+drop table User_Proposal;
 
-drop table user_traject;
+drop table User_Traject;
 
-drop table user_request;
+drop table User_Request;
 
 SET FOREIGN_KEY_CHECKS=1;
 

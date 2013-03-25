@@ -1,66 +1,141 @@
 package controllers;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.locks.*;
 
-import play.db.DB;
-
+import models.objects.Proposal;
 import models.objects.Traject;
 import models.objects.User;
+import controllers.interfaces.ICommunication;
+import controllers.interfaces.IHandler;
+import controllers.interfaces.IPayment;
+import controllers.interfaces.ITimer;
 import controllers.interfaces.ITrajectManager;
 
-/**
- * User: gbriot
- * Date: 14/03/13
- */
 public class TrajectManager extends ITrajectManager {
-
-	public static void recordTraject(Traject traj, User user) {
-		// TODO Soit via SQL comme executeUpdate !!!
-		// Soit via ebean et faire une méthode addDB dans Traject qui appelera save de Model!
-		Connection conn = DB.getConnection();
-		try {
-			Statement stmt = conn.createStatement();
-			int result = stmt.executeUpdate("INSERT INTO trajects (reservedSeats, totalCost, request, user, departurePP, ArrivalPP, proposal) VALUES ('" + traj.getReservedSeats() + "', '" + traj.getTotalCost() + "','" + traj.getRequest() + "','" + traj.getUser() + "','" + traj.getDeparturePP() + "','" + traj.getArrivalPP() + "','" + traj.getProposal() + "')");
-			// TODO ajout du trajet à user ? ou pas besoin ?
-			conn.close();
-		} catch (SQLException e) {
-			// TODO
+	
+	private static Lock l = new ReentrantLock();
+	
+	private static ArrayList<ReminderHandler> timers = new ArrayList<ReminderHandler>();
+	
+	public static void recordTraject(Traject traj, User user) throws Exception {
+		
+		l.lock();
+		
+		int seat =  traj.getProposal().getAvailableSeats();
+		if(seat > 0){
+			
+			
+			traj.getProposal().setAvailableSeats(seat-1);
+			traj.getProposal().save();
+			traj.save();
+			
+			IPayment.debit(traj.getUser(), traj.getTotalCost());
+			
+			//Ajout de la proposal pour le timer 
+			for(ReminderHandler t : timers){
+				if(t.getProposal().equals(traj.getProposal())){
+					break;
+				}
+				ITimer timer = new TimerCP();
+				ReminderHandler rh = new ReminderHandler(traj.getProposal());
+				timers.add(rh);
+				timer.wakeAtDate(new Date(traj.getArrivalPP().getTime().getTime() - 600), rh );
+				
+				
+			}
 		}
+		else{
+			throw new Exception("Il n'y a plus de place dans la voiture");
+		}
+		
+		l.unlock();
+
 	}
 
-	public static void cancelTraject(Traject traject) {
-		Connection conn = DB.getConnection();
-		try {
-			Statement stmt = conn.createStatement();
-			int result = stmt.executeUpdate("DELETE FROM trajects WHERE user = '" + traject.getUser() + "'");
-			conn.close();
-		} catch (SQLException e) {
-			// TODO
+    /**
+     * Retourne le liste des traject de l'utilisateur.
+     */
+    public static List<Traject> getTrajects(User user){
+        //TODO:  ???   On ne sais pas recuperer la liste des traject de l'utilisateur !
+        return null;
+    }
+	
+	//TODO : argent pour les annulation!
+
+	/**
+	 * Supprime un trajet de la base de donnee,
+	 * notifie le conducteur de l'annulation du passager
+	 */
+	public static void cancelTraject(Traject traj) {
+		if(traj.getProposal().getTraject().size()-1 > 0){
+			for(ReminderHandler t : timers){
+				if(t.getProposal().equals(traj.getProposal())){
+					timers.remove(t);
+					break;
+				}
+			}
 		}
-		// TODO notifier le user avec communication
+		
+		IPayment.credit(traj.getUser(), traj.getTotalCost());
+		ICommunication.requestCancelled(traj.getUser(), traj);
+		traj.delete();
+
+	}
+
+	public static void proposalCancelled(Proposal prop){
+		for(Traject t : prop.getTraject()){
+			IPayment.credit(t.getUser(), t.getTotalCost());
+			ICommunication.proposalCancelled(t.getUser(), t);
+			t.delete();
+		}
 	}
 
 	public static void cancelTraject(User driver, List<Traject> trajects) {
-		for(int i = 0; i < trajects.size(); i++) {
-			cancelTraject(trajects.get(i));
+		for(Traject t : trajects){
+			ICommunication.proposalCancelled(t.getUser(), t);
+			t.delete();
 		}
-		// TODO notifier les users fait par cancetTraject(traj) mais pourquoi on a Drive ?
 	}
 
 	public static void arrivalNotification(Traject traj, short rating) {
-		// TODO Soit via SQL comme executeUpdate !!!
-		// Soit via ebean et faire une méthode addDB dans Traject qui appelera save de Model!
-		Connection conn = DB.getConnection();
-		try {
-			Statement stmt = conn.createStatement();
-			int result = stmt.executeUpdate("INSERT INTO assessments (rating) VALUES ('" + rating + "')");
-			// TODO comment lier traj à rating
-			conn.close();
-		} catch (SQLException e) {
-			// TODO
+		if(rating < 0){
+			ICommunication.helpMeSatff(traj);
+			return;
+		}
+
+		User driver = traj.getProposal().getUser();
+		driver.getAssessment().setRating(driver.getAssessment().getRating()+rating);
+		IPayment.credit(driver, traj.getTotalCost());
+		traj.delete();
+	}
+
+
+
+	public static class ReminderHandler implements IHandler{
+
+		private Proposal prop;
+		private boolean stop;
+
+		public ReminderHandler(Proposal prop){
+			this.prop = prop;
+			stop = false;
+		}
+
+		public void execute(){
+			//Communicate
+			if (stop) return;
+			ICommunication.trajectReminder(prop);
+		}
+		
+		public Proposal getProposal(){
+			return prop;
+		}
+		
+		public void stop(){
+			stop = true;
 		}
 	}
 }

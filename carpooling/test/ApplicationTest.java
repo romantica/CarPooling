@@ -27,10 +27,9 @@ import static org.fest.assertions.Assertions.*;
 */
 public class ApplicationTest {
     
-    @Test 
+		@Test 
     public void carpoolingCheck() {
 				Assessment assessTest = new Assessment(3,"Test",true);
-				
 				assertThat(assessTest.getRating()).isEqualTo(3);
 				assertThat(assessTest.getComment()).isEqualTo("Test");
 				assertThat(assessTest.isType()).isEqualTo(true);
@@ -44,6 +43,13 @@ public class ApplicationTest {
 						"0123-456", 0, assessTest,
 						null, null, null,
 						null);
+				assertThat(userTest.getLogin()).isEqualTo("loginTest");
+				assertThat(userTest.getFirstName()).isEqualTo("Mister");
+				assertThat(userTest.getName()).isEqualTo("Nobody");
+				assertThat(userTest.getEmail()).isEqualTo("test@test.com");
+				assertThat(userTest.getPhoneNumber()).isEqualTo("0123-456");
+				assertThat(userTest.getBalance()).isEqualTo(0);
+				assertThat(userTest.getAssessment()).isEqualTo(assessTest);
 
 				Proposal propTest = new Proposal(1.2, 2, carTest, userTest);
 				assertThat(propTest.getkmCost()).isEqualTo(1.2);
@@ -52,27 +58,35 @@ public class ApplicationTest {
 				assertThat(propTest.getUser()).isEqualTo(userTest);
 
 				Coordinate coorATest = new Coordinate(1.5,2.5);
-				assertThat(propTest.getX()).isEqualTo(1.5);
-				assertThat(propTest.getY()).isEqualTo(2.5);
-
+				assertThat(coorATest.getX()).isEqualTo(1.5);
+				assertThat(coorATest.getY()).isEqualTo(2.5);
 				Coordinate coorBTest = new Coordinate(3.5,4.5);
 
+				PickupPoint pickupTest = new PickupPoint("LLN", "LLN Descr", "1348 Ottignies",coorATest);
+				assertThat(pickupTest.getName()).isEqualTo("LLN");
+				assertThat(pickupTest.getDescription()).isEqualTo("LLN Descr");
+				assertThat(pickupTest.getAddress()).isEqualTo("1348 Ottignies");
+				assertThat(pickupTest.getCoordinates()).isEqualTo(coorATest);
 
+				Itinerary iterTest = new Itinerary(new Date(20,03,2013), new Date(20,03,2013),pickupTest);//1 seul pickup point ?
+				assertThat(iterTest.getDepartureTime()).isEqualTo(new Date(20,03,2013));
+				assertThat(iterTest.getArrivalTime()).isEqualTo(new Date(20,03,2013));
+				assertThat(iterTest.getPickupPoint()).isEqualTo(new Date(20,03,2013));
+
+				
 			// TESTS GLOBAUX 
 			// =============
 			// -ProposalManager
-			// => utiliser proposalManager.recordProposal(propTest) ; getProposalList(propTest.user) ;  vérifier que 
-			//		la liste retournée est ok = Itérer 1 fois et assertEqual() puis tenter de voir l'élément suivant et 
-			//		assertNull()
-			// 
+			proposalManager.recordProposal(propTest);
+			List<Proposal> ret = proposalManager.getProposalList(propTest.getUser());
+			if(ret.getItemCount() > 1){fail("Item count of list of proposal for the user is greater than 1");}
+			else if (ret.getItem(0) != propTest){fail("Returned proposal not = to initially inserted proposal");}
 
 			// -TrajectManager
-			// => 
-			//
-			//
-			//
+			
 
     }	
+
 
 
     @Test

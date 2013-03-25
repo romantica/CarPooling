@@ -10,7 +10,27 @@
         @Header
     </head>
     <body>
-        @mainbar(Username)
+        <div class="header" style="margin-top: -20px;">
+            <ul class="login">
+                @if(Username != null){
+                <li><a href="/user" class="username">@Username</a></li>
+                <li><a href="/logout" class="button">Logout</a></li>
+                }else{
+                <li><a href="/login" class="button">Login</a></li>
+                }
+            </ul>
+            <a href="/" class="brand">
+                <img src="@routes.Assets.at("images/logo.png")">
+                <span>CarPooling</span>
+            </a>
+            @if(Username != null){
+                <ul class="mainbar">
+                    <li class="left"><a href="/request">Search traject</a></li>
+                    <li class="center"><a href="/traject">Manage traject</a></li>
+                    <li class="right"><a href="/proposal">Propose traject</a></li>
+                </ul>
+            }
+        </div>
         <div class="content">
             @content
         </div>

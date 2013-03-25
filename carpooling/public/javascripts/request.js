@@ -5,7 +5,7 @@ var TrajectList = function(container) {
 	this.container = container;
 	
 	this.Add = function(t) {
-		this.container.innerHTML+= "<div class='choice' onclick='calcRoute(trajects["+t.id+"]);'>"+
+		this.container.innerHTML+= "<div class='choice' id='choice_"+t.id+"' onclick='calcRoute(trajects["+t.id+"]);'>"+
 			"Traject from <b>"+ t.fromName + "</b> to <b>" + t.toName + "</b> by " + t.driver + " (" + t.price + "€)" +
 			"</div>";
 	}
@@ -19,7 +19,12 @@ var TrajectList = function(container) {
 var directionDisplay;
 var directionsService;
 var trajectCache = {};
+var selected = -1;
 function calcRoute(traject) {
+	if (selected != -1)
+		document.getElementById('choice_'+selected).style.border = '1px solid transparent';
+	selected = traject.id;
+	document.getElementById('choice_'+selected).style.border = '1px dotted black';
 	if (trajectCache[traject.id] != null) {
 		directionsDisplay.setDirections(trajectCache[traject.id]);
 		return;
@@ -37,6 +42,11 @@ function calcRoute(traject) {
 	});
 }
 
+function selectTraject() {
+	if (selected == -1)
+		alert("You must first choose a traject !");
+	else location.href = "/requestselectedtraject?selected="+selected;
+}
 
 window.onload = function() {
 	initMap("map");

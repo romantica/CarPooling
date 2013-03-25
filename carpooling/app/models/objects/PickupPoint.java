@@ -86,6 +86,9 @@ public class PickupPoint extends Model {
 
 
 	public Coordinate getCoordinates() {
+        if (coordinates == null){
+            return new Coordinate(getCoordinateX(), getCoordinateY());
+        }
 		return coordinates;
 	}
 
