@@ -13,8 +13,8 @@
 				{
 					driver : 	"@t.getProposal().getUser().getLogin().replaceAll("\"", "&quot;")",
 					price : 	"@t.getTotalCost()",
-					from : 		new google.maps.LatLng(@t.getDeparturePP().getPickupPoint().getCoordinates().getY() , @t.getDeparturePP().getPickupPoint().getCoordinates().getX()),
-					to : 		new google.maps.LatLng(@t.getArrivalPP().getPickupPoint().getCoordinates().getY() , @t.getArrivalPP().getPickupPoint().getCoordinates().getX()),
+					from : 		new google.maps.LatLng(@t.getDeparturePP().getPickupPoint().getCoordinates().getX() , @t.getDeparturePP().getPickupPoint().getCoordinates().getY()),
+					to : 		new google.maps.LatLng(@t.getArrivalPP().getPickupPoint().getCoordinates().getX() , @t.getArrivalPP().getPickupPoint().getCoordinates().getY()),
 					fromName : 	"@t.getDeparturePP().getPickupPoint().getName()",
 					toName : 	"@t.getArrivalPP().getPickupPoint().getName()"
 				},

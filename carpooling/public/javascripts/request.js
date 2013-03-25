@@ -48,6 +48,10 @@ function selectTraject() {
 	else location.href = "/requestselectedtraject?selected="+selected;
 }
 
+function moreInfos(i) {
+	alert("test");
+}
+
 window.onload = function() {
 	initMap("map");
 	directionsDisplay = new google.maps.DirectionsRenderer();
