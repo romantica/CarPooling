@@ -57,6 +57,10 @@ public class Itinerary extends Model {
 		iti.save();
 	}
 	
+	public static void delete(Itinerary iti) {
+		iti.delete();
+	}
+	
     @Override
     public String toString() {
         return "Itinerary{" +

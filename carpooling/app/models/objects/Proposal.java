@@ -133,6 +133,13 @@ public class Proposal extends Model{
 	}
 	
 	public static void delete(Proposal prop) {
+		prop.getUser().removeProposal(prop);
+		LinkedList<Itinerary> iti = prop.getItinerary();
+		prop.deleteManyToManyAssociations("itinerary");
+		for(Itinerary i: iti){
+			i.delete();
+		}
+		prop.getUser().save();
 		prop.delete();
 	}
 	
