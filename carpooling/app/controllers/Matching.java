@@ -47,7 +47,7 @@ public class Matching
 	 * 
 	 * @return un arrayList des Proposals contenues dans la DB
 	 */
-	private static ArrayList<Proposal> getProposals()
+	public static ArrayList<Proposal> getProposals()
 	{
 		List<Proposal> proposals = new Model.Finder<Integer,Proposal>(Integer.class,Proposal.class).all();
 		return new ArrayList<Proposal>(proposals);
@@ -62,14 +62,14 @@ public class Matching
 	 * @param pickupPoints : les PickupPoints de depart et d'arrivee (null au depart, calcules en cours de methode)
 	 * @return un booleen qui determine si un Traject peut etre cree a partir de la Proposal
 	 */
-	private static boolean isAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
+	public static boolean isAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
 		if ( !isSeatsRequestAMatch(proposal, request) || !isArrivalTimeAMatch(proposal, request) )
 			return false; //Test des sieges et du temps d'arrivee
 		else
 		{
 			pickupPoints = getPickupPoints(proposal, request);
-			if ( !isTimingAMatch(proposal, request, pickupPoints) || !isPriceAMatch(proposal, request, pickupPoints))
+			if ( pickupPoints == null || !isTimingAMatch(proposal, request, pickupPoints) || !isPriceAMatch(proposal, request, pickupPoints))
 				return false;
 			else 
 				return true;
@@ -84,13 +84,10 @@ public class Matching
 	 * @param request : la Request qui donne les criteres
 	 * @return un boolean qui determine si l'arrivee est dans la fenetre
 	 */
-	private static boolean isArrivalTimeAMatch(Proposal proposal, Request request)
+	public static boolean isArrivalTimeAMatch(Proposal proposal, Request request)
 	{
-		if (proposal.getItinerary().getFirst().getDepartureTime().after(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), true))
-				|| proposal.getItinerary().getLast().getArrivalTime().before(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), false)))
-			return false;
-		else
-			return true;
+		return !(proposal.getItinerary().getFirst().getDepartureTime().after(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), true))
+				|| proposal.getItinerary().getLast().getArrivalTime().before(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), false)));
 	}
 
 	/**
@@ -101,7 +98,7 @@ public class Matching
 	 * @param pickupPoints : les PickupPoints de depart et d'arrivee
 	 * @return un booleen qui determine si le prix d'un eventuel Traject est dans la tolerance
 	 */
-	private static boolean isPriceAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
+	public static boolean isPriceAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
 		return request.getTolerancePrice() >= proposal.getKmCost() * getTrajectLength(proposal.getItinerary(), pickupPoints[0], pickupPoints[1]);
 	}
@@ -114,7 +111,7 @@ public class Matching
 	 * @param request : la Request qui donne les criteres
 	 * @return un boolean qui determine si le nombre de sieges requis est disponible
 	 */
-	private static boolean isSeatsRequestAMatch(Proposal proposal, Request request)
+	public static boolean isSeatsRequestAMatch(Proposal proposal, Request request)
 	{
 		return proposal.getAvailableSeats() >= request.getNecessarySeats();
 	}
@@ -127,13 +124,15 @@ public class Matching
 	 * @param plusMinus : ajouter ou retirer la tolerance
 	 * @return une Date modifiee
 	 */
-	private static Date getDateAndTolerance(Date date, int timeTolerance, boolean plusMinus)
+	public static Date getDateAndTolerance(Date date, int timeTolerance, boolean plusMinus)
 	{
+		Date result = new Date();
+		
 		if (plusMinus)
-			date.setTime(date.getTime() + timeTolerance);
+			result.setTime(date.getTime() + timeTolerance);
 		else
-			date.setTime(date.getTime() - timeTolerance);
-		return date;
+			result.setTime(date.getTime() - timeTolerance);
+		return result;
 	}
 	
 	/**
@@ -144,10 +143,10 @@ public class Matching
 	 * @param pickupPoints : les PickupPoints de depart et d'arrivee
 	 * @return un boolean qui determine si l'heure d'arrivee est dans les criteres de la requete
 	 */
-	private static boolean isTimingAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
+	public static boolean isTimingAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
 		Date realArrival = proposal.getItinerary(pickupPoints[1]).getArrivalTime();
-		realArrival.setTime(realArrival.getTime() + distance(pickupPoints[1].getCoordinates(), request.getArrivalCoordinates()) * 1000);
+		realArrival.setTime((long) (realArrival.getTime() + distance(pickupPoints[1].getCoordinates(), request.getArrivalCoordinates()) * 1000));
 		
 		return !(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), true).before(realArrival)
 					|| getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), false).after(realArrival));
@@ -161,10 +160,10 @@ public class Matching
 	 * @param pickupPoints : les PickupPoints de depart et d'arrivee (null au depart, calcules en cours de methode)
 	 * @return un Traject cree a partir d'une proposal selon le Request et les PickupPoints donnes
 	 */
-	private static Traject createTraject(Proposal proposal, Request request, PickupPoint[] pickupPoints)
+	public static Traject createTraject(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
 		return new Traject(request.getNecessarySeats(),
-									getTrajectLength(proposal.getItinerary(), pickupPoints[0], pickupPoints[1]) * proposal.getKmCost() / (float)1000.0,
+									(float) (getTrajectLength(proposal.getItinerary(), pickupPoints[0], pickupPoints[1]) * proposal.getKmCost() / (float)1000.0),
 									request,
 									request.getUser(),
 									new Composition(true, proposal.getItinerary(pickupPoints[0]).getDepartureTime(), pickupPoints[0]),
@@ -227,16 +226,19 @@ public class Matching
 	 * @param start, end : les coordonnees des deux points
 	 * @return une distance en metres
 	 */
-	private static int distance(Coordinate start, Coordinate end)
+	public static double distance(Coordinate start, Coordinate end)
 	{
 		// conversion en radian
+		if (start.equals(end))
+			return 0.0;
+		
 		double lat1 = Math.toRadians(start.getX());
 		double long1 = Math.toRadians(start.getY());
 		double lat2 = Math.toRadians(end.getX());
 		double long2 = Math.toRadians(end.getY());
-		int R = 6371000; // rayon de la terre en metre
+		double R = 6371000.0; // rayon de la terre en metre
 
-		return (int) (Math.acos(Math.sin(lat1) * Math.sin(lat2)
+		return (Math.acos(Math.sin(lat1) * Math.sin(lat2)
 				+ Math.cos(lat1) * Math.cos(lat2) * Math.cos(long1 - long2)) * R);
 	}
 
@@ -247,25 +249,30 @@ public class Matching
 	 * @param start, end : les PickupPoints de depart et d'arrivee
 	 * @return une distance en metres
 	 */
-	private static int getTrajectLength(LinkedList<Itinerary> itinerary, PickupPoint start, PickupPoint end)
+	public static double getTrajectLength(LinkedList<Itinerary> itinerary, PickupPoint start, PickupPoint end)
 	{
-		int length = 0;
-		PickupPoint p1 = null;
+		double length = 0;
+		
+		PickupPoint p1 = itinerary.getFirst().getPickupPoint();
 		PickupPoint p2 = null;
-		ListIterator<Itinerary> iterator = itinerary.listIterator();
+		ListIterator<Itinerary> iterator = itinerary.listIterator(0);
 
 		while (iterator.hasNext() && !p1.equals(start))
 		{
+			if (p1.equals(end))
+				return Double.POSITIVE_INFINITY;
 			p1 = iterator.next().getPickupPoint();
 		}
-
+		
+		p2 = p1;
+		
 		while (iterator.hasNext() && !p2.equals(end))
-		{
+		{			
 			p2 = iterator.next().getPickupPoint();
 			length += distance(p1.getCoordinates(), p2.getCoordinates());
 			p1 = p2;
 		}
-
+		
 		return length;
 	}
 
@@ -277,18 +284,18 @@ public class Matching
 	 * @param request : la Request qui donne les criteres
 	 * @return un array de 2 PickupPoints si ils existent, null sinon
 	 */
-	private static PickupPoint[] getPickupPoints(Proposal proposal, Request request)
+	public static PickupPoint[] getPickupPoints(Proposal proposal, Request request)
 	{
 		PickupPoint[] result = new PickupPoint[2];
 		result[0] = null;
 		result[1] = null;
 		
 		LinkedList<PickupPoint> startList = new LinkedList<PickupPoint>();
-		ArrayList<Integer> startDistance = new ArrayList<Integer>();
+		ArrayList<Double> startDistance = new ArrayList<Double>();
 		LinkedList<PickupPoint> endList = new LinkedList<PickupPoint>();
-		ArrayList<Integer> endDistance = new ArrayList<Integer>();
+		ArrayList<Double> endDistance = new ArrayList<Double>();
 		
-		int distance;
+		double distance;
 
 		for (Itinerary itinerary : proposal.getItinerary())
 		{
@@ -302,7 +309,7 @@ public class Matching
 			if (distance <= request.getToleranceWalkDistance())
 			{
 				endList.add(itinerary.getPickupPoint());
-				startDistance.add(distance);
+				endDistance.add(distance);
 			}
 		}
 
@@ -314,7 +321,7 @@ public class Matching
 			ListIterator<PickupPoint> endIterator;
 			PickupPoint start;
 			PickupPoint end;
-
+			
 			while (startIterator.hasPrevious())
 			{
 				start = startIterator.previous();
