@@ -12,11 +12,10 @@ create table Assessment (
 ;
 
 create table Car (
-  id                        integer auto_increment not null,
-  plate_number              varchar(255),
+  plate_number              varchar(255) not null,
   model                     varchar(255),
   color                     varchar(255),
-  constraint pk_Car primary key (id))
+  constraint pk_Car primary key (plate_number))
 ;
 
 create table Composition (
@@ -55,6 +54,7 @@ create table Proposal (
   id                        integer auto_increment not null,
   km_cost                   float,
   available_seats           integer,
+  car_plate_number          varchar(255),
   user_id                   integer,
   constraint pk_Proposal primary key (id))
 ;
@@ -109,8 +109,8 @@ create table Proposal_Itinerary (
 
 create table User_Car (
   User_id                        integer not null,
-  Car_id                         integer not null,
-  constraint pk_User_Car primary key (User_id, Car_id))
+  Car_plate_number               varchar(255) not null,
+  constraint pk_User_Car primary key (User_id, Car_plate_number))
 ;
 
 create table User_Proposal (
@@ -132,16 +132,18 @@ create table User_Request (
 ;
 alter table Itinerary add constraint fk_Itinerary_pickupPoint_1 foreign key (pickup_point_id) references PickupPoint (id) on delete restrict on update restrict;
 create index ix_Itinerary_pickupPoint_1 on Itinerary (pickup_point_id);
-alter table Proposal add constraint fk_Proposal_user_2 foreign key (user_id) references User (id) on delete restrict on update restrict;
-create index ix_Proposal_user_2 on Proposal (user_id);
-alter table Request add constraint fk_Request_departureCoordinates_3 foreign key (departure_coordinates_id) references coordinate (id) on delete restrict on update restrict;
-create index ix_Request_departureCoordinates_3 on Request (departure_coordinates_id);
-alter table Request add constraint fk_Request_arrivalCoordinates_4 foreign key (arrival_coordinates_id) references coordinate (id) on delete restrict on update restrict;
-create index ix_Request_arrivalCoordinates_4 on Request (arrival_coordinates_id);
-alter table Request add constraint fk_Request_user_5 foreign key (user_id) references User (id) on delete restrict on update restrict;
-create index ix_Request_user_5 on Request (user_id);
-alter table Request add constraint fk_Request_traject_6 foreign key (traject_id) references Traject (id) on delete restrict on update restrict;
-create index ix_Request_traject_6 on Request (traject_id);
+alter table Proposal add constraint fk_Proposal_car_2 foreign key (car_plate_number) references Car (plate_number) on delete restrict on update restrict;
+create index ix_Proposal_car_2 on Proposal (car_plate_number);
+alter table Proposal add constraint fk_Proposal_user_3 foreign key (user_id) references User (id) on delete restrict on update restrict;
+create index ix_Proposal_user_3 on Proposal (user_id);
+alter table Request add constraint fk_Request_departureCoordinates_4 foreign key (departure_coordinates_id) references coordinate (id) on delete restrict on update restrict;
+create index ix_Request_departureCoordinates_4 on Request (departure_coordinates_id);
+alter table Request add constraint fk_Request_arrivalCoordinates_5 foreign key (arrival_coordinates_id) references coordinate (id) on delete restrict on update restrict;
+create index ix_Request_arrivalCoordinates_5 on Request (arrival_coordinates_id);
+alter table Request add constraint fk_Request_user_6 foreign key (user_id) references User (id) on delete restrict on update restrict;
+create index ix_Request_user_6 on Request (user_id);
+alter table Request add constraint fk_Request_traject_7 foreign key (traject_id) references Traject (id) on delete restrict on update restrict;
+create index ix_Request_traject_7 on Request (traject_id);
 
 
 
@@ -155,7 +157,7 @@ alter table Proposal_Itinerary add constraint fk_Proposal_Itinerary_Itinerary_02
 
 alter table User_Car add constraint fk_User_Car_User_01 foreign key (User_id) references User (id) on delete restrict on update restrict;
 
-alter table User_Car add constraint fk_User_Car_Car_02 foreign key (Car_id) references Car (id) on delete restrict on update restrict;
+alter table User_Car add constraint fk_User_Car_Car_02 foreign key (Car_plate_number) references Car (plate_number) on delete restrict on update restrict;
 
 alter table User_Proposal add constraint fk_User_Proposal_User_01 foreign key (User_id) references User (id) on delete restrict on update restrict;
 

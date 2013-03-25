@@ -1,6 +1,5 @@
 @(user: models.objects.User)
 
-<h1>user</h1>
 <div class="block">
     <dt>Login</dt>
     <dd>@user.getLogin()</dd>
@@ -21,11 +20,4 @@
     <dd>@user.getPhoneNumber()</dd>
     }
 </div>
-<h1>cars</h1>
-<ul>
-@for(c <- user.getCars()) {
-    <li>@car.view(c)</li>
-}
-</ul>
-<a href="/user/car" class="grayButton" style="width: 125px;">Add a car</a>
 

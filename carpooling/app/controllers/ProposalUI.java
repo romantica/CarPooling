@@ -13,6 +13,7 @@ import models.*;
 import models.objects.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,13 @@ public class ProposalUI extends Controller {
         //No error
         //Create proposal object
         //TODO: assiation correcte de la car
-        Car car = new Car();
+        Car car = null;
+        UserManager UM = new UserManager();
+        for(Car carObj : UM.getCar(session("username"))){
+            if(carObj.getPlateNumber().equals(form.getStringField("car"))){
+                car = carObj;
+            }
+        }
         User user = UserManager.getUserLogged();
         Proposal prop = new Proposal(
                 form.getFloatField("kmcost"),
@@ -216,7 +223,15 @@ public class ProposalUI extends Controller {
         car.typeinput = "select";
         car.name = "Car";
         car.id = "car";
-        car.selection  = new String[]{"Unknown"};
+        UserManager UM = new UserManager();
+        List<Car> carlist = UM.getCar(session("username"));
+        String[] plaque = new String[carlist.size()];
+        int i = 0;
+        for(Car carObj : carlist){
+            plaque[i] = carObj.getPlateNumber();
+            i++;
+        }
+        car.selection  = plaque;
         form.addField(car);
         form.addField(new Field("number", "Available seats", "seats", true, "Invalid format", "[0-9]{1,2}"));
         form.addField(new Field("number", "Cost in km", "kmcost", true, "Invalid format", "[0-9]{1,2}"));

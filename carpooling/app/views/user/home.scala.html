@@ -6,6 +6,23 @@
 
 @main(title = "User", Username = Username, Header = header) {
 <div class="view">
-    @view(user)
+    <h1>User information</h1>
+    <div class="block">
+        @view(user)
+    </div>
+    <div class="block">
+        <div class="selection">
+            <div class="title">Car</div>
+            <div class="data">
+                @for(c <- user.getCars()) {
+                <div class="block">
+                    @car.view(c)
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <a href="/user/car" class="grayButton" style="width: 125px;">Add a car</a>
 </div>
 }

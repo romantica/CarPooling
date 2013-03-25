@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import play.data.validation.Constraints;
 //import play.db.ebean.Model;
 
-
+//TODO: Entityin data base ???
 @Entity
 public class Coordinate {
 	

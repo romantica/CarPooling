@@ -8,10 +8,9 @@ import play.db.ebean.Model;
 @Entity
 @Table(name="Car")
 public class Car extends Model {
-	
-	@Id
-	private int id;
-	
+
+
+    @Id
 	@Constraints.Required
 	private String plateNumber;
 	private String model, color;

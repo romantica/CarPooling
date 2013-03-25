@@ -19,6 +19,7 @@ public class Proposal extends Model{
 	private int availableSeats;
 	
 	@Constraints.Required
+    @ManyToOne
 	private Car car;
 	@Constraints.Required
 	@ManyToOne

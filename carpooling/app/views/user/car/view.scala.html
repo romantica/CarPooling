@@ -1,2 +1,15 @@
 @(car: models.objects.Car)
-The @car.getColor() @car.getModel() with the plate number @car.getPlateNumber() 
+<div class="block">
+    @if(car.getModel() != null && car.getModel() !=""){
+    <dt>Model</dt>
+    <dd>@car.getModel()</dd>
+    }
+    @if(car.getColor() != null && car.getColor() !=""){
+    <dt>Color</dt>
+    <dd>@car.getColor()</dd>
+    }
+    @if(car.getPlateNumber() != null && car.getPlateNumber() !=""){
+    <dt>Plaque number</dt>
+    <dd>@car.getPlateNumber()</dd>
+    }
+</div>
