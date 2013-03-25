@@ -1,0 +1,10 @@
+@(Username: String, error: String, Form: FormUI)
+
+@header = { 
+
+}
+
+@main(title = "Create User", Username = Username, Header = header) {
+        <h1>Create new user</h1>
+        @form(Form)
+}

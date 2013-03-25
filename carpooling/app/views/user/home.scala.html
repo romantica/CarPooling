@@ -1,0 +1,9 @@
+@(Username: String, user: models.objects.User)
+
+@header = { 
+
+}
+
+@main(title = "User", Username = Username, Header = header) {
+        @view(user)
+}

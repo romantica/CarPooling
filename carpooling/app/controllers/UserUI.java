@@ -13,8 +13,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import views.html.*;
-import views.html.user.usercreate;
-import views.html.user.view;
+import views.html.user.*;
 import views.html.user.car.addcar;
 
 /**
@@ -29,7 +28,7 @@ public class UserUI extends Controller {
     	User user = User.find.where().like("login", session.getUsername()).findUnique();
         if (user == null) return redirect("/user/login");
         //Print the data
-        return(ok(view.render(session.getUsername(), user)));
+        return(ok(home.render(session.getUsername(), user)));
 
 	}
 	public static Result create() {
