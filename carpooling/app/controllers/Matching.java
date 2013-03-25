@@ -142,17 +142,7 @@ public class Matching
 	 */
 	public static boolean isTimingAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
-		
-		Itinerary test = proposal.getItinerary(pickupPoints[1]);
 		Date realArrival = proposal.getItinerary(pickupPoints[1]).getArrivalTime();
-		double test2 = distance(pickupPoints[1].getCoordinates(), request.getArrivalCoordinates()) * 1000;
-		realArrival.setTime((long) (realArrival.getTime() + distance(pickupPoints[1].getCoordinates(), request.getArrivalCoordinates()) * 1000));
-		
-		Date test3 = getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), true);
-		Date test4 = getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), false);
-		
-		boolean r = !(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), true).before(realArrival)
-				|| getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), false).after(realArrival));
 		
 		return !(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), true).before(realArrival)
 					|| getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), false).after(realArrival));
