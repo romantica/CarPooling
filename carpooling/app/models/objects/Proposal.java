@@ -25,7 +25,7 @@ public class Proposal extends Model{
 	@ManyToMany
 	private List<Traject> traject;
 	@ManyToMany
-	private LinkedList<Itinerary> itinerary;
+	private List<Itinerary> itinerary;
 
 	public Proposal(float kmCost, int availableSeats, Car car, User user) {
 		super();
@@ -97,7 +97,10 @@ public class Proposal extends Model{
 	}
 
 	public LinkedList<Itinerary> getItinerary() {
-		return itinerary;
+        LinkedList<Itinerary> result = new LinkedList<Itinerary>();
+        for (Itinerary i : itinerary)
+            result.add(i);
+		return result;
 	}
 
 	public void addItinerary(Itinerary itinerary){

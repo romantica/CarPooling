@@ -16,6 +16,7 @@ public class Itinerary extends Model {
 	@Constraints.Required
 	private Date departureTime, arrivalTime;
 	@Constraints.Required
+    @OneToOne
 	private PickupPoint pickupPoint;
 
 	public Itinerary(Date departureTime, Date arrivalTime,

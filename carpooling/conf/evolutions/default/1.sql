@@ -37,6 +37,7 @@ create table Itinerary (
   id                        integer auto_increment not null,
   departure_time            datetime,
   arrival_time              datetime,
+  pickup_point_id           integer,
   constraint pk_Itinerary primary key (id))
 ;
 
@@ -96,6 +97,12 @@ create table Proposal_Traject (
   constraint pk_Proposal_Traject primary key (Proposal_id, Traject_id))
 ;
 
+create table Proposal_Itinerary (
+  Proposal_id                    integer not null,
+  Itinerary_id                   integer not null,
+  constraint pk_Proposal_Itinerary primary key (Proposal_id, Itinerary_id))
+;
+
 create table User_Car (
   User_id                        integer not null,
   Car_id                         integer not null,
@@ -119,14 +126,20 @@ create table User_Request (
   Request_id                     integer not null,
   constraint pk_User_Request primary key (User_id, Request_id))
 ;
-alter table Proposal add constraint fk_Proposal_user_1 foreign key (user_id) references User (id) on delete restrict on update restrict;
-create index ix_Proposal_user_1 on Proposal (user_id);
+alter table Itinerary add constraint fk_Itinerary_pickupPoint_1 foreign key (pickup_point_id) references PickupPoint (id) on delete restrict on update restrict;
+create index ix_Itinerary_pickupPoint_1 on Itinerary (pickup_point_id);
+alter table Proposal add constraint fk_Proposal_user_2 foreign key (user_id) references User (id) on delete restrict on update restrict;
+create index ix_Proposal_user_2 on Proposal (user_id);
 
 
 
 alter table Proposal_Traject add constraint fk_Proposal_Traject_Proposal_01 foreign key (Proposal_id) references Proposal (id) on delete restrict on update restrict;
 
 alter table Proposal_Traject add constraint fk_Proposal_Traject_Traject_02 foreign key (Traject_id) references Traject (id) on delete restrict on update restrict;
+
+alter table Proposal_Itinerary add constraint fk_Proposal_Itinerary_Proposal_01 foreign key (Proposal_id) references Proposal (id) on delete restrict on update restrict;
+
+alter table Proposal_Itinerary add constraint fk_Proposal_Itinerary_Itinerary_02 foreign key (Itinerary_id) references Itinerary (id) on delete restrict on update restrict;
 
 alter table User_Car add constraint fk_User_Car_User_01 foreign key (User_id) references User (id) on delete restrict on update restrict;
 
@@ -163,6 +176,8 @@ drop table PickupPoint;
 drop table Proposal;
 
 drop table Proposal_Traject;
+
+drop table Proposal_Itinerary;
 
 drop table Request;
 

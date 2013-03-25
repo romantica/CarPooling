@@ -170,9 +170,9 @@ public class User extends Model {
                 ", balance=" + balance +
                 ", assessment=" + assessment +
                 ", cars=" + cars +
-                ", proposals=" + proposals +
-                ", trajects=" + trajects +
-                ", request=" + request +
+                //", proposals=" + proposals +
+                //", trajects=" + trajects +
+                //", request=" + request +
                 '}';
     }
 }
