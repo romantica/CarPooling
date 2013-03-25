@@ -53,6 +53,14 @@ public class Coordinate {
     public String toString() {
         return this.x + "," + this.y;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+    	if (o == this) return true;
+    	if (!(o instanceof Coordinate)) return false;
+    	Coordinate c = (Coordinate) o;
+    	return this.getX() == c.getX() && this.getY() == c.getY();
+    }
 
     //public static Finder<Integer, Coordinate> find = new Finder<Integer, Coordinate>(Integer.class, Coordinate.class);
 }
