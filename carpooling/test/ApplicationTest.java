@@ -111,8 +111,8 @@ public class ApplicationTest {
 																		float totalCost, //TotalCost
 																		null, // Request
 																		userTest, //User
-																		Composition departurePP, //Dep PP
-																		Composition arrivalPP, //Arr PP
+																		null, //Dep PP
+																		null, //Arr PP
 																		null); // Proposal
 		Request reqTest = new Request(
 													coorATest, //Coor departure
