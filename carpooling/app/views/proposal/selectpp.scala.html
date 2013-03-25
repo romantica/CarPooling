@@ -22,8 +22,7 @@
     window.onload = function(){
         var mapID = "map";
         initMap(mapID);
-        startpp = pp[0]
-        map.setCenter(new google.maps.LatLng(startpp.gps_lat, startpp.gps_long));
+        map.setCenter(new google.maps.LatLng(fromCoord.gps_lat, fromCoord.gps_long));
         addMarker(new google.maps.LatLng(fromCoord.gps_lat, fromCoord.gps_long), "start");
         addMarker(new google.maps.LatLng(toCoord.gps_lat, toCoord.gps_long),"end");
         addListenerMarker(clickMarker);

@@ -63,7 +63,7 @@ function addFormPPSelected(pickuppoint){
         id = "new#"+count;
         count++;
     }
-    var html = '<div id="pp_'+id+'" class="field pp_item" style="height:175px; width:200px;">';
+    var html = "";
     html += '<input type="hidden" name="'+id+'" value="'+(pickuppoint.id == null ? "new" : id)+'" />';
     if(pickuppoint.Address != null){
         html += '<div class="address">'+pickuppoint.Address+'</div>';
@@ -75,9 +75,13 @@ function addFormPPSelected(pickuppoint){
     }
     html += '<dd><span>Arrival Time:</span><input type="datetime-local" name="'+id+'_arrivaltime" /></dd>';
     html += '<dd><span>Start Time:</span><input type="datetime-local" name="'+id+'_starttime" /></dd>';
-    html += "</div>";
+    var div = document.createElement('div');
+    div.setAttribute("id","pp_"+id);
+    div.setAttribute("class","field pp_item");
+    div.setAttribute("style","height:175px; width:200px;");
+    div.innerHTML = html;
     var form = document.getElementById("pp_form");
-    form.innerHTML += html;
+    form.appendChild(div);
 }
 
 function removeFormPPSlected(pickuppoint){
