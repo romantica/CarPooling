@@ -3,7 +3,6 @@
 @header = {
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/traject.css")">
 <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/proposal.css")">
-<script type="text/javascript" src="@routes.Assets.at("javascripts/traject.js")" charset="utf-8"></script>
 }
 
 @main(title = "Passanger Traject", Username = Username, Header = header) {
@@ -12,27 +11,27 @@
             <li class="selected"><a href="/traject/passanger">Passager</a></li>
     </ul>
 
-@if(TrajList == null){
+@if(TrajList == null || TrajList.length == 0){
     <div style="font-size: 14px; margin: 20px; text-align: center;">
                 We have no traject to do. Click <a href="/request">here</a> do search one.
                 </div>
     } else {
     @for(traj <- TrajList){
         <div class="trajectlist">
-                    <div class="summary" onclick="listdisplay('@traj.getId()')" id="list_sum_@traj.getId()">
-                    <span class="from">???</span>
-            <span class="to">????</span>
-            <div class="clearfix"></div>
-                    </div>
-                    <div class="datalist" id="list_@traj.getId()" style="display:none;">
-                    <ul class="functionbar">
-                    <li><a href="/traject/remove?id=@traj.getId()">Remove</a></li>
-                    </ul>
-                    <div>
-                    @view(traj)
-                    </div>
-                    </div>
+            <div class="summary" onclick="listdisplay('@traj.getId()')" id="list_sum_@traj.getId()">
+                <span class="from">@traj.getDeparturePP()getPickupPoint().getAddress()</span>
+                <span class="to">@traj.getArrivalPP()getPickupPoint().getAddress()</span>
+                <div class="clearfix"></div>
             </div>
+            <div class="datalist" id="list_@traj.getId()" style="display:none;">
+                <ul class="functionbar">
+                    <li><a href="/traject/remove?id=@traj.getId()">Remove</a></li>
+                </ul>
+                <div>
+                @view(traj)
+                </div>
+            </div>
+        </div>
         }
     }
 
