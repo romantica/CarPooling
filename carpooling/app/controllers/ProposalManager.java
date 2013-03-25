@@ -1,12 +1,17 @@
 package controllers;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.sql.*;
-import java.util.Date;
 
-import models.objects.*;
+import models.objects.Coordinate;
+import models.objects.Itinerary;
+import models.objects.PickupPoint;
+import models.objects.Proposal;
+import models.objects.Traject;
+import models.objects.User;
 import controllers.interfaces.ICommunication;
 import controllers.TrajectManager;
 import play.db.*;
@@ -64,114 +69,27 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Proposal> getProposalList(User user) {
-        /* TODO: NE FONCTIONNE PAS
-          Il faut avoir tt les information de toutes les proposals de l'utilisateur
-          Donc il faut qu'il y ai les objects, Car, User, Initenray, PickupPoint, Trajects pour chaque proposal
-         */
-        /*
-		Connection conn = DB.getConnection();
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT proposals FROM User WHERE Login='" + user.getLogin() + "'");
-            if (!rs.first()) return null; // TODO check if null is OK or create an empty List<Proposal> ?
-            conn.close();
-            return (List<Proposal>) rs.getObject("proposals");
-        } catch (SQLException e) {
-            return null;
-        } catch (ClassCastException e) {
-        	return null;
-        }*/
-
-        List<Proposal> l = new ArrayList<Proposal>();
-        User u = UserManager.getUserLogged();
-        Car c = new Car();
-        Proposal p = new Proposal(1,1.0F,2,c,u);
-        p.addItinerary(new Itinerary(
-                new Date(),
-                new Date(),
-                new PickupPoint(
-                        "name",
-                        "desc",
-                        "Address",
-                        new Coordinate(50.715897,4.7128073)
-                )
-        ));
-        p.addItinerary(new Itinerary(
-                new Date(),
-                new Date(),
-                new PickupPoint(
-                        "name2",
-                        "desc2",
-                        "Address2",
-                        new Coordinate(50.725897,4.7228073)
-                )
-        ));
-        l.add(p);
-        Proposal p2 = new Proposal(2,3.0F,4,c,u);
-        p2.addItinerary(new Itinerary(
-                new Date(),
-                new Date(),
-                new PickupPoint(
-                        "name",
-                        "desc",
-                        "Address",
-                        new Coordinate(50.715897,4.7128073)
-                )
-        ));
-        p2.addItinerary(new Itinerary(
-                new Date(),
-                new Date(),
-                new PickupPoint(
-                        "name2",
-                        "desc2",
-                        "Address2",
-                        new Coordinate(50.725897,4.7228073)
-                )
-        ));
-        p2.addItinerary(new Itinerary(
-                new Date(),
-                new Date(),
-                new PickupPoint(
-                        "name",
-                        "desc",
-                        "Address",
-                        new Coordinate(50.715897,4.7128073)
-                )
-        ));
-        p2.addItinerary(new Itinerary(
-                new Date(),
-                new Date(),
-                new PickupPoint(
-                        "name2",
-                        "desc2",
-                        "Address2",
-                        new Coordinate(50.725897,4.7228073)
-                )
-        ));
-        l.add(p2);
-        Proposal p3 = new Proposal(3,4.0F,5,c,u);
-        p3.addItinerary(new Itinerary(
-                new Date(),
-                new Date(),
-                new PickupPoint(
-                        "name",
-                        "desc",
-                        "Address",
-                        new Coordinate(50.715897,4.7128073)
-                )
-        ));
-        p3.addItinerary(new Itinerary(
-                new Date(),
-                new Date(),
-                new PickupPoint(
-                        "name2",
-                        "desc2",
-                        "Address2",
-                        new Coordinate(50.725897,4.7228073)
-                )
-        ));
-        l.add(p3);
-        return l;
+		List<Proposal> result = Proposal.findAll();
+		for(int i = 0; i < result.size(); i++){
+			if(result.get(i).getUser().getId() != user.getId()){
+				result.remove(i);
+			}
+		}
+		return result;
+		
+		
+//		Connection conn = DB.getConnection();
+//        try {
+//            Statement stmt = conn.createStatement();
+//            ResultSet rs = stmt.executeQuery("SELECT proposals FROM User WHERE Login='" + user.getLogin() + "'");
+//            if (!rs.first()) return null; // TODO check if null is OK or create an empty List<Proposal> ?
+//            conn.close();
+//            return (List<Proposal>) rs.getObject("proposals");
+//        } catch (SQLException e) {
+//            return null;
+//        } catch (ClassCastException e) {
+//        	return null;
+//        }
 	}
 
 	@Override
@@ -196,7 +114,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 		// appele cancelTraject pour TOUS les trajets liés
 		List<Traject> traj = Traject.find.where().eq("proposal", prop).findList();
 		for(int i = 0; i < traj.size(); i++){
-			//ICommunication.ProposalCancelled(traj.get(i).getUser(), traj.get(i));
+			ICommunication.ProposalCancelled(traj.get(i).getUser(), traj.get(i));
 			TrajectManager.cancelTraject(traj.get(i));
 		}
 		// supprimer oldProposal

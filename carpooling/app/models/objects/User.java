@@ -149,6 +149,10 @@ public class User extends Model {
 	public void setRequest(List<Request> request) {
 		this.request = request;
 	}
+	
+	public int getId() {
+		return this.id;
+	}
 
 	public static Finder<Integer, User> find = new Finder<Integer, User>(Integer.class, User.class);
 	

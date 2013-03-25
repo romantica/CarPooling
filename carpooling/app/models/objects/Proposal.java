@@ -1,6 +1,7 @@
 package models.objects;
 
 import java.util.*;
+
 import javax.persistence.*;
 
 import play.data.validation.*;
@@ -122,6 +123,10 @@ public class Proposal extends Model{
 	public static void create(Proposal prop) {
 		prop.save();
 		//prop.saveManyToManyAssociations("itinerary");
+	}
+	
+	public static List<Proposal> findAll() {
+		return find.all();
 	}
 	
 	public static void delete(Proposal prop) {
