@@ -109,12 +109,12 @@ public class PickupPoint extends Model {
 	
 	public void setCoordinateX(double x) {
 		this.Coordinatex = x;
-		setCoordinates(new Coordinate(x, this.Coordinatey));
+        this.coordinates = new Coordinate(x, this.Coordinatey);
 	}
 	
 	public void setCoordinateY(double y) {
 		this.Coordinatey = y;
-		setCoordinates(new Coordinate(this.Coordinatex, y));
+        this.coordinates = new Coordinate(this.Coordinatex, y);
 	}
 	
 	public static Finder<Integer, PickupPoint> find = new Finder<Integer, PickupPoint>(Integer.class, PickupPoint.class);
