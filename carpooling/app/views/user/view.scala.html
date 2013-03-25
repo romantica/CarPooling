@@ -1,16 +1,31 @@
 @(user: models.objects.User)
 
-        <h1>user</h1>
-        login : @user.getLogin() <br>
-        first name : @user.getFirstName() <br>
-        last name : @user.getName() <br>
-        email : @user.getEmail() <br>
-        phone number : @user.getPhoneNumber() <br>
-        <h1>cars</h1>
-        <ul>
-        @for(c <- user.getCars()) {
-        	<li>@car.view(c)</li>
-        }
-        </ul>
-        <a href="/user/car">Add a car</a>
+<h1>user</h1>
+<div class="block">
+    <dt>Login</dt>
+    <dd>@user.getLogin()</dd>
+    @if(user.getFirstName() != null && user.getFirstName() !=""){
+    <dt>First name</dt>
+    <dd>@user.getFirstName()</dd>
+    }
+    @if(user.getName() != null && user.getName() !=""){
+    <dt>Last name</dt>
+    <dd>@user.getName()</dd>
+    }
+    @if(user.getEmail() != null && user.getEmail() !=""){
+    <dt>Email</dt>
+    <dd>@user.getEmail()</dd>
+    }
+    @if(user.getPhoneNumber() != null && user.getPhoneNumber() !=""){
+    <dt>Phone number</dt>
+    <dd>@user.getPhoneNumber()</dd>
+    }
+</div>
+<h1>cars</h1>
+<ul>
+@for(c <- user.getCars()) {
+    <li>@car.view(c)</li>
+}
+</ul>
+<a href="/user/car" class="grayButton" style="width: 125px;">Add a car</a>
 
