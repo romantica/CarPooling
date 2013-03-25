@@ -309,13 +309,13 @@ public class Matching
 		for (Itinerary itinerary : proposal.getItinerary())
 		{
 			distance = distance(itinerary.getPickupPoint().getCoordinates(), request.getDepartureCoordinates());
-			if (distance <= request.getToleranceWalkDistance())
+			if (distance <= request.getToleranceWalkDistance() * 1000)
 			{
 				startList.add(itinerary.getPickupPoint());
 				startDistance.add(distance);
 			}
 			distance = distance(itinerary.getPickupPoint().getCoordinates(), request.getArrivalCoordinates());
-			if (distance <= request.getToleranceWalkDistance())
+			if (distance <= request.getToleranceWalkDistance() * 1000)
 			{
 				endList.add(itinerary.getPickupPoint());
 				endDistance.add(distance);
@@ -339,7 +339,7 @@ public class Matching
 				{
 					end = endIterator.next();
 					distance = getTrajectLength(proposal.getItinerary(), start, end);
-					if (startDistance.get(startList.lastIndexOf(start)) + endDistance.get(endList.indexOf(end)) <= request.getToleranceWalkDistance())
+					if (startDistance.get(startList.lastIndexOf(start)) + endDistance.get(endList.indexOf(end)) <= request.getToleranceWalkDistance() * 1000)
 					{
 						if (result[0] == null || distance < getTrajectLength(proposal.getItinerary(), result[0], result[1]))
 						{
