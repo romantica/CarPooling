@@ -49,7 +49,6 @@ public class ProposalUI extends Controller {
         }
         //No error
         //Create proposal object
-        //TODO: assiation correcte de la car
         Car car = null;
         UserManager UM = new UserManager();
         for(Car carObj : UM.getCar(session("username"))){
@@ -223,6 +222,9 @@ public class ProposalUI extends Controller {
         car.typeinput = "select";
         car.name = "Car";
         car.id = "car";
+        car.error = "A car must be selected.";
+        car.required = true;
+        car.regex = "[A-Z]{3}\\-[0-9]{3}";
         UserManager UM = new UserManager();
         List<Car> carlist = UM.getCar(session("username"));
         String[] plaque = new String[carlist.size()];

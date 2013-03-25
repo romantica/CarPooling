@@ -65,9 +65,9 @@ public class Login {
         Connection conn = DB.getConnection();
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT password FROM User WHERE Login='" + this.username + "'");
+            ResultSet rs = stmt.executeQuery("SELECT password FROM User WHERE login='" + this.username + "'");
             if (!rs.first()) return false;
-            return rs.getString("Password").equals(encoderMD5(this.pwd));
+            return rs.getString("password").equals(encoderMD5(this.pwd));
         } catch (SQLException e) {
             return false;
         }
