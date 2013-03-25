@@ -69,18 +69,27 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Proposal> getProposalList(User user) {
-		Connection conn = DB.getConnection();
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT proposals FROM User WHERE Login='" + user.getLogin() + "'");
-            if (!rs.first()) return null; // TODO check if null is OK or create an empty List<Proposal> ?
-            conn.close();
-            return (List<Proposal>) rs.getObject("proposals");
-        } catch (SQLException e) {
-            return null;
-        } catch (ClassCastException e) {
-        	return null;
-        }
+		List<Proposal> result = Proposal.findAll();
+		for(int i = 0; i < result.size(); i++){
+			if(result.get(i).getUser().getId() != user.getId()){
+				result.remove(i);
+			}
+		}
+		return result;
+		
+		
+//		Connection conn = DB.getConnection();
+//        try {
+//            Statement stmt = conn.createStatement();
+//            ResultSet rs = stmt.executeQuery("SELECT proposals FROM User WHERE Login='" + user.getLogin() + "'");
+//            if (!rs.first()) return null; // TODO check if null is OK or create an empty List<Proposal> ?
+//            conn.close();
+//            return (List<Proposal>) rs.getObject("proposals");
+//        } catch (SQLException e) {
+//            return null;
+//        } catch (ClassCastException e) {
+//        	return null;
+//        }
 	}
 
 	@Override
