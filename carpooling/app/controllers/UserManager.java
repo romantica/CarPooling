@@ -29,8 +29,8 @@ public class UserManager implements IUserManager {
 		return user;
 	}
 
-	public void addCar(String login, Car car) {
-		User user = getUser(login);
+	public void addCar(Car car) {
+		User user = getUser(session("username"));
 		car.save();
 		user.addCar(car);
 		user.save();
@@ -49,34 +49,6 @@ public class UserManager implements IUserManager {
 	public List<User> getUsers(){
 		return new Model.Finder<Integer, User>(Integer.class, User.class).all();
 	}
-	
-	public void removeCar(String login, Car car) {
-		User user = getUser(login);
-		user.removeCar(car);
-		car.delete();
-		user.save();
-	}
-
-//	public static User getUserLogged() {
-//		// TODO: autre acces a la bd ?
-//		// TODO: completer le profile.
-//		Connection conn = DB.getConnection();
-//		try {
-//			Statement stmt = conn.createStatement();
-//			String username = session("username");
-//			if (username == null)
-//				return null;
-//			ResultSet rs = stmt.executeQuery("SELECT * FROM User WHERE Login='"
-//					+ username + "'");
-//			if (!rs.first())
-//				return null;
-//			User user = new User();
-//			user.setLogin(rs.getString("Login"));
-//			return user;
-//		} catch (SQLException e) {
-//			return null;
-//		}
-//	}
 
 	public static User getUserLogged() {
 		String login = session("username");

@@ -32,7 +32,7 @@ public class TrajectManager extends ITrajectManager {
 			traj.getProposal().save();
 			traj.save();
 			
-			IPayment.debit(traj.getUser(), traj.getTotalCost());
+			Payment.debit(traj.getUser(), (int)traj.getTotalCost());
 			
 			//Ajout de la proposal pour le timer 
 			for(ReminderHandler t : timers){
@@ -77,7 +77,7 @@ public class TrajectManager extends ITrajectManager {
 			}
 		}
 		
-		IPayment.credit(traj.getUser(), traj.getTotalCost());
+		IPayment.credit(traj.getUser(), (int)traj.getTotalCost());
 		ICommunication.requestCancelled(traj.getUser(), traj);
 		traj.delete();
 
@@ -85,7 +85,7 @@ public class TrajectManager extends ITrajectManager {
 
 	public static void proposalCancelled(Proposal prop){
 		for(Traject t : prop.getTraject()){
-			IPayment.credit(t.getUser(), t.getTotalCost());
+			IPayment.credit(t.getUser(), (int)t.getTotalCost());
 			ICommunication.proposalCancelled(t.getUser(), t);
 			t.delete();
 		}
@@ -106,7 +106,7 @@ public class TrajectManager extends ITrajectManager {
 
 		User driver = traj.getProposal().getUser();
 		driver.getAssessment().setRating(driver.getAssessment().getRating()+rating);
-		IPayment.credit(driver, traj.getTotalCost());
+		IPayment.credit(driver, (int)traj.getTotalCost());
 		traj.delete();
 	}
 

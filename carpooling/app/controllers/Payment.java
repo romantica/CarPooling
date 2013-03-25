@@ -3,27 +3,24 @@ package controllers;
 import models.objects.User;
 import controllers.interfaces.IPayment;
 
-public class Payment implements IPayment {
+public class Payment extends IPayment {
 
-	@Override
-	public double getBalance(User user) {
+	public static int getBalance(User user) {
 		// TODO Auto-generated method stub
 		return User.find.where().eq("login", user.getLogin()).findUnique().getBalance();
 //		return user.getBalance();
 	}
 
-	@Override
-	public void debit(User user, double amount) {
-		double newBalance = getBalance(user) - amount;
+	public static void debit(User user, int amount) {
+		int newBalance = getBalance(user) - amount;
 //		User.find.where().eq("login", user.getLogin()).findUnique().setBalance(newBalance);
 		user.setBalance(newBalance);
 		user.save();
 		return;
 	}
 
-	@Override
-	public void credit(User user, double amount) {
-		double newBalance = getBalance(user) + amount;
+	public static void credit(User user, int amount) {
+		int newBalance = getBalance(user) + amount;
 //		User.find.where().eq("login", user.getLogin()).findUnique().setBalance(newBalance);
 		user.setBalance(newBalance);
 		user.save();		
