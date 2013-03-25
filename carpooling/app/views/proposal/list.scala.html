@@ -12,7 +12,7 @@
     <li><a href="/traject/passanger">Passager</a></li>
 </ul>
 
-@if(PropList == null){
+@if(PropList == null || PropList.length == 0){
 <div style="font-size: 14px; margin: 20px; text-align: center;">
     We have no way of proposal. You can create <a href="/proposal">here</a>.
 </div>

@@ -37,6 +37,9 @@ public class UserManager implements IUserManager {
     }
 
     public static User getUserLogged() {
+        User user = User.find.where().like("login", session("username")).findUnique();
+        return user;
+        /*
         //TODO: autre acces a la bd ?
         //TODO: completer le profile.
         Connection conn = DB.getConnection();
@@ -52,5 +55,6 @@ public class UserManager implements IUserManager {
         } catch (SQLException e) {
             return null;
         }
+        */
     }
 }
