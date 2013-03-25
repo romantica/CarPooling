@@ -131,7 +131,7 @@ public class RequestUI extends Controller {
 		Coordinate to	= new Coordinate(form.getFloatField("tocoordX"), form.getFloatField("tocoordY"));
 		
 		@SuppressWarnings("deprecation")
-		Date arrivalTime = new Date(Integer.parseInt(dateStr[0]), Integer.parseInt(dateStr[1]), Integer.parseInt(dateStr[2]), Integer.parseInt(timeStr[0]), Integer.parseInt(timeStr[1]), 0);
+		Date arrivalTime = new Date(Integer.parseInt(dateStr[0]) - 1900, Integer.parseInt(dateStr[1]) - 1, Integer.parseInt(dateStr[2]), Integer.parseInt(timeStr[0]), Integer.parseInt(timeStr[1]), 0);
 		
 		// Forge request and perform match
 		Request request = new Request(new Coordinate(form.getFloatField("fromcoordX"), form.getFloatField("fromcoordY")), new Coordinate(form.getFloatField("tocoordX"), form.getFloatField("tocoordY")), 
