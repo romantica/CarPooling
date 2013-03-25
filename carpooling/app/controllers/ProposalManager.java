@@ -114,7 +114,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 		// appele cancelTraject pour TOUS les trajets liés
 		List<Traject> traj = Traject.find.where().eq("proposal", prop).findList();
 		for(int i = 0; i < traj.size(); i++){
-			ICommunication.ProposalCancelled(traj.get(i).getUser(), traj.get(i));
+			ICommunication.proposalCancelled(traj.get(i).getUser(), traj.get(i));
 			TrajectManager.cancelTraject(traj.get(i));
 		}
 		// supprimer oldProposal
