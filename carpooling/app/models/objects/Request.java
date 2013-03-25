@@ -13,13 +13,16 @@ public class Request extends Model {
 	private int id;
 	
 	@Constraints.Required
+    @OneToOne
 	private Coordinate departureCoordinates, arrivalCoordinates;
 	private String departureAddress, arrivalAddress;
 	private Date arrivalTime;
 	private int necessarySeats, toleranceTime, toleranceWalkDistance;
 	private float tolerancePrice;
-	
+
+    @OneToOne
 	private User user;
+    @OneToOne
 	private Traject traject;
 	
 	public Request(Coordinate departureCoordinates,

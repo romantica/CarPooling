@@ -61,6 +61,8 @@ create table Proposal (
 
 create table Request (
   id                        integer auto_increment not null,
+  departure_coordinates_id  integer,
+  arrival_coordinates_id    integer,
   departure_address         varchar(255),
   arrival_address           varchar(255),
   arrival_time              datetime,
@@ -68,6 +70,8 @@ create table Request (
   tolerance_time            integer,
   tolerance_walk_distance   integer,
   tolerance_price           float,
+  user_id                   integer,
+  traject_id                integer,
   constraint pk_Request primary key (id))
 ;
 
@@ -130,6 +134,14 @@ alter table Itinerary add constraint fk_Itinerary_pickupPoint_1 foreign key (pic
 create index ix_Itinerary_pickupPoint_1 on Itinerary (pickup_point_id);
 alter table Proposal add constraint fk_Proposal_user_2 foreign key (user_id) references User (id) on delete restrict on update restrict;
 create index ix_Proposal_user_2 on Proposal (user_id);
+alter table Request add constraint fk_Request_departureCoordinates_3 foreign key (departure_coordinates_id) references coordinate (id) on delete restrict on update restrict;
+create index ix_Request_departureCoordinates_3 on Request (departure_coordinates_id);
+alter table Request add constraint fk_Request_arrivalCoordinates_4 foreign key (arrival_coordinates_id) references coordinate (id) on delete restrict on update restrict;
+create index ix_Request_arrivalCoordinates_4 on Request (arrival_coordinates_id);
+alter table Request add constraint fk_Request_user_5 foreign key (user_id) references User (id) on delete restrict on update restrict;
+create index ix_Request_user_5 on Request (user_id);
+alter table Request add constraint fk_Request_traject_6 foreign key (traject_id) references Traject (id) on delete restrict on update restrict;
+create index ix_Request_traject_6 on Request (traject_id);
 
 
 

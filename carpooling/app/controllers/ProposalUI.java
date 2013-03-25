@@ -162,6 +162,10 @@ public class ProposalUI extends Controller {
                 }
             }
         }
+        //Change position of arrival in array
+        Itinerary arrival = prop.getItinerary().get(1);
+        prop.getItinerary().remove(1);
+        prop.getItinerary().addLast(arrival);
         //Put new Information in cache
         Cache.set("proposal#" + session("username"), prop, 60 * 60); //Cache available 1hour
         return redirect("../summary");
