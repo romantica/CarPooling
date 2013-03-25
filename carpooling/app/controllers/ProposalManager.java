@@ -48,7 +48,10 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 		// Attention, les PP qui sont déjà en DB ne doivent pas être ajouté (ils n'ont pas d'id), les autres oui !
 		List<Itinerary> listIti = proposal.getItinerary();
 		for(Itinerary i: listIti){
-			PickupPoint.create(i.getPickupPoint());
+			PickupPoint pp = i.getPickupPoint();
+			PickupPoint realPP = PickupPoint.find.where().like("address", pp.getAddress()).findUnique(); 
+			if(realPP == null) PickupPoint.create(i.getPickupPoint());
+			else i.setPickupPoint(realPP);
 			Itinerary.create(i);
 		}
 		proposal.getUser().addProposal(proposal);
