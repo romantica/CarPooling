@@ -52,6 +52,10 @@ public class Itinerary extends Model {
 	
 	public static Finder<Integer, Itinerary> find = new Finder<Integer, Itinerary>(Integer.class, Itinerary.class);
     
+	public static void create(Itinerary iti){
+		iti.save();
+	}
+	
     @Override
     public String toString() {
         return "Itinerary{" +

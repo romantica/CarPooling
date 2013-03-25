@@ -23,7 +23,7 @@ public class PickupPoint extends Model {
 	
 	@Constraints.Required
 	private Coordinate coordinates;
-	private static double PRECISION = 0.5;
+	private static double PRECISION = 0.00005;
 	
     public PickupPoint(){}
 	

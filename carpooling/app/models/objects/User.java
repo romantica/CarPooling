@@ -154,6 +154,10 @@ public class User extends Model {
 		return this.id;
 	}
 
+	public void addProposal(Proposal prop) {
+		this.proposals.add(prop);
+	}
+	
 	public static Finder<Integer, User> find = new Finder<Integer, User>(Integer.class, User.class);
 	
     public String toString() {
