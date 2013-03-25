@@ -23,7 +23,7 @@ public class PickupPoint extends Model {
 	
 	@Constraints.Required
 	private Coordinate coordinates;
-	private static double PRECISION = 0.5;
+	private static double PRECISION = 0.00005;
 	
     public PickupPoint(){}
 	
@@ -109,12 +109,12 @@ public class PickupPoint extends Model {
 	
 	public void setCoordinateX(double x) {
 		this.Coordinatex = x;
-		setCoordinates(new Coordinate(x, this.Coordinatey));
+		this.coordinates = new Coordinate(x, this.getCoordinateY());
 	}
 	
 	public void setCoordinateY(double y) {
 		this.Coordinatey = y;
-		setCoordinates(new Coordinate(this.Coordinatex, y));
+		this.coordinates = new Coordinate(this.getCoordinateX(), y);
 	}
 	
 	public static Finder<Integer, PickupPoint> find = new Finder<Integer, PickupPoint>(Integer.class, PickupPoint.class);
