@@ -134,7 +134,8 @@ public class TrajectManager extends ITrajectManager {
 		public void execute(){
 			//Communicate
 			if (stop) return;
-			ICommunication.trajectReminder(prop);
+            //TODO: compatibilite
+			//ICommunication.trajectReminder(prop);
 		}
 		
 		public Proposal getProposal(){
