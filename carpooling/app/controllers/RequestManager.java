@@ -37,13 +37,13 @@ public class RequestManager implements IRequestManager{
 	 * @throws Exception 
 	 */
 	public void recordRequest(Request request) throws Exception {
-		if(request.getUser().getBalance() < request.getNecessarySeats()*request.getTolerancePrice()){
-			throw new Exception("Vous n'avez pas assez d'argent.");
-		} else {
+//		if(request.getUser().getBalance() < request.getNecessarySeats()*request.getTolerancePrice()){
+//			throw new Exception("Vous n'avez pas assez d'argent.");
+//		} else {
 			request.getUser().addRequest(request);
 			request.save();
 			request.getUser().save();
-		}
+//		}
 	}
 
     /**

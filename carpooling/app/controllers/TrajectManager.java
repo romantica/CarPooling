@@ -39,7 +39,7 @@ public class TrajectManager extends ITrajectManager {
 		l.lock();
 
 		int seat =  traj.getProposal().getAvailableSeats();
-		if(seat > 0 || user.getBalance() < traj.getReservedSeats()*traj.getTotalCost()){
+		if(seat > 0 && user.getBalance() < traj.getReservedSeats()*traj.getTotalCost()){
 
 			traj.getDeparturePP().save();
 			traj.getArrivalPP().save();
