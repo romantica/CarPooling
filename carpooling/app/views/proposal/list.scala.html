@@ -26,8 +26,10 @@
             </div>
             <div class="datalist" id="list_@prop.getId()" style="display:none;">
                 <ul class="functionbar">
+					<li><a href="javascript:rateWindow(@prop.getId())">Rate this driver</a></li>
                     <li><a href="/proposal/remove?id=@prop.getId()">Remove</a></li>
                 </ul>
+				<form method="post" action="/traject/rate" id="rateDiv" style="border: 1px solid gray; display: none; padding: 5px; margin-top: 15px;"><input type="hidden" name="isPassenger" value="false" /></form>
                 <div>
                     @view(prop)
                 </div>
