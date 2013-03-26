@@ -127,7 +127,6 @@ public class Proposal extends Model{
 	
 	public static void create(Proposal prop) {
 		prop.save();
-		//prop.saveManyToManyAssociations("itinerary");
 	}
 	
 	public static List<Proposal> findAll() {
