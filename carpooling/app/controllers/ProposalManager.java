@@ -124,7 +124,7 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 		} catch(NullPointerException e) {}
 		if(traj != null) {
 			for(int i = 0; i < traj.size(); i++){
-				ICommunication.proposalCancelled(traj.get(i).getUser(), traj.get(i));
+				ICommunication.proposalCancelled(traj.get(i).getUser(), User.find.where().eq("id", prop.getUser().getId()).findUnique(), traj.get(i));
 				TrajectManager.cancelTraject(traj.get(i));
 			}
 		}

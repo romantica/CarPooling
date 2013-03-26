@@ -1,6 +1,7 @@
 package models.objects;
 
 import java.sql.Timestamp;
+import java.util.LinkedList;
 
 import javax.persistence.*;
 
@@ -112,4 +113,11 @@ public class Traject extends Model {
 	
 	public static Finder<Integer, Traject> find = new Finder<Integer, Traject>(Integer.class, Traject.class);
 	
+	public static void delete(Traject traj) {
+		traj.getUser().removeTraject(traj);
+		traj.getUser().save();
+		traj.delete();
+		traj.getArrivalPP().delete();
+		traj.getDeparturePP().delete();
+	}
 }

@@ -54,6 +54,8 @@ public class TrajectManager extends ITrajectManager {
 				ReminderHandler rh = new ReminderHandler(traj.getProposal());
 				timers.add(rh);
 				timer.wakeAtDate(new Date(traj.getArrivalPP().getTime().getTime() - 600), rh );
+				
+				
 			}
 		}
 		else{
@@ -87,30 +89,22 @@ public class TrajectManager extends ITrajectManager {
 		
 		IPayment.credit(traj.getUser(), (int)traj.getTotalCost());
 		ICommunication.requestCancelled(traj.getUser(), traj);
-		
-		traj.getProposal().getTraject().remove(traj);
-		traj.getProposal().save();
-		traj.getUser().getTrajects().remove(traj);
-		traj.getUser().save();
-		traj.getRequest().setTraject(null);
-		//TODO : quid de ce null?
-		traj.getRequest().save();
-		traj.delete();
+		Traject.delete(traj);
 
 	}
 
 	public static void proposalCancelled(Proposal prop){
 		for(Traject t : prop.getTraject()){
 			IPayment.credit(t.getUser(), (int)t.getTotalCost());
-			ICommunication.proposalCancelled(t.getUser(), t);
-			t.delete();
+			ICommunication.proposalCancelled(t.getUser(), User.find.where().eq("id", prop.getUser().getId()).findUnique(), t);
+			Traject.delete(t);
 		}
 	}
 
 	public static void cancelTraject(User driver, List<Traject> trajects) {
 		for(Traject t : trajects){
-			ICommunication.proposalCancelled(t.getUser(), t);
-			t.delete();
+			ICommunication.proposalCancelled(t.getUser(), driver, t);
+			Traject.delete(t);
 		}
 	}
 
@@ -123,7 +117,7 @@ public class TrajectManager extends ITrajectManager {
 		User driver = traj.getProposal().getUser();
 		driver.getAssessment().setRating(driver.getAssessment().getRating()+rating);
 		IPayment.credit(driver, (int)traj.getTotalCost());
-		traj.delete();
+		Traject.delete(traj);
 	}
 
 

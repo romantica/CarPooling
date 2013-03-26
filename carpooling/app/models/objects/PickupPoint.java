@@ -25,7 +25,7 @@ public class PickupPoint extends Model {
 	private Coordinate coordinates;
 	private static double PRECISION = 0.00005;
 	
-    public PickupPoint(){}
+   public PickupPoint(){}
 	
 	public PickupPoint(String name, String description, String address,
 			Coordinate coordinates) {
@@ -34,8 +34,9 @@ public class PickupPoint extends Model {
 		this.description = description;
 		this.address = address;
 		this.coordinates = coordinates;
-		this.Coordinatex = coordinates.getX();
-		this.Coordinatey = coordinates.getY();
+		this.setCoordinates(coordinates);
+		//this.Coordinatex = coordinates.getX();
+		//this.Coordinatey = coordinates.getY();
 	}
 
     public PickupPoint(int id, String name, String description, String address,
@@ -46,8 +47,9 @@ public class PickupPoint extends Model {
         this.address = address;
         this.coordinates = coordinates;
         this.id = id;
-        this.Coordinatex = coordinates.getX();
-		this.Coordinatey = coordinates.getY();
+        this.setCoordinates(coordinates);
+        //this.Coordinatex = coordinates.getX();
+        //this.Coordinatey = coordinates.getY();
     }
 
     public int getId() {
