@@ -17,6 +17,15 @@ public class RequestManager implements IRequestManager{
 	
 	private ArrayList<MatchLaterHandler> timers;
 
+    //Timeout (real)
+/*
+    private final int timeout24 = 24*60*60;
+    private final int timeout2  = 2*60*60;
+*/
+    //Timeout (simulation)
+    private final int timeout24 = 1*60;
+    private final int timeout2  = 30;
+
     public RequestManager(){
         timers = new ArrayList<MatchLaterHandler>();
     }
@@ -83,7 +92,7 @@ public class RequestManager implements IRequestManager{
 			if(stop) return;
 			if( Matching.match(request) == null){
 				//restart
-				long timeOut = (request.getArrivalTime().getTime() - new Date().getTime() > 24*60*60) ? 24*60*60 : 2*60*60;
+				long timeOut = (request.getArrivalTime().getTime() - new Date().getTime() > timeout24) ? timeout24 : timeout2;
 				ITimer timer = new TimerCP();
 				timer.wakeInTime(timeOut, this);
 			} 
