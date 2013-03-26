@@ -36,4 +36,18 @@
 </div>
 }
 
+    @if(Prop.getTraject() != null && !Prop.getTraject().isEmpty()){
+    <div class="block">
+
+        <div class="selection">
+            <div class="title">People in car</div>
+            <div class="data">
+            @for(trj <- Prop.getTraject()){
+                @traject.view_mini(trj)
+            }
+            </div>
+        </div>
+    </div>
+    }
+
 </div>

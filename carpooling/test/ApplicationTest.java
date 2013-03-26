@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import models.objects.Assessment;
 import org.codehaus.jackson.JsonNode;
 import org.junit.*;
 
@@ -117,7 +118,7 @@ public class ApplicationTest {
 		Request reqTest = new Request(
 													coorATest, //Coor departure
 													coorBTest, //Coor arrival
-													"Place Galilée 6 1348 Louvain-La-Neuve", // Adress departure
+													"Place Galilï¿½e 6 1348 Louvain-La-Neuve", // Adress departure
 													"Cour des Fleurets 1348 Louvain-La-Neuve",// Adress arrival 	
 													arrTimeTest, //Arrival time
 													1, //Seats
@@ -133,14 +134,14 @@ public class ApplicationTest {
 		for(Traject traj : response){
 				// BB Test : msg-5	
 				int walkBegin = Matching.distance(coorATest,traj.getDeparturePP().getPickupPoint()
-				if(walkBegin + walkEnd > 3000){Assert.fail("La tolerance de distance de marche n’est pas respectee");}
+				if(walkBegin + walkEnd > 3000){Assert.fail("La tolerance de distance de marche nï¿½est pas respectee");}
 
 				// BB Test : msg-6
 				Date maxiTime = new Date(2013,01,04,16,00); 
-				if(traj.getArrivalPP().getTime() > maxiTime){Assert.fail("L’heure d’arrivee du passager depasse la tolerance d’heure d’arrivee de la requete");}
+				if(traj.getArrivalPP().getTime() > maxiTime){Assert.fail("Lï¿½heure dï¿½arrivee du passager depasse la tolerance dï¿½heure dï¿½arrivee de la requete");}
 
 				// BB Test : msg-7
-				if(traj.getReservedSeats() - 1 < 0){Assert.fail("Il n’y a pas assez de sieges libres dans la proposition pour satisfaire la requete");}
+				if(traj.getReservedSeats() - 1 < 0){Assert.fail("Il nï¿½y a pas assez de sieges libres dans la proposition pour satisfaire la requete");}
 
 				// BB Test : msg-8
 				if(traj.getTotalCost() > 5){Assert.fail("Tolerance en cout non respectee.");} 
