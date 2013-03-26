@@ -76,8 +76,9 @@ ul.bar li.selected a{
 
 .ratingform{
     display: block;
-    padding: 5px;
+    padding: 10px 25px;
     margin-top: 15px;
+    font-size: 13px;
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
     border-radius:10px;
@@ -86,4 +87,5 @@ ul.bar li.selected a{
     -o-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
     -ms-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
     box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    background: #EEE;
 }
