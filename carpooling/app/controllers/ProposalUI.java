@@ -58,7 +58,7 @@ public class ProposalUI extends Controller {
         }
         User user = UserManager.getUserLogged();
         Proposal prop = new Proposal(
-                form.getFloatField("kmcost"),
+                form.getFloatField("kmcost")/100,
                 form.getIntField("seats"),
                 car,
                 user
@@ -236,7 +236,7 @@ public class ProposalUI extends Controller {
         car.selection  = plaque;
         form.addField(car);
         form.addField(new Field("number", "Available seats", "seats", true, "Invalid format", "[0-9]{1,2}"));
-        form.addField(new Field("number", "Cost in km", "kmcost", true, "Invalid format", "[0-9]{1,2}"));
+        form.addField(new Field("number", "Cost in km [cents]", "kmcost", true, "Invalid format", "[0-9]{1,2}"));
         Field nextButton = new Field();
         nextButton.value = "Next step";
         nextButton.id = "nextstep";
