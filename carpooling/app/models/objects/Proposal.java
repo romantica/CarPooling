@@ -97,6 +97,10 @@ public class Proposal extends Model{
 		this.traject.add(traj);
 	}
 	
+	public void removeTraject(Traject traj){
+		this.traject.remove(traj);
+	}
+	
 	@Deprecated
 	public void setTraject(List<Traject> traject) {
 		this.traject = traject;
