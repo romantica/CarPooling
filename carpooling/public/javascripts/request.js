@@ -6,7 +6,13 @@ var TrajectList = function(container) {
 	
 	this.Add = function(t) {
 		this.container.innerHTML+= "<div class='choice' id='choice_"+t.id+"' onclick='calcRoute(trajects["+t.id+"]);'>"+
-			"Traject from <b>"+ t.fromName + "</b> to <b>" + t.toName + "</b> by " + t.driver + " (" + t.price + "€, mean rating: "+t.driverRate+"/5)" +
+			"Traject from <b>"+ (t.fromName == '' ? t.fromAddr : t.fromName) + "</b> to <b>" + (t.toName == '' ? t.toAddr : t.toName) + "</b> by " + t.driver + " (" + t.price + "€, mean rating: "+t.driverRate+"/5)<div id='show_"+t.id+"' style='display: none; font-size: 80%; margin-top: 5px;'>"+
+				"<b>Departure address:</b><br />" + t.fromAddr + "<br />" +
+				"<b>Departure time:</b><br />" + t.fromTime + "<br />" +
+				"<b>Arrival address:</b><br />" + t.toAddr + "<br />" +
+				"<b>Arrival time:</b><br />" + t.toTime + "<br />" +
+				"<b>Driver ratings:</b> <a href='/user/seerating?userId="+t.driverId+"'>View details</a><br />" +
+			"</div><div style='text-align: right'><a id='lnk_"+t.id+"' href='javascript:moreInfos("+t.id+")'>More info</a></div>" +
 			"</div>";
 	}
 	
@@ -49,7 +55,13 @@ function selectTraject() {
 }
 
 function moreInfos(i) {
-	alert("test");
+	if (document.getElementById('show_'+i).style.display == 'none') {
+		document.getElementById('show_'+i).style.display = 'block';
+		document.getElementById('lnk_'+i).innerHTML = 'Less info';
+	} else {
+		document.getElementById('show_'+i).style.display = 'none';
+		document.getElementById('lnk_'+i).innerHTML = 'More info';
+	}
 }
 
 window.onload = function() {

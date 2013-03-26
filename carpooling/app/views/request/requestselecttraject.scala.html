@@ -12,12 +12,17 @@
 			@for(t <- trajects) {
 				{
 					driver : 	"@t.getProposal().getUser().getLogin().replaceAll("\"", "&quot;")",
+					driverId :	@t.getProposal().getUser().getId(),
 					driverRate:	@t.getProposal().getUser().getMeanRating(),
 					price : 	"@t.getTotalCost()",
 					from : 		new google.maps.LatLng(@t.getDeparturePP().getPickupPoint().getCoordinates().getX() , @t.getDeparturePP().getPickupPoint().getCoordinates().getY()),
 					to : 		new google.maps.LatLng(@t.getArrivalPP().getPickupPoint().getCoordinates().getX() , @t.getArrivalPP().getPickupPoint().getCoordinates().getY()),
 					fromName : 	"@t.getDeparturePP().getPickupPoint().getName()",
-					toName : 	"@t.getArrivalPP().getPickupPoint().getName()"
+					toName : 	"@t.getArrivalPP().getPickupPoint().getName()",
+					fromAddr : 	"@t.getDeparturePP().getPickupPoint().getAddress()",
+					toAddr : 	"@t.getArrivalPP().getPickupPoint().getAddress()",
+					fromTime :	"@t.getDeparturePP().getTime().toString()",
+					toTime :	"@t.getArrivalPP().getTime().toString()"
 				},
 			}
 		]
