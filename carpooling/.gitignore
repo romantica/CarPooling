@@ -19,3 +19,4 @@ RemoteSystemsTempFiles/*
 carpooling/.metadata/*
 carpooling/.target/*
 carpooling/RemoteSystemsTempFiles/*
+carpooling/conf/evolutions/default/1.sql

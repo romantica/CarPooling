@@ -9,7 +9,8 @@
 @main(title = "Passanger Traject", Username = Username, Header = header) {
 <ul class="bar">
             <li><a href="/traject/driver" style="border-right: #CCC solid 1px;" >Driver</a></li>
-            <li class="selected"><a href="/traject/passanger">Passager</a></li>
+            <li class="selected"><a href="/traject/passanger" style="border-right: #CCC solid 1px;">Passager</a></li>
+            <li><a href="/traject/request">Queries requested</a></li>
     </ul>
 
 @if(TrajList == null || TrajList.length == 0){
@@ -26,12 +27,14 @@
             </div>
             <div class="datalist" id="list_@traj.getId()" style="display:none;">
                 <ul class="functionbar">
+					@if(traj.isPastTraject()) {} <!-- Empty for tests, should englobe next li in production -->
 					<li><a href="javascript:rateWindow(@traj.getId())">Rate this driver</a></li>
+					
                     <li><a href="/traject/remove?id=@traj.getId()">Remove</a></li>
                 </ul>
-				<form method="post" action="/traject/rate" id="rateDiv_@traj.getId()" style="border: 1px solid gray; display: none; padding: 5px; margin-top: 15px;"><input type="hidden" name="isPassenger" value="false" /></form>
+				<form method="post" action="/traject/rate" id="rateDiv_@traj.getId()" class="ratingform" style="display:none;"></form>
                 <div>
-                @view(traj)
+                    @view(traj)
                 </div>
             </div>
         </div>

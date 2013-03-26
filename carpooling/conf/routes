@@ -16,6 +16,7 @@ GET     /user/create                controllers.UserUI.create()
 POST	/user/create				controllers.UserUI.createSubmit()
 GET		/user/car					controllers.UserUI.addCar()
 POST	/user/car					controllers.UserUI.recordCar()
+GET		/user/seerating				controllers.UserUI.seeRating(userId: String)
 
 # Prposal
 GET     /proposal                   controllers.ProposalUI.create()
@@ -40,6 +41,8 @@ GET     /traject/driver             controllers.ProposalUI.driverList()
 GET     /traject/passanger          controllers.TrajectUI.passanger()
 GET     /traject/remove             controllers.TrajectUI.remove()
 POST    /traject/rate             	controllers.TrajectUI.rate()
+GET     /traject/request            controllers.RequestUI.view()
+GET     /traject/request/remove     controllers.RequestUI.remove()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

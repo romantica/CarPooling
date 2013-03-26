@@ -17,7 +17,6 @@ public class UserManager implements IUserManager {
 		User user = new User(login, firstName, lastName, email, phone, 0, null,
 				null, null, null, null);
 		user.save();
-		//return user;
 	}
 
 	// TODO: A ajouter dans l'interface

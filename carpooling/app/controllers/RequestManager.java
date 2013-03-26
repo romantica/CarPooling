@@ -1,5 +1,7 @@
 package controllers;
 
+import static play.mvc.Controller.session;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,9 +11,9 @@ import controllers.interfaces.ITimer;
 import controllers.interfaces.IHandler;
 import controllers.interfaces.ICommunication;
 
-import models.objects.Coordinate;
 import models.objects.Request;
 import models.objects.Traject;
+import models.objects.User;
 
 public class RequestManager implements IRequestManager{
 	
@@ -38,6 +40,15 @@ public class RequestManager implements IRequestManager{
 		request.save();
 		request.getUser().save();
 	}
+
+    /**
+     * retourne la liste de toutes les request qui
+     * sont sur la base de donnée
+     */
+    public List<Request> getlist(){
+        User user = User.find.where().like("login", session("username")).findUnique();
+    	return user.getRequest();
+    }
 	
 	/**
 	 * Supprime la requete dans la base de donnees
@@ -51,6 +62,7 @@ public class RequestManager implements IRequestManager{
 			}
 		}
 		request.getUser().getRequest().remove(request);
+		request.getUser().save();
 		request.delete();
 	}
 
@@ -66,15 +78,10 @@ public class RequestManager implements IRequestManager{
 	 * Lance un timer pour faire un matching plus tard.
 	 */
 	public void matchLater(Request request){
+		this.recordRequest(request);
 		MatchLaterHandler mlh = new MatchLaterHandler(request);
 		timers.add(mlh);
 		mlh.execute();
-	}
-	
-	public static void test(){
-		RequestManager rm = new RequestManager();
-		Request r = new Request(new Coordinate(), new Coordinate(), "a", "b", new Date(), 5, 10, 10, 10, null, null);
-		rm.recordRequest(r);
 	}
 	
 	
@@ -90,7 +97,9 @@ public class RequestManager implements IRequestManager{
 		}
 
 		public void execute(){
-			if(stop) return;
+			if(stop || request.getArrivalTime().before(new Date())){
+				return;
+			}
 			ArrayList<Traject> ps = Matching.match(request);
 			if( ps == null || ps.size() == 0){
 				//restart
@@ -108,6 +117,10 @@ public class RequestManager implements IRequestManager{
 		
 		public void stop(){
 			stop = true;
+		}
+		
+		public String toString(){
+			return "request " + request.getDepartureAddress() + " to " + request.getArrivalAddress();
 		}
 
 	}

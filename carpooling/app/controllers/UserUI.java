@@ -1,8 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import models.Field;
 import models.FormUI;
 import models.objects.Car;
@@ -83,8 +80,8 @@ public class UserUI extends Controller {
 		form.id = "newUser";
 		form.addField(new Field("text", "Login", "login", true, "must be alphanumeric", "[A-z0-9]{4,50}"));
 		form.addField(new Field("password", "Password", "pwd", true, "must be alphanumeric", "[A-z0-9]{4,50}"));
-		form.addField(new Field("text", "First name", "first", true, "Invalid name", "[A-z0-9\\w\\s'\"\\-_&@!?()\\[\\]-]{4,50}"));
-		form.addField(new Field("text", "Last name", "last", true, "Invalid name", "[A-z0-9\\w\\s'\"\\-_&@!?()\\[\\]-]{4,50}"));
+		form.addField(new Field("text", "First name", "first", true, "Invalid name", "[ \\u00c0-\\u01ffa-zA-Z'\\-]{1,50}"));
+		form.addField(new Field("text", "Last name", "last", true, "Invalid name", "[ \\u00c0-\\u01ffa-zA-Z'\\-]{1,50}"));
 		form.addField(new Field("text", "Email", "email", true, "Invalid email format","^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$"));//"Wrong type of email address", "[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}"));
 		form.addField(new Field("text", "Phone number", "phone", true, null, null));
 		Field nextButton = new Field();
@@ -155,6 +152,19 @@ public class UserUI extends Controller {
         user.addCar(car);
         user.save();
         return redirect("/user");
+    }
+    
+    public static Result seeRating(String userId) {
+    	Login session = new Login();
+	    if (!session.isLogged())
+	        return redirect("/");
+	    
+	    int id = Integer.parseInt(userId);
+	    User user = User.find.byId(id);
+	    
+	    if (user == null)
+	    	return redirect("/user/");
+    	return ok(rating.render(session.getUsername(), user));
     }
     
     private static FormUI carForm(){

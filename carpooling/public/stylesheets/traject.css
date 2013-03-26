@@ -10,7 +10,7 @@ ul.bar a{
     display: block;
     line-height: 30px;
     float: left;
-    width: 48%;
+    width: 32%;
     text-align: center;
     cursor: pointer;
     font-size: 18px;
@@ -56,6 +56,7 @@ ul.bar li.selected a{
     border: 1px solid #CCC;
     border-top: none;
     float: right;
+    margin-left: 10px;
 }
 .trajectlist .datalist .functionbar li a{
     display: block;
@@ -71,4 +72,20 @@ ul.bar li.selected a{
     box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
     background: #CCC;
     color: #333;
+}
+
+.ratingform{
+    display: block;
+    padding: 10px 25px;
+    margin-top: 15px;
+    font-size: 13px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+    -webkit-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -moz-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -o-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -ms-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    background: #EEE;
 }

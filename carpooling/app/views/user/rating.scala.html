@@ -1,0 +1,25 @@
+@(username: String, ratedUser: models.objects.User)
+
+@header = {
+	<link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/rating.css")">
+}
+
+@main(title = "Users rating", Username = username, Header = header) {
+
+<h1>Ratings for user @ratedUser.getLogin()</h1>
+
+	@if(ratedUser.getAssessment() == null || ratedUser.getAssessment().length == 0){
+	<div style="font-size: 14px; margin: 20px; text-align: center;">
+		Currently no rating have been posted for the user @ratedUser.getLogin().
+	</div>
+	} else {
+		Mean rating: <b>@ratedUser.getMeanRating()/5</b>
+		@for(a <- ratedUser.getAssessment()){
+			<div class="ratingItem">
+				<h3>Rating: @a.getRating()/5</h3>
+				@a.getComment()
+			</div>
+		}
+	}
+
+}

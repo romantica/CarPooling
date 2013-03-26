@@ -15,15 +15,11 @@ public abstract class ICommunication{
      */
     public static void requestCancelled(User driver, Traject t){
         String dest = driver.getEmail();
-        int remainingSeats = t.getReservedSeats()-1;
         String subject = "[UCL Carpooling] Request cancelled";
         String message = "Hello,\n\nThe user "+ driver.getLogin() +" cancelled its request for the following proposal :\n\nDeparture address : "
                 +t.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+t.getArrivalPP().getPickupPoint().getAddress()
                 +"\nDeparture time : "+t.getProposal().getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
-                +"\nRemaining reserved seats : "+remainingSeats;
-        if(remainingSeats <= 0)
-            message = message+"\n\nThe corresponding traject has been cancelled.";
-        message = message+"\n\nThe UCL Carpooling team";
+                +"\n\nThe UCL Carpooling team";
         MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
         mail.setSubject(subject);
         mail.addRecipient(dest);
@@ -130,7 +126,7 @@ public abstract class ICommunication{
                 +"\nReserved seats : "+t.getReservedSeats()
                 +"\nDeparture time : "+t.getProposal().getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
                 +"\nArrival time : "+t.getProposal().getItinerary(t.getArrivalPP().getPickupPoint()).getArrivalTime().toString()
-                +"\n\nPlease start investigating at soon as possible.\n\nThe UCL Carpooling team";
+                +"\n\nThe UCL Carpooling team";
         MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
         mail.setSubject(subject);
         mail.addRecipient(dest);

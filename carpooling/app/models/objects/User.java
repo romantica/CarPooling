@@ -21,7 +21,7 @@ public class User extends Model {
 	private String login, firstName, name, email, phoneNumber, password;
 	private int balance;
 	@ManyToMany
-	private Assessment assessment;
+	private List<Assessment> assessment;
 	@ManyToMany
 	private List<Car> cars;
 	@ManyToMany
@@ -35,7 +35,7 @@ public class User extends Model {
 
 
     public User(String login, String firstName, String name, String email,
-			String phoneNumber, int balance, Assessment assessment,
+			String phoneNumber, int balance, List<Assessment> assessment,
 			List<Car> cars, List<Proposal> proposals, List<Traject> trajects,
 			List<Request> request) {
 		super();
@@ -110,12 +110,25 @@ public class User extends Model {
 	}
 
 
-	public Assessment getAssessment() {
+	public List<Assessment> getAssessment() {
 		return assessment;
 	}
+	
+	public void addAssessment(Assessment assessment) {
+		this.getAssessment().add(assessment);
+	}
 
-	public void setAssessment(Assessment assessment) {
+	public void setAssessment(List<Assessment> assessment) {
 		this.assessment = assessment;
+	}
+	
+	public float getMeanRating() {
+		if (this.getAssessment() == null || this.getAssessment().size() == 0)
+			return 3.0F;
+		float result = 0;
+		for (Assessment a : this.getAssessment())
+			result+= a.getRating();
+		return result / this.getAssessment().size();
 	}
 
 	public List<Car> getCars() {
