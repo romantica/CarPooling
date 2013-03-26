@@ -1,7 +1,7 @@
 package controllers.interfaces;
 
 import models.objects.*;
-//import com.typesafe.plugin.*;
+import com.typesafe.plugin.*;
 
 public abstract class ICommunication{
 	
@@ -14,7 +14,6 @@ public abstract class ICommunication{
 	 * passager concerne 
 	 */
 	public static void requestCancelled(User driver, Traject t){
-        /*
 		String dest = driver.getEmail();
 		String subject = "[UCL Carpooling] Request cancelled";
 		String message = "";
@@ -23,11 +22,9 @@ public abstract class ICommunication{
 		mail.addRecipient(dest);
 		mail.addFrom(sender);
 		mail.send(message);
-		*/
 	}
 	
 	public static void proposalCancelled(User passenger, Traject t){
-        /*
 		String dest = passenger.getEmail();
 		String subject = "[UCL Carpooling] Proposal cancelled";
 		String message = "";
@@ -36,7 +33,6 @@ public abstract class ICommunication{
 		mail.addRecipient(dest);
 		mail.addFrom(sender);
 		mail.send(message);
-		*/
 	}
 	
 	/**
@@ -45,7 +41,6 @@ public abstract class ICommunication{
 	 * trajet.
 	 */
 	public static void trajectReminder(Proposal prop){
-        /*
 		String subject = "[UCL Carpooling] Traject Reminder";
 		String message = "";
 		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
@@ -56,7 +51,6 @@ public abstract class ICommunication{
 		mail.setSubject(subject);
 		mail.addFrom(sender);
 		mail.send("");
-		*/
 	}
 	
 	/**
@@ -65,7 +59,6 @@ public abstract class ICommunication{
 	 * prevenu.
 	 */
 	public static void trajectFound(User user){
-        /*
 		String dest = user.getEmail();
 		String subject = "[UCL Carpooling] Traject found";
 		String message = "";
@@ -74,7 +67,6 @@ public abstract class ICommunication{
 		mail.addRecipient(dest);
 		mail.addFrom(sender);
 		mail.send(message);
-		*/
 	}
 	
 	/**
@@ -82,7 +74,6 @@ public abstract class ICommunication{
 	 * recoit les informations qui permettront le ramassage.
 	 */
 	public static void newPassengerNotification(Traject t){
-        /*
 		String dest = t.getProposal().getUser().getEmail();
 		String subject = "[UCL Carpooling] New passenger registered";
 		String message = "";
@@ -91,14 +82,12 @@ public abstract class ICommunication{
 		mail.addRecipient(dest);
 		mail.addFrom(sender);
 		mail.send(message);
-		*/
 	}
 	
 	/**
 	 * Notifie un utilisateur lors de la creation de son compte.
 	 */
 	public static void newUser(User u){
-        /*
 		String dest = u.getEmail();
 		String subject = "[UCL Carpooling] Account creation";
 		String message = "";
@@ -107,7 +96,6 @@ public abstract class ICommunication{
 		mail.addRecipient(dest);
 		mail.addFrom(sender);
 		mail.send(message);
-		*/
 	}
 	
 	/**
