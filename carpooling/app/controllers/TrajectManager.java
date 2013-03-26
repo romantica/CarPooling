@@ -23,7 +23,7 @@ public class TrajectManager extends ITrajectManager {
 	private static ArrayList<ReminderHandler> timers = new ArrayList<ReminderHandler>();
 	
 	public static void recordTraject(Traject traj, User user) throws Exception {
-		
+		//TODO : 24 après le trajet, il doit etre considéré comme OK!
 		l.lock();
 		
 		int seat =  traj.getProposal().getAvailableSeats();
@@ -34,16 +34,12 @@ public class TrajectManager extends ITrajectManager {
 			traj.getProposal().setAvailableSeats(seat-1);
 			traj.getProposal().addTraject(traj);
 			traj.getUser().addTraject(traj);
-			Ebean.save(traj);
-			Ebean.save(traj.getProposal());
-			
-			/*Proposal p = Proposal.find.where().like("id", ""+traj.getProposal().getId()).findUnique();
-			p.setAvailableSeats(seat-1);
-			p.save();*/
-			
-			//traj.getUser().save();
 			
 			Payment.debit(traj.getUser(), (int)traj.getTotalCost());
+
+			Ebean.save(traj);
+			Ebean.save(traj.getProposal());
+			Ebean.save(traj.getUser());
 			
 			//Ajout de la proposal pour le timer 
 			for(ReminderHandler t : timers){
