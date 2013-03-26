@@ -1,5 +1,7 @@
 package controllers;
 
+import static play.mvc.Controller.session;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +14,7 @@ import controllers.interfaces.ICommunication;
 import models.objects.Coordinate;
 import models.objects.Request;
 import models.objects.Traject;
+import models.objects.User;
 
 public class RequestManager implements IRequestManager{
 	
@@ -44,8 +47,8 @@ public class RequestManager implements IRequestManager{
      * sont sur la base de donnée
      */
     public List<Request> getlist(){
-        //TODO
-        return null;
+        User user = User.find.where().like("login", session("username")).findUnique();
+    	return user.getRequest();
     }
 	
 	/**
