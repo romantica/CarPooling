@@ -39,7 +39,7 @@ public class TrajectManager extends ITrajectManager {
 		l.lock();
 
 		int seat =  traj.getProposal().getAvailableSeats();
-		if(seat > 0){
+		if(seat > 0 || user.getBalance() < traj.getReservedSeats()*traj.getTotalCost()){
 
 			traj.getDeparturePP().save();
 			traj.getArrivalPP().save();
@@ -63,7 +63,11 @@ public class TrajectManager extends ITrajectManager {
 
 		}
 		else{
-			throw new Exception("Il n'y a plus de place dans la voiture");
+			if(seat > 0) {
+				throw new Exception("Il n'y a plus de place dans la voiture");
+			} else {
+				throw new Exception("Vous n'avez pas assez d'argent pour ce trajet.");
+			}
 		}
 
 		l.unlock();

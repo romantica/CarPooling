@@ -8,8 +8,9 @@ import models.objects.Traject;
 public interface IRequestManager{
 	/**
 	 * Enregistre la requete dans la base de donnees
+	 * @throws Exception 
 	 */
-	public void recordRequest(Request request);
+	public void recordRequest(Request request) throws Exception;
 
 	/**
 	 * Lance le matching pour la requete et renvoie
@@ -19,6 +20,7 @@ public interface IRequestManager{
 	
 	/**
 	 * Lance un timer pour faire un matching plus tard.
+	 * @throws Exception 
 	 */
-	public void matchLater(Request request);
+	public void matchLater(Request request) throws Exception;
 }

@@ -34,11 +34,16 @@ public class RequestManager implements IRequestManager{
 
 	/**
 	 * Enregistre la requete dans la base de donnees
+	 * @throws Exception 
 	 */
-	public void recordRequest(Request request){
-		request.getUser().addRequest(request);
-		request.save();
-		request.getUser().save();
+	public void recordRequest(Request request) throws Exception {
+		if(request.getUser().getBalance() < request.getNecessarySeats()*request.getTolerancePrice()){
+			throw new Exception("Vous n'avez pas assez d'argent.");
+		} else {
+			request.getUser().addRequest(request);
+			request.save();
+			request.getUser().save();
+		}
 	}
 
     /**
@@ -76,8 +81,9 @@ public class RequestManager implements IRequestManager{
 
 	/**
 	 * Lance un timer pour faire un matching plus tard.
+	 * @throws Exception 
 	 */
-	public void matchLater(Request request){
+	public void matchLater(Request request) throws Exception{
 		this.recordRequest(request);
 		MatchLaterHandler mlh = new MatchLaterHandler(request);
 		timers.add(mlh);
