@@ -1,5 +1,7 @@
 package controllers;
 
+import models.objects.Assessment;
+import models.objects.Proposal;
 import models.objects.Traject;
 import models.objects.User;
 import play.cache.Cache;
@@ -55,5 +57,36 @@ public class TrajectUI  extends Controller {
             TrajectManager.recordTraject(thistrj,user);
         }catch (Exception e){}
         return redirect("/traject/passanger");
+    }
+    
+    public static Result rate() {
+    	
+    	// Get parameters
+    	DynamicForm form = Form.form().bindFromRequest();
+    	int tid = Integer.parseInt(form.get("id"));
+    	int trate = Integer.parseInt(form.get("rate"));
+    	String comment = form.get("comment");
+    	boolean isPassenger = Boolean.parseBoolean(form.get("isPassenger"));
+    	
+    	// Get concerned driver
+    	User driver;
+    	if (isPassenger) {
+    		for (Traject t : (List<Traject>) Cache.get("trjlist#" + session("username")))
+    			if (t.getId() == tid) {
+    				driver = t.getUser();
+    				break;
+    			}
+    	} else {
+    		for (Proposal p : (List<Proposal>) Cache.get("proplist#" + session("username")))
+    			if (p.getId() == tid) {
+    				driver = p.getUser();
+    				break;
+    			}
+    	}
+    	
+    	// And add a new assesment
+    	//driver.getAssessment().add(new Assessment(tid, comment, isPassenger)); // TODO: implement assessment as list of Assesment in user
+    	
+    	return isPassenger ? redirect("/traject/passanger") : redirect("/traject/driver");
     }
 }
