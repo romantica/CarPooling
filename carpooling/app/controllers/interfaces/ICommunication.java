@@ -113,7 +113,7 @@ public abstract class ICommunication{
 	/**
 	 * Contact le satff en cas de rating negatif.
 	 */
-	public static void helpMeSatff(Traject t){
+	public static void helpMeStaff(Traject t){
 		
 	}
 }

@@ -34,9 +34,8 @@ public class RequestManager implements IRequestManager{
 	 * Enregistre la requete dans la base de donnees
 	 */
 	public void recordRequest(Request request){
-		request.save();
 		request.getUser().addRequest(request);
-		request.getUser().save();
+		request.save();
 	}
 	
 	/**
