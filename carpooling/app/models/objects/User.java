@@ -1,5 +1,6 @@
 package models.objects;
 
+import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.*;
 
@@ -10,6 +11,9 @@ import play.db.ebean.Model;
 @Table(name="User")
 public class User extends Model {
 
+	@Version
+    public Timestamp lastUpdate;
+	
 	@Id
 	private int id;
 	

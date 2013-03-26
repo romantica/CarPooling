@@ -1,5 +1,6 @@
 package models.objects;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.*;
 import play.data.validation.Constraints;
@@ -11,6 +12,9 @@ public class Request extends Model {
 	
 	@Id
 	private int id;
+	
+	@Version
+    public Timestamp lastUpdate;
 	
 	@Constraints.Required
 	private double depCoordinateX, depCoordinateY, arCoordinateX, arCoordinateY;

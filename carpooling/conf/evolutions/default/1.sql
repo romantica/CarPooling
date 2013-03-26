@@ -57,6 +57,7 @@ create table Proposal (
   available_seats           integer,
   car_plate_number          varchar(255),
   user_id                   integer,
+  last_update               datetime not null,
   constraint pk_Proposal primary key (id))
 ;
 
@@ -75,6 +76,7 @@ create table Request (
   tolerance_price           float,
   user_id                   integer,
   traject_id                integer,
+  last_update               datetime not null,
   constraint pk_Request primary key (id))
 ;
 
@@ -86,6 +88,7 @@ create table Traject (
   departure_pp_id           integer,
   arrival_pp_id             integer,
   proposal_id               integer,
+  last_update               datetime not null,
   constraint pk_Traject primary key (id))
 ;
 
@@ -98,6 +101,7 @@ create table User (
   phone_number              varchar(255),
   password                  varchar(255),
   balance                   integer,
+  last_update               datetime not null,
   constraint pk_User primary key (id))
 ;
 
