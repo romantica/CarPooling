@@ -7,6 +7,9 @@
                 <li>@field.name : @field.error</li>
                 }
             }
+            @for(errorstr <- Form.otherError){
+                <li>@errorstr</li>
+            }
         </ul>
     </div>
     <div class="field_container">

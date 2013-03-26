@@ -44,6 +44,22 @@ public class ProposalUI extends Controller {
             return redirect("/");
         FormUI form = formCreate("/proposal/create/submit");
         form.completeForm(Form.form().bindFromRequest());
+        //Check date
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date startdate = null;
+        Date arrivaldate = null;
+        try {
+            startdate = dateFormat.parse(form.getStringField("starthour").replace('T', ' '));
+            arrivaldate = dateFormat.parse(form.getStringField("arrivalhour").replace('T', ' '));
+        } catch (Exception e) {
+        }
+        if (arrivaldate.compareTo(startdate) < 0)
+            form.otherError.add("Arrival time before departure.");
+        if (startdate.compareTo(new Date()) < 0)
+            form.otherError.add("Start time must be after now");
+        if (arrivaldate.compareTo(new Date()) < 0)
+            form.otherError.add("Arrival time must be after now");
+        //Check errors in form
         if (form.isError()){
             return ok(create.render(session.getUsername(), null, form));
         }
@@ -77,14 +93,6 @@ public class ProposalUI extends Controller {
                 new Coordinate(form.getStringField("tocoord"))
         );
         //Create Itinerary object
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        Date startdate = null;
-        Date arrivaldate = null;
-        try {
-            startdate = dateFormat.parse(form.getStringField("starthour").replace('T', ' '));
-            arrivaldate = dateFormat.parse(form.getStringField("arrivalhour").replace('T', ' '));
-        } catch (Exception e) {
-        }
         Itinerary depItin = new Itinerary(startdate, startdate, departure);
         Itinerary arrItin = new Itinerary(arrivaldate, arrivaldate, arrival);
         prop.addItinerary(depItin);

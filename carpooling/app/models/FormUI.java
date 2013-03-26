@@ -13,12 +13,14 @@ public class FormUI {
     public String meth;
     public String name;
     public String id = "1";
+    public ArrayList<String> otherError;
 	private List<Field> fields;
 
     public FormUI(String action, String meth){
         this.action = action;
         this.meth = meth;
 		this.fields = new ArrayList<Field>();
+        this.otherError = new ArrayList<String>();
     }
 	
 	public FormUI(String action) {
@@ -70,6 +72,8 @@ public class FormUI {
 		for (Field f : this.fields)
 			if (f.isError)
 				return true;
+        if (!otherError.isEmpty())
+            return true;
 		return false;
 	}
 }
