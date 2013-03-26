@@ -36,15 +36,16 @@ public class TrajectManager extends ITrajectManager {
 			traj.getProposal().addTraject(traj);
 			traj.getUser().addTraject(traj);
 			
+			Ebean.save(traj.getRequest());
 			traj.getRequest().setTraject(traj);
-			
-			Payment.debit(traj.getUser(), (int)traj.getTotalCost());
 
 			Ebean.save(traj);
 			Ebean.save(traj.getProposal());
-			Ebean.save(traj.getUser());
 			Ebean.save(traj.getRequest());
-			
+			Ebean.save(traj.getUser());
+
+			Payment.debit(traj.getUser(), (int)traj.getTotalCost());
+
 			//Ajout de la proposal pour le timer 
 			for(ReminderHandler t : timers){
 				if(t.getProposal().equals(traj.getProposal())){
