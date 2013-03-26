@@ -5,6 +5,7 @@ import static play.mvc.Controller.session;
 import java.util.List;
 
 import models.objects.Car;
+import models.objects.Proposal;
 import models.objects.User;
 import play.db.ebean.Model;
 import controllers.interfaces.IUserManager;

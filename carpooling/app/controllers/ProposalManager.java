@@ -4,10 +4,12 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.objects.Car;
 import models.objects.Coordinate;
 import models.objects.Itinerary;
 import models.objects.PickupPoint;
 import models.objects.Proposal;
+import models.objects.Request;
 import models.objects.Traject;
 import models.objects.User;
 import controllers.interfaces.ICommunication;
@@ -69,14 +71,15 @@ public class ProposalManager implements controllers.interfaces.IProposalManager{
 //		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Proposal> getProposalList(User user) {
-		List<Proposal> result = Proposal.findAll();
-		for(int i = 0; i < result.size(); i++){
-			if(result.get(i).getUser().getId() != user.getId()){
-				result.remove(i);
-			}
+		List<Proposal> result = Proposal.find.where().eq("user_id", user.getId()).findList();
+		int i = 0;
+		for(Proposal j: result){
+			j.setCar(Car.find.where().eq("plate_number", result.get(i).getCar().getPlateNumber()).findUnique());
+			j.setUser(user);
+			result.set(i, j);
+			i++;
 		}
 		return result;
 		
