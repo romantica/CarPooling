@@ -7,6 +7,7 @@ import java.util.concurrent.locks.*;
 
 import com.avaje.ebean.Ebean;
 
+import models.objects.Assessment;
 import models.objects.Proposal;
 import models.objects.Traject;
 import models.objects.User;
@@ -109,14 +110,18 @@ public class TrajectManager extends ITrajectManager {
 		}
 	}
 
-	public static void arrivalNotification(Traject traj, short rating) {
+	public static void arrivalNotification(Traject traj, short rating, String comment) {
 		if(rating < 0){
 			ICommunication.helpMeStaff(traj);
 			return;
 		}
 
 		User driver = traj.getProposal().getUser();
-		driver.getAssessment().setRating(driver.getAssessment().getRating()+rating);
+		//driver.getAssessment().setRating(driver.getAssessment().getRating()+rating);
+		Assessment a = new Assessment(rating, comment, true);
+		a.save();
+		driver.addAssessment(a);
+		driver.update();
 		IPayment.credit(driver, (int)traj.getTotalCost());
 		Traject.delete(traj);
 	}

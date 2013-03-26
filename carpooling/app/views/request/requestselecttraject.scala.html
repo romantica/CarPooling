@@ -12,6 +12,7 @@
 			@for(t <- trajects) {
 				{
 					driver : 	"@t.getProposal().getUser().getLogin().replaceAll("\"", "&quot;")",
+					driverRate:	@t.getProposal().getUser().getMeanRating(),
 					price : 	"@t.getTotalCost()",
 					from : 		new google.maps.LatLng(@t.getDeparturePP().getPickupPoint().getCoordinates().getX() , @t.getDeparturePP().getPickupPoint().getCoordinates().getY()),
 					to : 		new google.maps.LatLng(@t.getArrivalPP().getPickupPoint().getCoordinates().getX() , @t.getArrivalPP().getPickupPoint().getCoordinates().getY()),

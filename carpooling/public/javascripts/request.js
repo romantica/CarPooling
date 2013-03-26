@@ -6,7 +6,7 @@ var TrajectList = function(container) {
 	
 	this.Add = function(t) {
 		this.container.innerHTML+= "<div class='choice' id='choice_"+t.id+"' onclick='calcRoute(trajects["+t.id+"]);'>"+
-			"Traject from <b>"+ t.fromName + "</b> to <b>" + t.toName + "</b> by " + t.driver + " (" + t.price + "€)" +
+			"Traject from <b>"+ t.fromName + "</b> to <b>" + t.toName + "</b> by " + t.driver + " (" + t.price + "€, mean rating: "+t.driverRate+"/5)" +
 			"</div>";
 	}
 	
