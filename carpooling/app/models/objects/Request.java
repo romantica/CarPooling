@@ -1,5 +1,6 @@
 package models.objects;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.*;
 import play.data.validation.Constraints;
@@ -12,6 +13,9 @@ public class Request extends Model {
 	@Id
 	private int id;
 	
+	@Version
+    public Timestamp lastUpdate;
+	
 	@Constraints.Required
 	private double depCoordinateX, depCoordinateY, arCoordinateX, arCoordinateY;
 	private String departureAddress, arrivalAddress;
@@ -21,7 +25,7 @@ public class Request extends Model {
 	private int necessarySeats, toleranceTime, toleranceWalkDistance;
 	private float tolerancePrice;
 
-    @OneToOne
+    @ManyToOne
 	private User user;
     @OneToOne
 	private Traject traject;

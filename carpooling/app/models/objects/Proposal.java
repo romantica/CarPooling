@@ -1,5 +1,6 @@
 package models.objects;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import javax.persistence.*;
@@ -14,6 +15,9 @@ public class Proposal extends Model{
 	
 	@Id
 	private int id;
+	
+	@Version
+    public Timestamp lastUpdate;
 	
 	private float kmCost;
 	private int availableSeats;
@@ -127,7 +131,6 @@ public class Proposal extends Model{
 	
 	public static void create(Proposal prop) {
 		prop.save();
-		//prop.saveManyToManyAssociations("itinerary");
 	}
 	
 	public static List<Proposal> findAll() {

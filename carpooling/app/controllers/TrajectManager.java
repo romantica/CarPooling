@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.locks.*;
 
+import com.avaje.ebean.Ebean;
+
 import models.objects.Proposal;
 import models.objects.Traject;
 import models.objects.User;
@@ -29,13 +31,16 @@ public class TrajectManager extends ITrajectManager {
 			
 			traj.getDeparturePP().save();
 			traj.getArrivalPP().save();
-			
 			traj.getProposal().setAvailableSeats(seat-1);
-			
+			traj.getProposal().addTraject(traj);
 			traj.getUser().addTraject(traj);
-			traj.save();
+			Ebean.save(traj);
+			Ebean.save(traj.getProposal());
 			
-			//traj.getProposal().save();
+			/*Proposal p = Proposal.find.where().like("id", ""+traj.getProposal().getId()).findUnique();
+			p.setAvailableSeats(seat-1);
+			p.save();*/
+			
 			//traj.getUser().save();
 			
 			Payment.debit(traj.getUser(), (int)traj.getTotalCost());
