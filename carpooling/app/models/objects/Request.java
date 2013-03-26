@@ -13,7 +13,6 @@ public class Request extends Model {
 	private int id;
 	
 	@Constraints.Required
-    @OneToOne
 	private double depCoordinateX, depCoordinateY, arCoordinateX, arCoordinateY;
 	private String departureAddress, arrivalAddress;
 	private Date arrivalTime;

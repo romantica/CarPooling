@@ -18,9 +18,11 @@ public class Traject extends Model {
 	@Constraints.Required
 	private Request request;
 	@Constraints.Required
+	@ManyToOne
 	private User user;
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany
 	private Composition departurePP, arrivalPP;
+	@OneToOne
 	private Proposal proposal;
 	
 	public Traject(int reservedSeats, float totalCost, Request request,

@@ -17,6 +17,7 @@ public class Composition extends Model {
 	private Date time;
 	
 	@Constraints.Required
+	@OneToOne
 	private PickupPoint pickupPoint;
 	
 	public Composition(boolean type, Date time, PickupPoint pickupPoint) {

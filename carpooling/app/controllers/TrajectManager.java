@@ -61,7 +61,6 @@ public class TrajectManager extends ITrajectManager {
      * Retourne le liste des traject de l'utilisateur.
      */
     public static List<Traject> getTrajects(User user){
-    	user = User.find.where().like("login", user.getLogin()).findUnique();
         return user.getTrajects();
     }
 
