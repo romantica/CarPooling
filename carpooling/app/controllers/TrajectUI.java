@@ -85,9 +85,6 @@ public class TrajectUI  extends Controller {
     			}
     	}
     	
-    	// And add a new assesment
-    	//driver.getAssessment().add(new Assessment(tid, comment, isPassenger)); // TODO: implement assessment as list of Assesment in user
-    	
     	
     	return isPassenger ? redirect("/traject/passanger") : redirect("/traject/driver");
     }
