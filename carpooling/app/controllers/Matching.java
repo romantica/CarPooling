@@ -31,14 +31,26 @@ public class Matching
 
 		for (Proposal proposal : proposals)
 		{
-			PickupPoint[] pickupPoints = getPickupPoints(proposal, request); //TODO
-			if (isAMatch(proposal, request, pickupPoints))
+			System.out.println("Proposal itinerary: " + proposal.getItinerary());
+			if ( isSeatsRequestAMatch(proposal, request) && isArrivalTimeAMatch(proposal, request) )
 			{
-				result.add(createTraject(proposal, request, pickupPoints));
+				System.out.println("111");
+				PickupPoint[] pickupPoints = getPickupPoints(proposal, request);
+				System.out.println("PUP : " + pickupPoints[0]);
+				if (pickupPoints != null 
+						&& isTimingAMatch(proposal, request, pickupPoints) 
+						&& isPriceAMatch(proposal, request, pickupPoints))
+				{
+					System.out.println("OK");
+					result.add(createTraject(proposal, request, pickupPoints));
+				}
 			}
 		}
-
-		return sortByTime(result);
+		
+		if (result.isEmpty())
+			return null;
+		else
+			return sortByTime(result);
 	}
 
 	/**
@@ -51,28 +63,6 @@ public class Matching
 	{
 		List<Proposal> proposals = new Model.Finder<Integer,Proposal>(Integer.class,Proposal.class).all();
 		return new ArrayList<Proposal>(proposals);
-	}
-
-	/**
-	 * Determine si une proposal est compatible avec une requete et donc si un
-	 * trajet peut etre cree a partir de celles-ci
-	 * 
-	 * @param proposal : la Proposal que l'on evalue
-	 * @param request : la Request qui donne les criteres
-	 * @param pickupPoints : les PickupPoints de depart et d'arrivee (null au depart, calcules en cours de methode)
-	 * @return un booleen qui determine si un Traject peut etre cree a partir de la Proposal
-	 */
-	public static boolean isAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
-	{
-		if ( !isSeatsRequestAMatch(proposal, request) || !isArrivalTimeAMatch(proposal, request) )
-			return false; //Test des sieges et du temps d'arrivee
-		else
-		{
-			if ( pickupPoints == null || !isTimingAMatch(proposal, request, pickupPoints) || !isPriceAMatch(proposal, request, pickupPoints))
-				return false;
-			else 
-				return true;
-		}
 	}
 
 	/**
@@ -144,8 +134,8 @@ public class Matching
 	 */
 	public static boolean isTimingAMatch(Proposal proposal, Request request, PickupPoint[] pickupPoints)
 	{
-		Date realArrival = proposal.getItinerary(pickupPoints[1]).getArrivalTime();
-		realArrival.setTime((long) (realArrival.getTime() + distance(pickupPoints[1].getCoordinates(), request.getArrivalCoordinates()) * 1000));
+		Date realArrival = new Date(proposal.getItinerary(pickupPoints[1]).getArrivalTime().getTime()
+				+ (long) distance(pickupPoints[1].getCoordinates(), request.getArrivalCoordinates()) * 1000);
 		
 		return !(getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), true).before(realArrival)
 					|| getDateAndTolerance(request.getArrivalTime(), request.getToleranceTime(), false).after(realArrival));

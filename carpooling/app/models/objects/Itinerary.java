@@ -70,4 +70,8 @@ public class Itinerary extends Model {
         '}';
     }
 	
+    public int getId()
+    {
+   	 return this.id;
+    }
 }
