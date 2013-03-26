@@ -26,8 +26,6 @@ public class MatchingTest
 	@Test
 	public void testMatch()
 	{
-		//fail("Not yet implemented");
-		//TODO
 		running(testServer(3333, fakeApplication(inMemoryDatabase())),
 				HTMLUNIT, new Callback<TestBrowser>() {
 					public void invoke(TestBrowser browser) {
@@ -44,7 +42,6 @@ public class MatchingTest
 		PickupPoint pup3 = new PickupPoint(null, null, null, coord3);
 		PickupPoint pup4 = new PickupPoint(null, null, null, coord4);
 		pup1.save();
-		//System.out.println(PickupPoint.find.where().eq("id", pup1.getId()).findUnique().getCoordinateX());
 		pup2.save();
 		pup3.save();
 		pup4.save();
@@ -55,7 +52,6 @@ public class MatchingTest
 		Itinerary itinerary1 = new Itinerary(date11, date12, pup1);
 		Itinerary itinerary2 = new Itinerary(date21, date22, pup2);
 		itinerary1.save();
-		//System.out.println("$$$$$$$" + Itinerary.find.where().eq("id", itinerary1.getId()).findUnique().getPickupPoint().getCoordinateX());
 		itinerary2.save();
 		proposal1.addItinerary(itinerary1);
 		proposal1.addItinerary(itinerary2);
@@ -67,13 +63,13 @@ public class MatchingTest
 		proposal1.save();
 		proposal2.save();
 		proposal3.save();
-		//System.out.println("$$$$$$$" + Proposal.find.where().eq("id", proposal1.getId()).findUnique().getItinerary().getFirst().getPickupPoint().getCoordinateX());
 		
 		//sièges
-		Request request = new Request(coord1, coord2, null, null, date21, 2, 0, 0, 0, null, null);
-		System.out.println("Match result : " + Matching.match(request));
-		//assertEquals(Matching.match(request).get(0).getProposal(), proposal3);
-					}});
+		Request request = new Request(coord1, coord2, null, null, date22, 2, 0, 0, 0, null, null);
+		System.out.println("Match result : " + Matching.match(request).get(0));
+		Traject tr = Matching.createTraject(proposal3, request, Matching.getPickupPoints(proposal3, request));
+		//assertEquals(Matching.match(request).get(0).getProposal(), tr.getProposal());
+		}});
 	}
 	
 	@Test
@@ -260,19 +256,19 @@ public class MatchingTest
 		assertEquals(Matching.sortByTime(list1), list2);
 	}
 	
-	/*
+	
 	@Test
 	public void testSortByDistance()
 	{
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
 
 	@Test
 	public void testSortByPrice()
 	{
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 	}
-	*/
+	
 	
 	@Test
 	public void testDistance()
