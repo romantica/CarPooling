@@ -15,10 +15,7 @@ import play.mvc.Result;
 import views.html.request.*;
 
 import models.*;
-import models.objects.Composition;
 import models.objects.Coordinate;
-import models.objects.PickupPoint;
-import models.objects.Proposal;
 import models.objects.Request;
 import models.objects.Traject;
 
@@ -210,4 +207,41 @@ public class RequestUI extends Controller {
 		
 		return redirect("/traject"); 
 	}
+
+
+    public static Result view(){
+        // Check if user is connected
+        Login sess = new Login();
+        if (!sess.isLogged())
+            return redirect("/");
+        RequestManager RM = new RequestManager();
+        List<Request> reqlist =  RM.getlist();
+        Cache.set("reqlist#" + sess.getUsername(), reqlist, 10 * 60);
+        return ok(list.render(sess.getUsername(), reqlist));
+    }
+
+    public static Result remove(){
+        Login sess = new Login();
+        if (!sess.isLogged())
+            return redirect("/");
+        //Get id coming from get
+        DynamicForm form = Form.form().bindFromRequest();
+        int id = Integer.parseInt(form.get("id"));
+        //Get cache
+        List<Request> reqlist = (List<Request>) Cache.get("proplist#" + session("username"));
+        //Search request to remove in cache with ID
+        Request thisreq = null;
+        for(Request req: reqlist){
+            if(req.getId() == id){
+                thisreq = req;
+            }
+        }
+        //If id is not in cache so it's a fake remove propsal
+        if (thisreq == null)
+            return ok("FAKE");
+        //Remove proposal
+        RequestManager RM = new RequestManager();
+        RM.deleteRequest(thisreq);
+        return redirect("/traject/request");
+    }
 }

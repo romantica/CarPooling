@@ -1,0 +1,18 @@
+@(Req: models.objects.Request)
+
+<div class="block">
+    <dt>Departure address</dt>
+    <dt>@Req.getDepartureAddress()</dt>
+    <dt>Arrival address</dt>
+    <dt>@Req.getArrivalAddress()</dt>
+    <dt>Arrival time</dt>
+    <dt>@Req.getArrivalTime()</dt>
+    <dt>Seats</dt>
+    <dt>@Req.getNecessarySeats()</dt>
+    <dt>Time tolerance</dt>
+    <dt>@Req.getToleranceTime()</dt>
+    <dt>Walk distance</dt>
+    <dt>@Req.getToleranceWalkDistance()</dt>
+    <dt>Max price</dt>
+    <dt>@Req.getTolerancePrice()</dt>
+</div>
