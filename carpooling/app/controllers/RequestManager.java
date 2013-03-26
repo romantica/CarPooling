@@ -51,6 +51,7 @@ public class RequestManager implements IRequestManager{
 			}
 		}
 		request.getUser().getRequest().remove(request);
+		request.getUser().save();
 		request.delete();
 	}
 
@@ -66,6 +67,7 @@ public class RequestManager implements IRequestManager{
 	 * Lance un timer pour faire un matching plus tard.
 	 */
 	public void matchLater(Request request){
+		this.recordRequest(request);
 		MatchLaterHandler mlh = new MatchLaterHandler(request);
 		timers.add(mlh);
 		mlh.execute();
@@ -90,7 +92,7 @@ public class RequestManager implements IRequestManager{
 		}
 
 		public void execute(){
-			if(stop) return;
+			if(stop || request.getArrivalTime().after(new Date())) return;
 			ArrayList<Traject> ps = Matching.match(request);
 			if( ps == null || ps.size() == 0){
 				//restart

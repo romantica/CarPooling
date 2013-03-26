@@ -31,17 +31,13 @@ public class Matching
 
 		for (Proposal proposal : proposals)
 		{
-			System.out.println("Proposal itinerary: " + proposal.getItinerary());
 			if ( isSeatsRequestAMatch(proposal, request) && isArrivalTimeAMatch(proposal, request) )
 			{
-				System.out.println("111");
 				PickupPoint[] pickupPoints = getPickupPoints(proposal, request);
-				System.out.println("PUP : " + pickupPoints[0]);
-				if (pickupPoints != null 
+				if (pickupPoints[0] != null 
 						&& isTimingAMatch(proposal, request, pickupPoints) 
 						&& isPriceAMatch(proposal, request, pickupPoints))
 				{
-					System.out.println("OK");
 					result.add(createTraject(proposal, request, pickupPoints));
 				}
 			}

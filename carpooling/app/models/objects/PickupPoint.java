@@ -89,7 +89,7 @@ public class PickupPoint extends Model {
 
 	public Coordinate getCoordinates() {
         if (coordinates == null){
-            return new Coordinate(getCoordinateX(), getCoordinateY());
+      	  return new Coordinate(getCoordinateX(), getCoordinateY());
         }
 		return coordinates;
 	}
@@ -165,7 +165,7 @@ public class PickupPoint extends Model {
         "name='" + name + '\'' +
         ", description='" + description + '\'' +
         ", address='" + address + '\'' +
-        ", coordinates=" + coordinates +
+        ", coordinates=" + Coordinatex + "," + Coordinatey +
         '}';
     }
     
