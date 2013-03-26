@@ -3,27 +3,40 @@ div#leftChooseTraject {
 	float: left;
 	width: 250px;
 	height: 500px;
-	background-color: lightgray;
 	margin-right: 5px;
+    overflow: auto;
+    -webkit-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -moz-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -o-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    -ms-box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    box-shadow: inset rgba(100, 100, 100, 0.5) 0 1px 5px;
+    border-radius: 5px;
+    background-color: #EEE;
+    border: #CCC 1px solid;
 }
 
 div#leftChooseTraject div#choices {
-	margin: 5px;
-	font-family: "Segoe UI", Calibri, Arial;
+    font-size: 12px;
+    border-bottom: #CCC 1px solid;
+
+}
+div#leftChooseTraject div#choices:hover{
+    background:#FFF;
+    -webkit-box-shadow: #BBB 0 0px 5px;
+    -moz-box-shadow:#BBB 0 0px 5px;
+    -o-box-shadow: #BBB 0 0px 5px;
+    -ms-box-shadow: #BBB 0 0px 5px;
+    box-shadow: #BBB 0 0px 5px;
 }
 
 div#leftChooseTraject div#choices div.choice {
 	cursor: pointer;
-	padding: 5px;
-	border: 1px solid transparent;
-}
-
-div#leftChooseTraject div#choices div.choice:hover {
-	background-color: darkgray;
+	padding: 10px;
 }
 
 div#leftChooseTraject div#static {
 	padding: 5px;
+    margin-top: 15px;
 	text-align: justify;
 	line-height: 150%;
 }
