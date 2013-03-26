@@ -122,6 +122,8 @@ public class Traject extends Model {
 		Ebean.save(traj.getProposal());
 		traj.getUser().removeTraject(traj);
 		traj.getUser().save();
+		traj.getRequest().setTraject(null);
+		traj.getRequest().save();
 		traj.delete();
 		traj.getArrivalPP().delete();
 		traj.getDeparturePP().delete();
