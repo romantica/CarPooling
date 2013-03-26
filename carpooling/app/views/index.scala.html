@@ -1,4 +1,11 @@
 @(Username: String)
 @main(title = "Home", Username = Username) {
-        <h1>HOME</h1>
+        <h1 style="text-align: center; margin: 50px; font-size: 25px;">Welcome</h1>
+        <h2 style="text-align: center; margin: 30px;"> A simple, easy and environmentally friendly web application.</h2>
+
+        @if(Username == null){
+            <a href="/user/create" class="button" style="font-size: 16px; color: rgb(81, 163, 25); text-shadow: rgb(180, 227, 145) 0px 1px 0px; display:block; text-align: center; margin: 20px;">
+                Register for free here
+            </a>
+        }
 }
