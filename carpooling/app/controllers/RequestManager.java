@@ -11,7 +11,6 @@ import controllers.interfaces.ITimer;
 import controllers.interfaces.IHandler;
 import controllers.interfaces.ICommunication;
 
-import models.objects.Coordinate;
 import models.objects.Request;
 import models.objects.Traject;
 import models.objects.User;
