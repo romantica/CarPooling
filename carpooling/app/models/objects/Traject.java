@@ -1,7 +1,7 @@
 package models.objects;
 
 import java.sql.Timestamp;
-import java.util.LinkedList;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -100,6 +100,10 @@ public class Traject extends Model {
 	public Composition getArrivalPP() {
 		return arrivalPP;
 	}
+	
+	public boolean isPastTraject() {
+		return this.getArrivalPP().getTime().before(new Date());
+	}
 
 	public void setArrivalPP(Composition arrivalPP) {
 		this.arrivalPP = arrivalPP;
@@ -127,5 +131,13 @@ public class Traject extends Model {
 		traj.delete();
 		traj.getArrivalPP().delete();
 		traj.getDeparturePP().delete();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == this) return true;
+		if (!(o instanceof Traject)) return false;
+		Traject t = (Traject) o;
+		return this.getId() == t.getId();
 	}
 }

@@ -27,12 +27,18 @@
             </div>
             <div class="datalist" id="list_@traj.getId()" style="display:none;">
                 <ul class="functionbar">
+					@if(traj.isPastTraject()) {} <!-- Empty for tests, should englobe next li in production -->
 					<li><a href="javascript:rateWindow(@traj.getId())">Rate this driver</a></li>
+					
                     <li><a href="/traject/remove?id=@traj.getId()">Remove</a></li>
                 </ul>
+<<<<<<< HEAD
 				<form method="post" action="/traject/rate" id="rateDiv_@traj.getId()" class="ratingform">
-                    <input type="hidden" name="isPassenger" value="false" />
+                    <input type="hidden" name="isPassenger" value="true" />
                 </form>
+=======
+				<form method="post" action="/traject/rate" id="rateDiv_@traj.getId()" style="border: 1px solid gray; display: none; padding: 5px; margin-top: 15px;"><input type="hidden" name="isPassenger" value="true" /></form>
+>>>>>>> Improve rating
                 <div>
                 @view(traj)
                 </div>

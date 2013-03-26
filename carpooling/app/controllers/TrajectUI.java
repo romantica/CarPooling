@@ -1,6 +1,5 @@
 package controllers;
 
-import models.objects.Assessment;
 import models.objects.Proposal;
 import models.objects.Traject;
 import models.objects.User;
@@ -64,7 +63,7 @@ public class TrajectUI  extends Controller {
     	// Get parameters
     	DynamicForm form = Form.form().bindFromRequest();
     	int tid = Integer.parseInt(form.get("id"));
-    	int trate = Integer.parseInt(form.get("rate"));
+    	short trate = Short.parseShort(form.get("rate"));
     	String comment = form.get("comment");
     	boolean isPassenger = Boolean.parseBoolean(form.get("isPassenger"));
     	
@@ -73,6 +72,7 @@ public class TrajectUI  extends Controller {
     	if (isPassenger) {
     		for (Traject t : (List<Traject>) Cache.get("trjlist#" + session("username")))
     			if (t.getId() == tid) {
+    				TrajectManager.arrivalNotification(t, trate, comment);
     				driver = t.getProposal().getUser();
     				break;
     			}
@@ -87,6 +87,7 @@ public class TrajectUI  extends Controller {
     	
     	// And add a new assesment
     	//driver.getAssessment().add(new Assessment(tid, comment, isPassenger)); // TODO: implement assessment as list of Assesment in user
+    	
     	
     	return isPassenger ? redirect("/traject/passanger") : redirect("/traject/driver");
     }

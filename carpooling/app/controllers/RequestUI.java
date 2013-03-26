@@ -174,7 +174,7 @@ public class RequestUI extends Controller {
 		}
 		requestManager.recordRequest(request);
         
-		return redirect("/traject");
+		return redirect("/traject/passanger");
 	}
 	
 	public static Result pendingRequest() {
@@ -205,7 +205,7 @@ public class RequestUI extends Controller {
         // And save it to postpone the matching
         requestManager.matchLater(request);
 		
-		return redirect("/traject"); 
+		return redirect("/traject/passanger"); 
 	}
 
 

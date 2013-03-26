@@ -119,6 +119,12 @@ create table Proposal_Itinerary (
   constraint pk_Proposal_Itinerary primary key (Proposal_id, Itinerary_id))
 ;
 
+create table User_Assessment (
+  User_id                        integer not null,
+  Assessment_id                  integer not null,
+  constraint pk_User_Assessment primary key (User_id, Assessment_id))
+;
+
 create table User_Car (
   User_id                        integer not null,
   Car_plate_number               varchar(255) not null,
@@ -175,6 +181,10 @@ alter table Proposal_Itinerary add constraint fk_Proposal_Itinerary_Proposal_01 
 
 alter table Proposal_Itinerary add constraint fk_Proposal_Itinerary_Itinerary_02 foreign key (Itinerary_id) references Itinerary (id) on delete restrict on update restrict;
 
+alter table User_Assessment add constraint fk_User_Assessment_User_01 foreign key (User_id) references User (id) on delete restrict on update restrict;
+
+alter table User_Assessment add constraint fk_User_Assessment_Assessment_02 foreign key (Assessment_id) references Assessment (id) on delete restrict on update restrict;
+
 alter table User_Car add constraint fk_User_Car_User_01 foreign key (User_id) references User (id) on delete restrict on update restrict;
 
 alter table User_Car add constraint fk_User_Car_Car_02 foreign key (Car_plate_number) references Car (plate_number) on delete restrict on update restrict;
@@ -218,6 +228,8 @@ drop table Request;
 drop table Traject;
 
 drop table User;
+
+drop table User_Assessment;
 
 drop table User_Car;
 
