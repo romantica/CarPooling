@@ -38,6 +38,15 @@ public class RequestManager implements IRequestManager{
 		request.save();
 		request.getUser().save();
 	}
+
+    /**
+     * retourne la liste de toutes les request qui
+     * sont sur la base de donnée
+     */
+    public List<Request> getlist(){
+        //TODO
+        return null;
+    }
 	
 	/**
 	 * Supprime la requete dans la base de donnees
@@ -71,12 +80,6 @@ public class RequestManager implements IRequestManager{
 		MatchLaterHandler mlh = new MatchLaterHandler(request);
 		timers.add(mlh);
 		mlh.execute();
-	}
-	
-	public static void test(){
-		RequestManager rm = new RequestManager();
-		Request r = new Request(new Coordinate(), new Coordinate(), "a", "b", new Date(), 5, 10, 10, 10, null, null);
-		rm.recordRequest(r);
 	}
 	
 	
