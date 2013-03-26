@@ -205,7 +205,7 @@ public class RequestUI extends Controller {
         // And save it to postpone the matching
         requestManager.matchLater(request);
 		
-		return redirect("/traject/passanger"); 
+		return redirect("/traject/request");
 	}
 
 
@@ -228,7 +228,7 @@ public class RequestUI extends Controller {
         DynamicForm form = Form.form().bindFromRequest();
         int id = Integer.parseInt(form.get("id"));
         //Get cache
-        List<Request> reqlist = (List<Request>) Cache.get("proplist#" + session("username"));
+        List<Request> reqlist = (List<Request>) Cache.get("reqlist#" + session("username"));
         //Search request to remove in cache with ID
         Request thisreq = null;
         for(Request req: reqlist){
