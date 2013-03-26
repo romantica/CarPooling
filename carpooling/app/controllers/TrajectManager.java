@@ -88,22 +88,22 @@ public class TrajectManager extends ITrajectManager {
 		
 		IPayment.credit(traj.getUser(), (int)traj.getTotalCost());
 		ICommunication.requestCancelled(traj.getUser(), traj);
-		traj.delete();
+		Traject.delete(traj);
 
 	}
 
 	public static void proposalCancelled(Proposal prop){
 		for(Traject t : prop.getTraject()){
 			IPayment.credit(t.getUser(), (int)t.getTotalCost());
-			ICommunication.proposalCancelled(t.getUser(), t);
-			t.delete();
+			ICommunication.proposalCancelled(t.getUser(), User.find.where().eq("id", prop.getUser().getId()).findUnique(), t);
+			Traject.delete(t);
 		}
 	}
 
 	public static void cancelTraject(User driver, List<Traject> trajects) {
 		for(Traject t : trajects){
-			ICommunication.proposalCancelled(t.getUser(), t);
-			t.delete();
+			ICommunication.proposalCancelled(t.getUser(), driver, t);
+			Traject.delete(t);
 		}
 	}
 
@@ -116,7 +116,7 @@ public class TrajectManager extends ITrajectManager {
 		User driver = traj.getProposal().getUser();
 		driver.getAssessment().setRating(driver.getAssessment().getRating()+rating);
 		IPayment.credit(driver, (int)traj.getTotalCost());
-		traj.delete();
+		Traject.delete(traj);
 	}
 
 
