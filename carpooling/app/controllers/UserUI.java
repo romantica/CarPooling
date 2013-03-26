@@ -81,12 +81,12 @@ public class UserUI extends Controller {
 	private static FormUI createForm(){
 		FormUI form = new FormUI("/user/create");
 		form.id = "newUser";
-		form.addField(new Field("text", "login", "login", true, null, null));
-		form.addField(new Field("password", "password", "pwd", true, null, null));
-		form.addField(new Field("text", "first name", "first", true, null, null));
-		form.addField(new Field("text", "last name", "last", true, null, null));
-		form.addField(new Field("text", "email", "email", true, null, null));//"Wrong type of email address", "[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}"));
-		form.addField(new Field("text", "phone number", "phone", true, null, null));
+		form.addField(new Field("text", "Login", "login", true, "must be alphanumeric", "[A-z0-9]{4,50}"));
+		form.addField(new Field("password", "Password", "pwd", true, "must be alphanumeric", "[A-z0-9]{4,50}"));
+		form.addField(new Field("text", "First name", "first", true, "Invalid name", "[A-z0-9\\w\\s'\"\\-_&@!?()\\[\\]-]{4,50}"));
+		form.addField(new Field("text", "Last name", "last", true, "Invalid name", "[A-z0-9\\w\\s'\"\\-_&@!?()\\[\\]-]{4,50}"));
+		form.addField(new Field("text", "Email", "email", true, "Invalid email format","^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$"));//"Wrong type of email address", "[A-Z0-9._%-]+@[A-Z0-9.-]+\\.[A-Z]{2,4}"));
+		form.addField(new Field("text", "Phone number", "phone", true, null, null));
 		Field nextButton = new Field();
         nextButton.value = "submit";
         nextButton.id = "submit";
@@ -160,8 +160,8 @@ public class UserUI extends Controller {
     private static FormUI carForm(){
     	FormUI form = new FormUI("/user/car");
     	form.id = "carForm";
-   		form.addField(new Field("text", "model", "model", true, null, null));
-   		form.addField(new Field("text", "color", "color", true, "Wrong color", "[a-z]+"));
+   		form.addField(new Field("text", "Model", "model", true, null, null));
+   		form.addField(new Field("text", "Color", "color", true, "Wrong color", "[a-z]+"));
    		form.addField(new Field("text", "Plate Number", "plate", true, "Wrong plate number", "[A-Z][A-Z][A-Z]\\-[0-9][0-9][0-9]"));
    		Field nextButton = new Field();
         nextButton.value = "submit";
