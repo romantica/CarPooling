@@ -5,6 +5,8 @@ import java.util.LinkedList;
 
 import javax.persistence.*;
 
+import com.avaje.ebean.Ebean;
+
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -113,6 +115,10 @@ public class Traject extends Model {
 	public static Finder<Integer, Traject> find = new Finder<Integer, Traject>(Integer.class, Traject.class);
 	
 	public static void delete(Traject traj) {
+		int seat =  traj.getProposal().getAvailableSeats();
+		traj.getProposal().setAvailableSeats(seat+1);
+		traj.getProposal().removeTraject(traj);
+		Ebean.save(traj.getProposal());
 		traj.getUser().removeTraject(traj);
 		traj.getUser().save();
 		traj.delete();
