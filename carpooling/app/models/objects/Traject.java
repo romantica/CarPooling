@@ -21,6 +21,7 @@ public class Traject extends Model {
 	private float totalCost;
 	
 	@Constraints.Required
+	@OneToOne
 	private Request request;
 	@Constraints.Required
 	@ManyToOne

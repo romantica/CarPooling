@@ -31,15 +31,19 @@ public class TrajectManager extends ITrajectManager {
 			
 			traj.getDeparturePP().save();
 			traj.getArrivalPP().save();
+			
 			traj.getProposal().setAvailableSeats(seat-1);
 			traj.getProposal().addTraject(traj);
 			traj.getUser().addTraject(traj);
+			
+			traj.getRequest().setTraject(traj);
 			
 			Payment.debit(traj.getUser(), (int)traj.getTotalCost());
 
 			Ebean.save(traj);
 			Ebean.save(traj.getProposal());
 			Ebean.save(traj.getUser());
+			Ebean.save(traj.getRequest());
 			
 			//Ajout de la proposal pour le timer 
 			for(ReminderHandler t : timers){
@@ -50,8 +54,6 @@ public class TrajectManager extends ITrajectManager {
 				ReminderHandler rh = new ReminderHandler(traj.getProposal());
 				timers.add(rh);
 				timer.wakeAtDate(new Date(traj.getArrivalPP().getTime().getTime() - 600), rh );
-				
-				
 			}
 		}
 		else{
@@ -85,6 +87,14 @@ public class TrajectManager extends ITrajectManager {
 		
 		IPayment.credit(traj.getUser(), (int)traj.getTotalCost());
 		ICommunication.requestCancelled(traj.getUser(), traj);
+		
+		traj.getProposal().getTraject().remove(traj);
+		traj.getProposal().save();
+		traj.getUser().getTrajects().remove(traj);
+		traj.getUser().save();
+		traj.getRequest().setTraject(null);
+		//TODO : quid de ce null?
+		traj.getRequest().save();
 		traj.delete();
 
 	}

@@ -84,6 +84,7 @@ create table Traject (
   id                        integer auto_increment not null,
   reserved_seats            integer,
   total_cost                float,
+  request_id                integer,
   user_id                   integer,
   departure_pp_id           integer,
   arrival_pp_id             integer,
@@ -153,14 +154,16 @@ alter table Request add constraint fk_Request_user_5 foreign key (user_id) refer
 create index ix_Request_user_5 on Request (user_id);
 alter table Request add constraint fk_Request_traject_6 foreign key (traject_id) references Traject (id) on delete restrict on update restrict;
 create index ix_Request_traject_6 on Request (traject_id);
-alter table Traject add constraint fk_Traject_user_7 foreign key (user_id) references User (id) on delete restrict on update restrict;
-create index ix_Traject_user_7 on Traject (user_id);
-alter table Traject add constraint fk_Traject_departurePP_8 foreign key (departure_pp_id) references Composition (id) on delete restrict on update restrict;
-create index ix_Traject_departurePP_8 on Traject (departure_pp_id);
-alter table Traject add constraint fk_Traject_arrivalPP_9 foreign key (arrival_pp_id) references Composition (id) on delete restrict on update restrict;
-create index ix_Traject_arrivalPP_9 on Traject (arrival_pp_id);
-alter table Traject add constraint fk_Traject_proposal_10 foreign key (proposal_id) references Proposal (id) on delete restrict on update restrict;
-create index ix_Traject_proposal_10 on Traject (proposal_id);
+alter table Traject add constraint fk_Traject_request_7 foreign key (request_id) references Request (id) on delete restrict on update restrict;
+create index ix_Traject_request_7 on Traject (request_id);
+alter table Traject add constraint fk_Traject_user_8 foreign key (user_id) references User (id) on delete restrict on update restrict;
+create index ix_Traject_user_8 on Traject (user_id);
+alter table Traject add constraint fk_Traject_departurePP_9 foreign key (departure_pp_id) references Composition (id) on delete restrict on update restrict;
+create index ix_Traject_departurePP_9 on Traject (departure_pp_id);
+alter table Traject add constraint fk_Traject_arrivalPP_10 foreign key (arrival_pp_id) references Composition (id) on delete restrict on update restrict;
+create index ix_Traject_arrivalPP_10 on Traject (arrival_pp_id);
+alter table Traject add constraint fk_Traject_proposal_11 foreign key (proposal_id) references Proposal (id) on delete restrict on update restrict;
+create index ix_Traject_proposal_11 on Traject (proposal_id);
 
 
 

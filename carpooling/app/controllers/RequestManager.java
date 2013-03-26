@@ -92,8 +92,7 @@ public class RequestManager implements IRequestManager{
 		}
 
 		public void execute(){
-			//TODO si on expire
-			if(stop) return;
+			if(stop || request.getArrivalTime().after(new Date())) return;
 			ArrayList<Traject> ps = Matching.match(request);
 			if( ps == null || ps.size() == 0){
 				//restart

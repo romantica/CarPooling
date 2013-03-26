@@ -53,9 +53,9 @@ public class TrajectUI  extends Controller {
         if (thistrj == null)
             return ok("FAKE");
         //Remove traject
-        try{
-            TrajectManager.recordTraject(thistrj,user);
-        }catch (Exception e){}
+        //TrajectManager.recordTraject(thistrj,user);
+        TrajectManager.cancelTraject(thistrj);
+
         return redirect("/traject/passanger");
     }
     
