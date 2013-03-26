@@ -136,7 +136,7 @@ public class RequestUI extends Controller {
 		// Forge request and perform match
 		Request request = new Request(new Coordinate(form.getFloatField("fromcoordY"), form.getFloatField("fromcoordX")), new Coordinate(form.getFloatField("tocoordY"), form.getFloatField("tocoordX")), 
 				form.getStringField("fromadd"), form.getStringField("toadd"), 
-				arrivalTime, form.getIntField("seats"), form.getIntField("toleranceTime"), form.getIntField("maxWalkingDistance"), form.getFloatField("maxPrice"), 
+				arrivalTime, form.getIntField("seats"), form.getIntField("toleranceTime") * 60000, form.getIntField("maxWalkingDistance") * 1000, form.getFloatField("maxPrice"), 
 				UserManager.getUserLogged(), null);
 		List<Traject> trajects = requestManager.findTrajects(request);
 		

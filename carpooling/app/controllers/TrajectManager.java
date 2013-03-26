@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.locks.*;
 
+import com.avaje.ebean.Ebean;
+
 import models.objects.Proposal;
 import models.objects.Traject;
 import models.objects.User;
@@ -27,12 +29,18 @@ public class TrajectManager extends ITrajectManager {
 		int seat =  traj.getProposal().getAvailableSeats();
 		if(seat > 0){
 			
-			
+			traj.getDeparturePP().save();
+			traj.getArrivalPP().save();
 			traj.getProposal().setAvailableSeats(seat-1);
-			traj.getProposal().save();
-			traj.save();
 			traj.getUser().addTraject(traj);
-			traj.getUser().save();
+			Ebean.save(traj);
+			Ebean.save(traj.getProposal());
+			
+			/*Proposal p = Proposal.find.where().like("id", ""+traj.getProposal().getId()).findUnique();
+			p.setAvailableSeats(seat-1);
+			p.save();*/
+			
+			//traj.getUser().save();
 			
 			Payment.debit(traj.getUser(), (int)traj.getTotalCost());
 			
@@ -101,7 +109,7 @@ public class TrajectManager extends ITrajectManager {
 
 	public static void arrivalNotification(Traject traj, short rating) {
 		if(rating < 0){
-			ICommunication.helpMeSatff(traj);
+			ICommunication.helpMeStaff(traj);
 			return;
 		}
 
@@ -126,7 +134,8 @@ public class TrajectManager extends ITrajectManager {
 		public void execute(){
 			//Communicate
 			if (stop) return;
-			ICommunication.trajectReminder(prop);
+            //TODO: compatibilite
+			//ICommunication.trajectReminder(prop);
 		}
 		
 		public Proposal getProposal(){

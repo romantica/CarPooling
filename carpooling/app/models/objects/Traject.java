@@ -1,5 +1,7 @@
 package models.objects;
 
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 
 import play.data.validation.Constraints;
@@ -12,6 +14,9 @@ public class Traject extends Model {
 	@Id
 	private int id;
 	
+	@Version
+    public Timestamp lastUpdate;
+	
 	private int reservedSeats;
 	private float totalCost;
 	
@@ -20,8 +25,10 @@ public class Traject extends Model {
 	@Constraints.Required
 	@ManyToOne
 	private User user;
-	@ManyToMany
-	private Composition departurePP, arrivalPP;
+	@OneToOne
+	private Composition departurePP;
+	@OneToOne
+	private Composition arrivalPP;
 	@OneToOne
 	private Proposal proposal;
 	
