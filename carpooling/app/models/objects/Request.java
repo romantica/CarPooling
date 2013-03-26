@@ -48,8 +48,11 @@ public class Request extends Model {
 	}
 
 	public void setDepartureCoordinates(Coordinate departureCoordinates) {
-		this.depCoordinateX = departureCoordinates.getX();
-		this.depCoordinateY = departureCoordinates.getY();
+		if (!(departureCoordinates == null))
+		{
+			this.depCoordinateX = departureCoordinates.getX();
+			this.depCoordinateY = departureCoordinates.getY();
+		}
 	}
 
 	public Coordinate getArrivalCoordinates() {
@@ -57,8 +60,11 @@ public class Request extends Model {
 	}
 
 	public void setArrivalCoordinates(Coordinate arrivalCoordinates) {
-		this.arCoordinateX = arrivalCoordinates.getX();
-		this.arCoordinateY = arrivalCoordinates.getY();
+		if (!(arrivalCoordinates == null))
+		{
+			this.arCoordinateX = arrivalCoordinates.getX();
+			this.arCoordinateY = arrivalCoordinates.getY();
+		}
 	}
 
 	public int getId() {
