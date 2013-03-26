@@ -141,6 +141,10 @@ public class User extends Model {
 	public void setTrajects(List<Traject> trajects) {
 		this.trajects = trajects;
 	}
+	
+	public void addTraject(Traject t){
+		this.trajects.add(t);
+	}
 
 	public List<Request> getRequest() {
 		return request;
@@ -148,6 +152,10 @@ public class User extends Model {
 
 	public void setRequest(List<Request> request) {
 		this.request = request;
+	}
+	
+	public void addRequest(Request request){
+		this.request.add(request);
 	}
 	
 	public int getId() {

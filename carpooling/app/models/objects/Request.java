@@ -14,7 +14,7 @@ public class Request extends Model {
 	
 	@Constraints.Required
     @OneToOne
-	private Coordinate departureCoordinates, arrivalCoordinates;
+	private double depCoordinateX, depCoordinateY, arCoordinateX, arCoordinateY;
 	private String departureAddress, arrivalAddress;
 	private Date arrivalTime;
 	private int necessarySeats, toleranceTime, toleranceWalkDistance;
@@ -31,8 +31,8 @@ public class Request extends Model {
 			int toleranceTime, int toleranceWalkDistance, float tolerancePrice,
 			User user, Traject traject) {
 		super();
-		this.departureCoordinates = departureCoordinates;
-		this.arrivalCoordinates = arrivalCoordinates;
+		this.setDepartureCoordinates(departureCoordinates);
+		this.setArrivalCoordinates(arrivalCoordinates);
 		this.departureAddress = departureAddress;
 		this.arrivalAddress = arrivalAddress;
 		this.arrivalTime = arrivalTime;
@@ -45,19 +45,61 @@ public class Request extends Model {
 	}
 
 	public Coordinate getDepartureCoordinates() {
-		return departureCoordinates;
+		return new Coordinate(depCoordinateX, depCoordinateY);
 	}
 
 	public void setDepartureCoordinates(Coordinate departureCoordinates) {
-		this.departureCoordinates = departureCoordinates;
+		this.depCoordinateX = departureCoordinates.getX();
+		this.depCoordinateY = departureCoordinates.getY();
 	}
 
 	public Coordinate getArrivalCoordinates() {
-		return arrivalCoordinates;
+		return new Coordinate(arCoordinateX, arCoordinateY);
 	}
 
 	public void setArrivalCoordinates(Coordinate arrivalCoordinates) {
-		this.arrivalCoordinates = arrivalCoordinates;
+		this.arCoordinateX = arrivalCoordinates.getX();
+		this.arCoordinateY = arrivalCoordinates.getY();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public double getDepCoordinateX() {
+		return depCoordinateX;
+	}
+
+	public void setDepCoordinateX(double depCoordinateX) {
+		this.depCoordinateX = depCoordinateX;
+	}
+
+	public double getDepCoordinateY() {
+		return depCoordinateY;
+	}
+
+	public void setDepCoordinateY(double depCoordinateY) {
+		this.depCoordinateY = depCoordinateY;
+	}
+
+	public double getArCoordinateX() {
+		return arCoordinateX;
+	}
+
+	public void setArCoordinateX(double arCoordinateX) {
+		this.arCoordinateX = arCoordinateX;
+	}
+
+	public double getArCoordinateY() {
+		return arCoordinateY;
+	}
+
+	public void setArCoordinateY(double arCoordinateY) {
+		this.arCoordinateY = arCoordinateY;
 	}
 
 	public String getDepartureAddress() {

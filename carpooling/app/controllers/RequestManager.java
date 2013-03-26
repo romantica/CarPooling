@@ -26,6 +26,8 @@ public class RequestManager implements IRequestManager{
 	 */
 	public void recordRequest(Request request){
 		request.save();
+		request.getUser().addRequest(request);
+		request.getUser().save();
 	}
 	
 	/**

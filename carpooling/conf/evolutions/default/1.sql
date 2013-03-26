@@ -61,8 +61,10 @@ create table Proposal (
 
 create table Request (
   id                        integer auto_increment not null,
-  departure_coordinates_id  integer,
-  arrival_coordinates_id    integer,
+  dep_coordinate_x          double,
+  dep_coordinate_y          double,
+  ar_coordinate_x           double,
+  ar_coordinate_y           double,
   departure_address         varchar(255),
   arrival_address           varchar(255),
   arrival_time              datetime,
@@ -136,14 +138,10 @@ alter table Proposal add constraint fk_Proposal_car_2 foreign key (car_plate_num
 create index ix_Proposal_car_2 on Proposal (car_plate_number);
 alter table Proposal add constraint fk_Proposal_user_3 foreign key (user_id) references User (id) on delete restrict on update restrict;
 create index ix_Proposal_user_3 on Proposal (user_id);
-alter table Request add constraint fk_Request_departureCoordinates_4 foreign key (departure_coordinates_id) references coordinate (id) on delete restrict on update restrict;
-create index ix_Request_departureCoordinates_4 on Request (departure_coordinates_id);
-alter table Request add constraint fk_Request_arrivalCoordinates_5 foreign key (arrival_coordinates_id) references coordinate (id) on delete restrict on update restrict;
-create index ix_Request_arrivalCoordinates_5 on Request (arrival_coordinates_id);
-alter table Request add constraint fk_Request_user_6 foreign key (user_id) references User (id) on delete restrict on update restrict;
-create index ix_Request_user_6 on Request (user_id);
-alter table Request add constraint fk_Request_traject_7 foreign key (traject_id) references Traject (id) on delete restrict on update restrict;
-create index ix_Request_traject_7 on Request (traject_id);
+alter table Request add constraint fk_Request_user_4 foreign key (user_id) references User (id) on delete restrict on update restrict;
+create index ix_Request_user_4 on Request (user_id);
+alter table Request add constraint fk_Request_traject_5 foreign key (traject_id) references Traject (id) on delete restrict on update restrict;
+create index ix_Request_traject_5 on Request (traject_id);
 
 
 
