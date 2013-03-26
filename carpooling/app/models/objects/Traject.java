@@ -20,8 +20,10 @@ public class Traject extends Model {
 	@Constraints.Required
 	@ManyToOne
 	private User user;
-	@ManyToMany
-	private Composition departurePP, arrivalPP;
+	@OneToOne
+	private Composition departurePP;
+	@OneToOne
+	private Composition arrivalPP;
 	@OneToOne
 	private Proposal proposal;
 	

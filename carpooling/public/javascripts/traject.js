@@ -14,6 +14,11 @@ function listdisplay(id){
 }
 
 function rateWindow(id) {
-	document.getElementById("rateDiv").style.display = "block";
-	document.getElementById("rateDiv").innerHTML+= "Rate this driver: <select name='rate'><option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select> / 5 <br /><textarea name='comment'></textarea><input type='hidden' name='id' value='"+id+"' /><input type='submit' value='Confirm' />";
+	document.getElementById("rateDiv_"+id).style.display = "block";
+	document.getElementById("rateDiv_"+id).innerHTML+= "Rate this driver: <select name='rate'><option value='0'>0</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select> / 5 <br /><textarea name='comment' rows='2' cols='50'></textarea><br /><input type='hidden' name='id' value='"+id+"' /><input type='submit' value='Confirm' /><input type='button' value='Cancel' onclick='cancelRating("+id+")' />";
+}
+
+function cancelRating(id) {
+	document.getElementById("rateDiv_"+id).style.display = "none";
+	document.getElementById("rateDiv_"+id).innerHTML = "";
 }

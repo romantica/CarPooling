@@ -73,10 +73,11 @@ public class TrajectUI  extends Controller {
     	if (isPassenger) {
     		for (Traject t : (List<Traject>) Cache.get("trjlist#" + session("username")))
     			if (t.getId() == tid) {
-    				driver = t.getUser();
+    				driver = t.getProposal().getUser();
     				break;
     			}
     	} else {
+    		// Not very useful for now if driver cannot rate passengers
     		for (Proposal p : (List<Proposal>) Cache.get("proplist#" + session("username")))
     			if (p.getId() == tid) {
     				driver = p.getUser();

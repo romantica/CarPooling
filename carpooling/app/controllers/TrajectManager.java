@@ -27,12 +27,16 @@ public class TrajectManager extends ITrajectManager {
 		int seat =  traj.getProposal().getAvailableSeats();
 		if(seat > 0){
 			
+			traj.getDeparturePP().save();
+			traj.getArrivalPP().save();
 			
 			traj.getProposal().setAvailableSeats(seat-1);
-			traj.getProposal().save();
-			traj.save();
+			
 			traj.getUser().addTraject(traj);
-			traj.getUser().save();
+			traj.save();
+			
+			//traj.getProposal().save();
+			//traj.getUser().save();
 			
 			Payment.debit(traj.getUser(), (int)traj.getTotalCost());
 			

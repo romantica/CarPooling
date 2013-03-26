@@ -14,7 +14,7 @@ public class Car extends Model {
 	@Constraints.Required
 	private String plateNumber;
 	private String model, color;
-	@OneToOne
+	//@OneToOne
 	private User user;
 
     public Car(){}
