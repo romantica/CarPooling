@@ -53,4 +53,11 @@ public class Composition extends Model {
 	
 	public static Finder<Integer, Composition> find = new Finder<Integer, Composition>(Integer.class, Composition.class);
 
+	public static void create(Composition compo) {
+		compo.save();
+	}
+	
+	public static void delete(Composition compo) {
+		compo.delete();
+	}
 }

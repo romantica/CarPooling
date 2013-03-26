@@ -17,7 +17,7 @@ public abstract class ICommunication{
         String dest = driver.getEmail();
         int remainingSeats = t.getReservedSeats()-1;
         String subject = "[UCL Carpooling] Request cancelled";
-        String message = "Hello,\n\nThe user "+t.getRequest().getUser().getLogin()+"cancelled its request for the following proposal :\n\nDeparture address : "
+        String message = "Hello,\n\nThe user "+ driver.getLogin() +" cancelled its request for the following proposal :\n\nDeparture address : "
                 +t.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+t.getArrivalPP().getPickupPoint().getAddress()
                 +"\nDeparture time : "+t.getProposal().getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
                 +"\nRemaining reserved seats : "+remainingSeats;
@@ -31,10 +31,10 @@ public abstract class ICommunication{
         mail.send(message);
     }
 
-    public static void proposalCancelled(User passenger, Traject t){
+    public static void proposalCancelled(User passenger, User driver, Traject t){
         String dest = passenger.getEmail();
         String subject = "[UCL Carpooling] Proposal cancelled";
-        String message = "Hello,\n\nThe user "+t.getRequest().getUser().getLogin()+"cancelled the following proposal :\n\nDeparture address : "
+        String message = "Hello,\n\nThe user "+ driver.getLogin() +" cancelled the following proposal :\n\nDeparture address : "
                 +t.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+t.getArrivalPP().getPickupPoint().getAddress()
                 +"\nDeparture time : "+t.getProposal().getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
                 +"\n\nThe corresponding traject is cancelled.\n\nThe UCL Carpooling team";

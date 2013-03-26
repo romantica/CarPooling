@@ -174,6 +174,10 @@ public class User extends Model {
 		this.proposals.remove(prop);
 	}
 	
+	public void removeTraject(Traject traj) {
+		this.trajects.remove(traj);
+	}
+	
 	public static Finder<Integer, User> find = new Finder<Integer, User>(Integer.class, User.class);
 	
     public String toString() {
