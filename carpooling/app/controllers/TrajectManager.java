@@ -101,7 +101,7 @@ public class TrajectManager extends ITrajectManager {
 
 	public static void arrivalNotification(Traject traj, short rating) {
 		if(rating < 0){
-			ICommunication.helpMeSatff(traj);
+			ICommunication.helpMeStaff(traj);
 			return;
 		}
 
@@ -126,7 +126,8 @@ public class TrajectManager extends ITrajectManager {
 		public void execute(){
 			//Communicate
 			if (stop) return;
-			ICommunication.trajectReminder(prop);
+            //TODO: compatibilite
+			//ICommunication.trajectReminder(prop);
 		}
 		
 		public Proposal getProposal(){
