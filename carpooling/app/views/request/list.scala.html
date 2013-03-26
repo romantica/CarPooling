@@ -20,12 +20,14 @@
     } else {
     @for(Req <- ReqList){
         <div class="trajectlist">
-            <div class="datalist" id="list_@Req.getId()" style="display:none;">
+            <div class="datalist" id="list_@Req.getId()">
                 <ul class="functionbar">
-                     <li><a href="/proposal/request/remove?id=@Req.getId()">Remove</a></li>
+                     <li><a href="/traject/request/remove?id=@Req.getId()">Remove</a></li>
                 </ul>
                 <div>
-                    @traject.view_request(Req)
+                    <div class="view">
+                        @traject.view_request(Req)
+                    </div>
                 </div>
             </div>
         </div>

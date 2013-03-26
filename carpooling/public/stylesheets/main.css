@@ -251,14 +251,16 @@ h1 {
 }
 .view dt{
     display: block;
-    width: 125px;
+    width: 150px;
     float: left;
     color: #666;
+    height: 25px;
 }
 .view dd{
     display: block;
     margin-left: 125px;
     color: #333;
+    height: 25px;
 }
 .view img.map{
     display: block;
