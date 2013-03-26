@@ -36,6 +36,7 @@ public class RequestManager implements IRequestManager{
 	public void recordRequest(Request request){
 		request.getUser().addRequest(request);
 		request.save();
+		request.getUser().save();
 	}
 	
 	/**
@@ -49,6 +50,7 @@ public class RequestManager implements IRequestManager{
 				break;
 			}
 		}
+		request.getUser().getRequest().remove(request);
 		request.delete();
 	}
 
@@ -89,7 +91,8 @@ public class RequestManager implements IRequestManager{
 
 		public void execute(){
 			if(stop) return;
-			if( Matching.match(request) == null){
+			ArrayList<Traject> ps = Matching.match(request);
+			if( ps == null || ps.size() == 0){
 				//restart
 				long timeOut = (request.getArrivalTime().getTime() - new Date().getTime() > timeout24) ? timeout24 : timeout2;
 				ITimer timer = new TimerCP();
