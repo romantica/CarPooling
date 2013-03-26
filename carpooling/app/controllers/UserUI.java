@@ -66,6 +66,7 @@ public class UserUI extends Controller {
         user.setEmail(form.getStringField("email"));
         user.setPhoneNumber(form.getStringField("phone"));
         user.setPassword(Login.encoderMD5(form.getStringField("pwd")));
+        user.setBalance(100); // CADEAU
 
         //TODO : call User manager
         
