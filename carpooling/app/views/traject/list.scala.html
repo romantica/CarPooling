@@ -20,8 +20,8 @@
     @for(traj <- TrajList){
         <div class="trajectlist">
             <div class="summary" onclick="listdisplay('@traj.getId()')" id="list_sum_@traj.getId()">
-                <span class="from">@traj.getDeparturePP()getPickupPoint().getAddress()</span>
-                <span class="to">@traj.getArrivalPP()getPickupPoint().getAddress()</span>
+                <span class="from">@traj.getDeparturePP().getPickupPoint().getAddress()</span>
+                <span class="to">@traj.getArrivalPP().getPickupPoint().getAddress()</span>
                 <div class="clearfix"></div>
             </div>
             <div class="datalist" id="list_@traj.getId()" style="display:none;">

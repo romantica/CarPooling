@@ -25,7 +25,7 @@ public class Request extends Model {
 	private int necessarySeats, toleranceTime, toleranceWalkDistance;
 	private float tolerancePrice;
 
-    @OneToOne
+    @ManyToOne
 	private User user;
     @OneToOne
 	private Traject traject;

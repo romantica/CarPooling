@@ -32,6 +32,7 @@ public class TrajectManager extends ITrajectManager {
 			traj.getDeparturePP().save();
 			traj.getArrivalPP().save();
 			traj.getProposal().setAvailableSeats(seat-1);
+			traj.getProposal().addTraject(traj);
 			traj.getUser().addTraject(traj);
 			Ebean.save(traj);
 			Ebean.save(traj.getProposal());
