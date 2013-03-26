@@ -16,6 +16,7 @@ GET     /user/create                controllers.UserUI.create()
 POST	/user/create				controllers.UserUI.createSubmit()
 GET		/user/car					controllers.UserUI.addCar()
 POST	/user/car					controllers.UserUI.recordCar()
+GET		/user/seerating				controllers.UserUI.seeRating(userId: String)
 
 # Prposal
 GET     /proposal                   controllers.ProposalUI.create()
