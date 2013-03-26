@@ -98,7 +98,9 @@ public class RequestManager implements IRequestManager{
 		}
 
 		public void execute(){
-			if(stop || request.getArrivalTime().after(new Date())) return;
+			if(stop || request.getArrivalTime().before(new Date())){
+				return;
+			}
 			ArrayList<Traject> ps = Matching.match(request);
 			if( ps == null || ps.size() == 0){
 				//restart
@@ -116,6 +118,10 @@ public class RequestManager implements IRequestManager{
 		
 		public void stop(){
 			stop = true;
+		}
+		
+		public String toString(){
+			return "request " + request.getDepartureAddress() + " to " + request.getArrivalAddress();
 		}
 
 	}
