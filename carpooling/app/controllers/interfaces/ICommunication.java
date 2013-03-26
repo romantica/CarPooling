@@ -17,7 +17,10 @@ public abstract class ICommunication{
         /*
 		String dest = driver.getEmail();
 		String subject = "[UCL Carpooling] Request cancelled";
-		String message = "";
+		String message = "Hello,\n\nThe user "+t.getRequest().getUser().getLogin()+"cancelled its request for the following proposal :\n\nDeparture address : "
+							+t.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+t.getArrivalPP().getPickupPoint().getAddress()
+							+"\nDeparture time : "+t.getProposal().getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
+							+"\n\nThe UCL Carpooling team";
 		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
 		mail.setSubject(subject);
 		mail.addRecipient(dest);
@@ -30,7 +33,10 @@ public abstract class ICommunication{
         /*
 		String dest = passenger.getEmail();
 		String subject = "[UCL Carpooling] Proposal cancelled";
-		String message = "";
+		String message = "Hello,\n\nThe user "+t.getRequest().getUser().getLogin()+"cancelled the following proposal :\n\nDeparture address : "
+							+t.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+t.getArrivalPP().getPickupPoint().getAddress()
+							+"\nDeparture time : "+t.getProposal().getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
+							+"\n\nThe corresponding traject is cancelled.\n\nThe UCL Carpooling team";
 		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
 		mail.setSubject(subject);
 		mail.addRecipient(dest);
@@ -47,7 +53,11 @@ public abstract class ICommunication{
 	public static void trajectReminder(Proposal prop){
         /*
 		String subject = "[UCL Carpooling] Traject Reminder";
-		String message = "";
+		String message = "Hello,\n\nThe following traject is about to start :\n\nDeparture address : "
+							+t.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+t.getArrivalPP().getPickupPoint().getAddress()
+							+"\nDeparture time : "+t.getProposal().getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
+							+"\nArrival time : "+t.getProposal().getItinerary(t.getArrivalPP().getPickupPoint()).getArrivalTime().toString()
+							+"\n\nThe UCL Carpooling team";
 		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
 		for(int i = 0; i < passenger.length; i++){
 			mail.addRecipient(passenger[i].getEmail());
@@ -68,7 +78,7 @@ public abstract class ICommunication{
         /*
 		String dest = user.getEmail();
 		String subject = "[UCL Carpooling] Traject found";
-		String message = "";
+		String message = "Hello,\n\nA new traject corresponding to your request has been created. Please go to www.uclcarpooling.be to get all details.\n\nThe UCL Carpooling team";
 		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
 		mail.setSubject(subject);
 		mail.addRecipient(dest);
@@ -85,7 +95,12 @@ public abstract class ICommunication{
         /*
 		String dest = t.getProposal().getUser().getEmail();
 		String subject = "[UCL Carpooling] New passenger registered";
-		String message = "";
+		String message = "Hello,\n\nA new passenger has been added to the following traject :\n\nDeparture address : "
+							+t.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+t.getArrivalPP().getPickupPoint().getAddress()
+							+"\nReserved seats : "+t.getReservedSeats()
+							+"\nDeparture time : "+t.getProposal().getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
+							+"\nArrival time : "+t.getProposal().getItinerary(t.getArrivalPP().getPickupPoint()).getArrivalTime().toString()
+							+"\n\nThe UCL Carpooling team";
 		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
 		mail.setSubject(subject);
 		mail.addRecipient(dest);
@@ -101,7 +116,8 @@ public abstract class ICommunication{
         /*
 		String dest = u.getEmail();
 		String subject = "[UCL Carpooling] Account creation";
-		String message = "";
+		String message = "Hello, \n\nA new account has been created on www.uclcarpooling.be with the following information :\n\nLogin : "
+							+u.getLogin()+"\nEmail address : "+u.getEmail()+"\n\nThe UCL Carpooling team";
 		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
 		mail.setSubject(subject);
 		mail.addRecipient(dest);
@@ -114,6 +130,20 @@ public abstract class ICommunication{
 	 * Contact le satff en cas de rating negatif.
 	 */
 	public static void helpMeStaff(Traject t){
-		
+		/*
+		String dest = "staff@carpooling.uclouvain.be";
+		String subject = "[UCL Carpooling] Traject conflict";
+		String message = "Hello,\n\nThere is a conflict for the following traject :\n\nDeparture address : "
+							+t.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+t.getArrivalPP().getPickupPoint().getAddress()
+							+"\nReserved seats : "+t.getReservedSeats()
+							+"\nDeparture time : "+t.getProposal().getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
+							+"\nArrival time : "+t.getProposal().getItinerary(t.getArrivalPP().getPickupPoint()).getArrivalTime().toString()
+							+"\n\nThe UCL Carpooling team";
+		MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+		mail.setSubject(subject);
+		mail.addRecipient(dest);
+		mail.addFrom(sender);
+		mail.send(message);
+		*/
 	}
 }

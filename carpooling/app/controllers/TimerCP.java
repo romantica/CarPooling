@@ -33,7 +33,7 @@ public class TimerCP extends ITimer{
 			public void run(){
 				handler.execute();
 			}
-		}, timeout);
+		}, timeout * 1000);
 	}
 
 }

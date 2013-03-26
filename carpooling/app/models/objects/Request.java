@@ -16,6 +16,8 @@ public class Request extends Model {
 	private double depCoordinateX, depCoordinateY, arCoordinateX, arCoordinateY;
 	private String departureAddress, arrivalAddress;
 	private Date arrivalTime;
+	
+	// In milliseconds and meters
 	private int necessarySeats, toleranceTime, toleranceWalkDistance;
 	private float tolerancePrice;
 
@@ -48,8 +50,11 @@ public class Request extends Model {
 	}
 
 	public void setDepartureCoordinates(Coordinate departureCoordinates) {
-		this.depCoordinateX = departureCoordinates.getX();
-		this.depCoordinateY = departureCoordinates.getY();
+		if (!(departureCoordinates == null))
+		{
+			this.depCoordinateX = departureCoordinates.getX();
+			this.depCoordinateY = departureCoordinates.getY();
+		}
 	}
 
 	public Coordinate getArrivalCoordinates() {
@@ -57,8 +62,11 @@ public class Request extends Model {
 	}
 
 	public void setArrivalCoordinates(Coordinate arrivalCoordinates) {
-		this.arCoordinateX = arrivalCoordinates.getX();
-		this.arCoordinateY = arrivalCoordinates.getY();
+		if (!(arrivalCoordinates == null))
+		{
+			this.arCoordinateX = arrivalCoordinates.getX();
+			this.arCoordinateY = arrivalCoordinates.getY();
+		}
 	}
 
 	public int getId() {
