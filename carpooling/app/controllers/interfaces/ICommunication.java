@@ -62,12 +62,7 @@ public abstract class ICommunication{
             mail.addFrom(sender);
             mail.send(message);
 	}
-	Traject traj = traject.get(0);
-	String messageDriver = "Hello,\n\nThe following traject is about to start :\n\nDeparture address : "
-                    		+traj.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+traj.getArrivalPP().getPickupPoint().getAddress()
-                    		+"\nReserved seats : "+traj.getReservedSeats()
-                    		+"\nDeparture time : "+prop.getItinerary(traj.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
-                    		+"\nArrival time : "+prop.getItinerary(traj.getArrivalPP().getPickupPoint()).getArrivalTime().toString()
+	String messageDriver = "Hello,\n\nThe traject corresponding to your proposal is about to start. Please be on your way as soon as possible"
                     		+"\n\nThe UCL Carpooling team";
 	MailerAPI mailDriver = play.Play.application().plugin(MailerPlugin.class).email();
 	mailDriver.addRecipient(prop.getUser().getEmail());
