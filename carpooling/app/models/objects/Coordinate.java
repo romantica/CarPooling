@@ -1,7 +1,11 @@
 package models.objects;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Version;
+
 import play.data.validation.Constraints;
 //import play.db.ebean.Model;
 
@@ -11,6 +15,9 @@ public class Coordinate {
 	
 	@Id
 	private int id;
+	
+	@Version
+    public Timestamp lastUpdate;
 	
 	@Constraints.Required
     private double x, y;

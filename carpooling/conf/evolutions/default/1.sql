@@ -8,6 +8,7 @@ create table Assessment (
   rating                    integer,
   comment                   varchar(255),
   type                      tinyint(1) default 0,
+  last_update               datetime not null,
   constraint pk_Assessment primary key (id))
 ;
 
@@ -15,6 +16,7 @@ create table Car (
   plate_number              varchar(255) not null,
   model                     varchar(255),
   color                     varchar(255),
+  last_update               datetime not null,
   constraint pk_Car primary key (plate_number))
 ;
 
@@ -23,6 +25,7 @@ create table Composition (
   type                      tinyint(1) default 0,
   time                      datetime,
   pickup_point_id           integer,
+  last_update               datetime not null,
   constraint pk_Composition primary key (id))
 ;
 
@@ -30,6 +33,7 @@ create table coordinate (
   id                        integer auto_increment not null,
   x                         double,
   y                         double,
+  last_update               datetime not null,
   constraint pk_coordinate primary key (id))
 ;
 
@@ -38,6 +42,7 @@ create table Itinerary (
   departure_time            datetime,
   arrival_time              datetime,
   pickup_point_id           integer,
+  last_update               datetime not null,
   constraint pk_Itinerary primary key (id))
 ;
 
