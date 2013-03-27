@@ -1,5 +1,6 @@
 package models.objects;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -12,6 +13,9 @@ public class Composition extends Model {
 	
 	@Id
 	private int id;
+	
+	@Version
+    public Timestamp lastUpdate;
 	
 	private boolean type;// TRUE = departure ; FALSE = arrival
 	private Date time;

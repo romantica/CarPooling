@@ -1,5 +1,7 @@
 package models.objects;
 
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 
 import play.data.validation.Constraints;
@@ -12,6 +14,9 @@ public class Assessment extends Model {
 	
 	@Id
 	private int id;
+	
+	@Version
+    public Timestamp lastUpdate;
 	
 	@Constraints.Required
 	private int rating;

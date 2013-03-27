@@ -1,5 +1,7 @@
 package models.objects;
 
+import java.sql.Timestamp;
+
 import javax.persistence.*;
 
 import play.data.validation.Constraints;
@@ -9,6 +11,8 @@ import play.db.ebean.Model;
 @Table(name="Car")
 public class Car extends Model {
 
+	@Version
+    public Timestamp lastUpdate;
 
     @Id
 	@Constraints.Required

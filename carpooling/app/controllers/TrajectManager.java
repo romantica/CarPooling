@@ -8,7 +8,9 @@ import java.util.concurrent.locks.*;
 import com.avaje.ebean.Ebean;
 
 import models.objects.Assessment;
+import models.objects.Itinerary;
 import models.objects.Proposal;
+import models.objects.Request;
 import models.objects.Traject;
 import models.objects.User;
 import controllers.interfaces.ICommunication;
@@ -21,8 +23,8 @@ public class TrajectManager extends ITrajectManager {
 
 	private static Lock l = new ReentrantLock();
 
-	private static int minutes15 = 900;
-	private static int hours24 = 24*60*60;
+	private static int minutes15 = 15;
+	private static int hours24 = 60;
 
 	private static ArrayList<TrajectReminderHandler> trajectRemTimers = new ArrayList<TrajectReminderHandler>();
 	private static ArrayList<ProposalReminderHandler> proposalRemTimers = new ArrayList<ProposalReminderHandler>();
@@ -124,6 +126,13 @@ public class TrajectManager extends ITrajectManager {
 	private static void deleteTraject(Traject traj){
 		cancelTimer(traj);
 		Traject.delete(traj);
+		
+		if(traj.getArrivalPP().getTime().before(new Date())){
+			traj.getUser().getRequest().remove(traj.getRequest());
+			traj.getUser().save();
+			traj.getRequest().delete();
+		}
+
 	}
 
 
@@ -132,7 +141,7 @@ public class TrajectManager extends ITrajectManager {
 		ITimer timer = new TimerCP();
 		//trajectReminder : obligatoire
 		TrajectReminderHandler trh = new TrajectReminderHandler(traj);
-		timer.wakeAtDate(new Date(traj.getArrivalPP().getTime().getTime() - minutes15), trh);
+		timer.wakeAtDate(new Date(traj.getDeparturePP().getTime().getTime() - minutes15), trh);
 		trajectRemTimers.add(trh);
 		//porposalReminder : seulement si il n'existe pas déjà
 		boolean exist = false;
@@ -144,7 +153,7 @@ public class TrajectManager extends ITrajectManager {
 		}
 		if(!exist){
 			ProposalReminderHandler prh = new ProposalReminderHandler(traj.getProposal());
-			timer.wakeAtDate(new Date(traj.getArrivalPP().getTime().getTime() - minutes15), prh);
+			timer.wakeAtDate(new Date(traj.getDeparturePP().getTime().getTime() - minutes15), prh);
 			proposalRemTimers.add(prh);
 		}
 		//EndHandler : obligatoire
@@ -198,6 +207,7 @@ public class TrajectManager extends ITrajectManager {
 			//Communicate
 			if (stop) return;
 			//TODO: compatibilite
+			System.out.println("traject reminded");
 			//ICommunication.trajectReminder(prop);
 		}
 
@@ -224,6 +234,7 @@ public class TrajectManager extends ITrajectManager {
 			//Communicate
 			if (stop) return;
 			//TODO: compatibilite
+			System.out.println("proposal reminded");
 			//ICommunication.trajectReminder(prop);
 		}
 
@@ -250,6 +261,8 @@ public class TrajectManager extends ITrajectManager {
 			//Communicate
 			if (stop) return;
 			//TODO: compatibilite
+			System.out.println("endTimeout");
+			deleteTraject(traj);
 			//ICommunication.trajectReminder(prop);
 		}
 
