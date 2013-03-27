@@ -34,7 +34,7 @@ public class Matching
 			if ( isSeatsRequestAMatch(proposal, request) && isArrivalTimeAMatch(proposal, request) )
 			{
 				PickupPoint[] pickupPoints = getPickupPoints(proposal, request);
-				if (pickupPoints != null 
+				if (pickupPoints != null && pickupPoints[0] != null
 						&& isTimingAMatch(proposal, request, pickupPoints) 
 						&& isPriceAMatch(proposal, request, pickupPoints))
 				{
