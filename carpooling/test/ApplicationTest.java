@@ -4,13 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-<<<<<<< Updated upstream
 import controllers.*;
 import models.objects.*;
 import views.*;
 
-=======
->>>>>>> Stashed changes
 import org.codehaus.jackson.JsonNode;
 import org.junit.*;
 
