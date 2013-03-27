@@ -65,7 +65,7 @@ public class TrajectManager extends ITrajectManager {
 		}
 		else{
 			l.unlock();
-			if(seat > 0) {
+			if(seat <= 0) {
 				throw new Exception("Il n'y a plus de place dans la voiture");
 			} else {
 				throw new Exception("Vous n'avez pas assez d'argent pour ce trajet.");
