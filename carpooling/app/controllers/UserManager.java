@@ -5,7 +5,6 @@ import static play.mvc.Controller.session;
 import java.util.List;
 
 import models.objects.Car;
-import models.objects.Proposal;
 import models.objects.User;
 import play.db.ebean.Model;
 import controllers.interfaces.IUserManager;
@@ -14,7 +13,7 @@ public class UserManager implements IUserManager {
 
 	public void createUser(String login, String lastName, String firstName,
 			String accountNumber, String phone, String email) {
-		User user = new User(login, firstName, lastName, email, phone, 0, null,
+		User user = new User(login, firstName, lastName, email, phone, 100, null,
 				null, null, null, null);
 		user.save();
 	}

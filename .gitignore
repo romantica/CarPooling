@@ -31,3 +31,6 @@ carpooling/.target/*
 carpooling/RemoteSystemsTempFiles/*
 carpooling/conf/evolutions/default/1.sql
 >>>>>>> e2eb50eed5ce91264d8de995e03895a4e52d85d3
+
+/carpooling/conf/evolutions/default/1.sql
+1.sql

@@ -1,8 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import models.Field;
 import models.FormUI;
 import models.objects.Car;
@@ -69,6 +66,7 @@ public class UserUI extends Controller {
         user.setEmail(form.getStringField("email"));
         user.setPhoneNumber(form.getStringField("phone"));
         user.setPassword(Login.encoderMD5(form.getStringField("pwd")));
+        user.setBalance(100); // CADEAU
 
         //TODO : call User manager
         
@@ -155,6 +153,19 @@ public class UserUI extends Controller {
         user.addCar(car);
         user.save();
         return redirect("/user");
+    }
+    
+    public static Result seeRating(String userId) {
+    	Login session = new Login();
+	    if (!session.isLogged())
+	        return redirect("/");
+	    
+	    int id = Integer.parseInt(userId);
+	    User user = User.find.byId(id);
+	    
+	    if (user == null)
+	    	return redirect("/user/");
+    	return ok(rating.render(session.getUsername(), user));
     }
     
     private static FormUI carForm(){

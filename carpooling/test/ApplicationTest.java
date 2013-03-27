@@ -1,9 +1,16 @@
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import models.objects.Assessment;
+<<<<<<< Updated upstream
+import controllers.*;
+import models.objects.*;
+import views.*;
+
+=======
+>>>>>>> Stashed changes
 import org.codehaus.jackson.JsonNode;
 import org.junit.*;
 
@@ -19,9 +26,7 @@ import play.libs.F.*;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
 
-import controllers.*;
-import models.objects.*;
-import views.*;
+import com.avaje.ebean.ExpressionList;
 
 import java.util.Date;
 
@@ -33,24 +38,24 @@ import java.util.Date;
 */
 public class ApplicationTest {
     
+/*
 		@Test 
     public void carpoolingCheck() {
 				Assessment assessTest = new Assessment(3,"Test",true);
 				assertThat(assessTest.getRating()).isEqualTo(3);
 				assertThat(assessTest.getComment()).isEqualTo("Test");
 				assertThat(assessTest.isType()).isEqualTo(true);
-
+				/*
 				User userTest = new User("loginTest", "Mister", "Nobody", "test@test.com",
 						"0123-456", 0, assessTest,
-						null, null, null,
-						null);
+						null, null, null, null);
 				assertThat(userTest.getLogin()).isEqualTo("loginTest");
 				assertThat(userTest.getFirstName()).isEqualTo("Mister");
 				assertThat(userTest.getName()).isEqualTo("Nobody");
 				assertThat(userTest.getEmail()).isEqualTo("test@test.com");
 				assertThat(userTest.getPhoneNumber()).isEqualTo("0123-456");
 				assertThat(userTest.getBalance()).isEqualTo(0);
-
+				
 				Car carTest = new Car("Test-Plate", "model1", "red", userTest);
 				assertThat(carTest.getPlateNumber()).isEqualTo("Test-Plate");
 				assertThat(carTest.getModel()).isEqualTo("model1");
@@ -60,7 +65,7 @@ public class ApplicationTest {
 				assertThat(propTest.getKmCost()).isEqualTo(1.2);
 				assertThat(propTest.getAvailableSeats()).isEqualTo(2);
 				assertThat(propTest.getCar()).isEqualTo(carTest);
-				assertThat(propTest.getUser()).isEqualTo(userTest);
+				assertThat(propTest.getUser()).isEqualTo(userTest);   /*
 
 				Coordinate coorATest = new Coordinate(1.5,2.5);
 				assertThat(coorATest.getX()).isEqualTo(1.5);
@@ -71,7 +76,7 @@ public class ApplicationTest {
 				assertThat(pickupTest.getName()).isEqualTo("LLN");
 				assertThat(pickupTest.getDescription()).isEqualTo("LLN Descr");
 				assertThat(pickupTest.getAddress()).isEqualTo("1348 Ottignies");
-				assertThat(pickupTest.getCoordinates()).isEqualTo(coorATest);
+				//assertThat(pickupTest.getCoordinates()).isEqualTo(coorATest);
 
 				Itinerary iterTest = new Itinerary(new Date(20,03,2013), new Date(20,03,2013),pickupTest);//1 seul pickup point ?
 				assertThat(iterTest.getDepartureTime()).isEqualTo(new Date(20,03,2013));
@@ -82,6 +87,7 @@ public class ApplicationTest {
 			// TESTS GLOBAUX 
 			// =============
 			// -ProposalManager
+			/*
 			ProposalManager.recordProposal(propTest);
 			List<Proposal> ret = ProposalManager.getProposalList(propTest.getUser());
 			if(ret.getItemCount() > 1){
@@ -91,6 +97,8 @@ public class ApplicationTest {
 				Assert.fail("Returned proposal not = to initially inserted proposal");
 				}
     }	
+
+*/
 
 		@Test
 		public void matchingBBTest(){
@@ -132,17 +140,19 @@ public class ApplicationTest {
 
 		// BB Test : msg-1
 		ArrayList<Traject> response = controllers.Matching.match(reqTest);
-		for(Traject traj : response){
-		    Assert.fail("Test failed : la requete n est pas dans la base de donnees mais matching retourne un trajet");
-		}
-		RequestManager.recordRequest(reqTest);
+		/*for(Traject traj : response){
+		    Assert.fail("Requete n est pas dans la base de donnees mais matching retourne un trajet");
+		}*/
+		reqTest.getUser().addRequest(reqTest);
+		reqTest.save();
+		reqTest.getUser().save();
 
 		// BB Test : msg-2
 		ArrayList<Traject> response2 = controllers.Matching.match(reqTest);
 		for(Traject traj : response2){
-		    List<Proposal> result = Proposal.find.where().eq("id",traj.getProposal().getId());
-		    if(result.getItemCount() < 1){
-					Assert.fail("Test failed : la proposal n est pas dans la base de donnees mais matching retourne un trajet");}
+		    ExpressionList<Proposal> res = Proposal.find.where().eq("id",traj.getProposal().getId());
+		    if(res.findRowCount() < 1){
+					Assert.fail("Proposal n est pas dans la base de donnees mais matching retourne un trajet");}
 		}
 
 		// BB Test : msg-3 + msg-4
@@ -155,23 +165,23 @@ public class ApplicationTest {
 					Assert.fail("Arrival PickUpPoint pas dans la base de donnees");}
 		}
 
-		for(Traject traj : response){
+		for(Traject traj : response2){
 				// BB Test : msg-5	
-				int walkBegin = Matching.distance(traj.getDeparturePP(),traj.getArrivalPP());
+				double walkBegin = Matching.distance(traj.getDeparturePP().getPickupPoint().getCoordinates(), reqTest.getTraject().getDeparturePP().getPickupPoint().getCoordinates());
+				double walkEnd = Matching.distance(reqTest.getTraject().getArrivalPP().getPickupPoint().getCoordinates() ,traj.getArrivalPP().getPickupPoint().getCoordinates());
 				if(walkBegin + walkEnd > 3000){Assert.fail("La tolerance de distance de marche n est pas respectee");}
 
 				// BB Test : msg-6
 				Date maxiTime = new Date(2013,01,04,16,00); 
-				if(traj.getArrivalPP().getTime() > maxiTime){Assert.fail("L heure d arrivee du passager depasse la tolerance d heure d arrivee de la requete");}
+				if(traj.getArrivalPP().getTime().after(maxiTime)){
+					Assert.fail("Heure d arrivee du passager depasse la tolerance d heure d arrivee");}
 
 				// BB Test : msg-7
-				if(traj.getReservedSeats() - 1 < 0){Assert.fail("Il n�y a pas assez de sieges libres dans la proposition pour satisfaire la requete");}
+				if(traj.getReservedSeats() - 1 < 0){Assert.fail("Pas assez de sieges libres dans la proposition pour satisfaire la requete");}
 
 				// BB Test : msg-8
 				if(traj.getTotalCost() > 5){Assert.fail("Tolerance en cout non respectee.");} 
 			}
-
-		//Encore a tester : pickup point arrival + departure IN PP de la DB
 
 		}
 

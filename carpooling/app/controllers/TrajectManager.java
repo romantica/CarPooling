@@ -41,7 +41,7 @@ public class TrajectManager extends ITrajectManager {
 		l.lock();
 
 		int seat =  traj.getProposal().getAvailableSeats();
-		if(seat > 0){
+		if(seat > 0 && user.getBalance() < traj.getReservedSeats()*traj.getTotalCost()){
 
 			traj.getDeparturePP().save();
 			traj.getArrivalPP().save();
@@ -65,7 +65,11 @@ public class TrajectManager extends ITrajectManager {
 
 		}
 		else{
-			throw new Exception("Il n'y a plus de place dans la voiture");
+			if(seat > 0) {
+				throw new Exception("Il n'y a plus de place dans la voiture");
+			} else {
+				throw new Exception("Vous n'avez pas assez d'argent pour ce trajet.");
+			}
 		}
 
 		l.unlock();
@@ -119,27 +123,12 @@ public class TrajectManager extends ITrajectManager {
 	}
 	
 	private static void deleteTraject(Traject traj){
-		/*traj.getProposal().getTraject().remove(traj);
-		traj.getProposal().save();
-		//Si le trajet est dans le passé, on supprime aussi la requete et la proposition (si dernière requete)
-		if(traj.getArrivalPP().getTime().before(new Date())){
-			if (traj.getProposal().getTraject().size() <= 1){
-				for(Itinerary i: traj.getProposal().getItinerary()){
-					traj.getProposal().getItinerary().remove(i);
-					i.delete();
-				}
-				traj.getProposal().delete();
-			}
-			models.objects.Request r = traj.getRequest();
-			traj.setRequest(null);
-			traj.save();
-			new RequestManager().deleteRequest(r);
-		}*/
-
 		cancelTimer(traj);
 		Traject.delete(traj);
 		
 		if(traj.getArrivalPP().getTime().before(new Date())){
+			traj.getUser().getRequest().remove(traj.getRequest());
+			traj.getUser().save();
 			traj.getRequest().delete();
 		}
 

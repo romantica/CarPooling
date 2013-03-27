@@ -25,6 +25,19 @@ dl, dt, dd, li, ul {
     border: 0;
 }
 
+h1, h2, h3{
+    color: #666;
+    text-shadow: #CCC 0px 1px 0px;
+}
+h1 {
+    font-size: 22px;
+}
+h2 {
+    font-size: 18px;
+}
+h3 {
+    font-size: 16px;
+}
 
 
 /*          FORM         */

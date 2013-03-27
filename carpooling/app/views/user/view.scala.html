@@ -19,5 +19,9 @@
     <dt>Phone number</dt>
     <dd>@user.getPhoneNumber()</dd>
     }
+	@if(user.getAssessment() != null && user.getAssessment().length != 0){
+    <dt>Rating</dt>
+    <dd>@user.getMeanRating()/5 (<a href="/user/seerating?userId=@user.getId()">see details</a>)</dd>
+    }
 </div>
 

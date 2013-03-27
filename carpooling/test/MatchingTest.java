@@ -30,27 +30,33 @@ public class MatchingTest
 				HTMLUNIT, new Callback<TestBrowser>() {
 					public void invoke(TestBrowser browser) {
 		
-		Proposal proposal1 = new Proposal(1.0F, 1, null, null);
-		Proposal proposal2 = new Proposal(2.0F, 1, null, null);
-		Proposal proposal3 = new Proposal(0F, 2, null, null);
+		Car car1 = new Car();
+		Car car2 = new Car();
+		Car car3 = new Car();
+		car1.setModel("1");
+		car2.setModel("2");
+		car3.setModel("3");
+		car1.save();
+		car2.save();
+		car3.save();						
+		Proposal proposal1 = new Proposal(0F, 1, car1, null);
+		Proposal proposal2 = new Proposal(0F, 1, car2, null);
+		Proposal proposal3 = new Proposal(0F, 2, car3, null);
 		Coordinate coord1 = new Coordinate(0.0, 0.0);
 		Coordinate coord2 = new Coordinate(1.0, 1.0);
-		Coordinate coord3 = new Coordinate(2.0, 2.0);
-		Coordinate coord4 = new Coordinate(3.0, 3.0);
+		Coordinate coord3 = new Coordinate(0.1, 0.1);
 		PickupPoint pup1 = new PickupPoint(null, null, null, coord1);		
 		PickupPoint pup2 = new PickupPoint(null, null, null, coord2);		
 		PickupPoint pup3 = new PickupPoint(null, null, null, coord3);
-		PickupPoint pup4 = new PickupPoint(null, null, null, coord4);
 		pup1.save();
 		pup2.save();
 		pup3.save();
-		pup4.save();
 		Date date11 = new Date(1000);
 		Date date12 = new Date(2000);
 		Date date21 = new Date(1000000);
 		Date date22 = new Date(1001000);
-		Itinerary itinerary1 = new Itinerary(date11, date12, pup1);
-		Itinerary itinerary2 = new Itinerary(date21, date22, pup2);
+		Itinerary itinerary1 = new Itinerary(date12, date11, pup1);
+		Itinerary itinerary2 = new Itinerary(date22, date21, pup2);
 		itinerary1.save();
 		itinerary2.save();
 		proposal1.addItinerary(itinerary1);
@@ -64,11 +70,31 @@ public class MatchingTest
 		proposal2.save();
 		proposal3.save();
 		
-		//sièges
-		Request request = new Request(coord1, coord2, null, null, date22, 2, 0, 0, 0, null, null);
-		System.out.println("Match result : " + Matching.match(request).get(0));
-		Traject tr = Matching.createTraject(proposal3, request, Matching.getPickupPoints(proposal3, request));
-		//assertEquals(Matching.match(request).get(0).getProposal(), tr.getProposal());
+		//seats
+		Request request = new Request(coord1, coord2, null, null, date21, 2, 0, 0, 0, null, null);
+		assertEquals(Matching.match(request).get(0).getProposal().getCar().getModel(), "3");
+		
+		//arrival time
+		request.getArrivalTime().setTime(0);
+		assertNull(Matching.match(request));
+		request.getArrivalTime().setTime(1000000);
+		request.setToleranceTime(1000);
+		request.setNecessarySeats(1);
+		assertEquals(Matching.match(request).size(), 3);
+		
+		//price
+		request.setTolerancePrice(10F);
+		proposal1.setKmCost(100F);
+		proposal1.save();
+		assertEquals(Matching.match(request).size(), 2);
+		
+		//location
+		request.setDepartureCoordinates(coord3);
+		request.setDepCoordinateX(coord3.getX());
+		request.setDepCoordinateY(coord3.getY());
+		assertNull(Matching.match(request));
+		request.setToleranceWalkDistance(16000);
+		assertEquals(Matching.match(request).size(), 2);
 		}});
 	}
 	

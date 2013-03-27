@@ -1,5 +1,6 @@
 package controllers.interfaces;
 
+import java.util.*;
 import models.objects.*;
 import com.typesafe.plugin.*;
 
@@ -46,22 +47,33 @@ public abstract class ICommunication{
      * conducteur recoivent un rappel contenant les infos du
      * trajet.
      */
-    public static void trajectReminder(User[] passenger, User driver, Traject t){
-        String subject = "[UCL Carpooling] Traject Reminder";
-        String message = "Hello,\n\nThe following traject is about to start :\n\nDeparture address : "
-                +t.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+t.getArrivalPP().getPickupPoint().getAddress()
-                +"\nReserved seats : "+t.getReservedSeats()
-                +"\nDeparture time : "+t.getProposal().getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
-                +"\nArrival time : "+t.getProposal().getItinerary(t.getArrivalPP().getPickupPoint()).getArrivalTime().toString()
-                +"\n\nThe UCL Carpooling team";
-        MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
-        for(int i = 0; i < passenger.length; i++){
-            mail.addRecipient(passenger[i].getEmail());
-        }
-        mail.addRecipient(driver.getEmail());
-        mail.setSubject(subject);
-        mail.addFrom(sender);
-        mail.send(message);
+    public static void trajectReminder(Proposal prop){
+	List<Traject> traject = prop.getTraject();
+	String subject = "[UCL Carpooling] Traject Reminder";
+	for(Traject t: traject){
+            String message = "Hello,\n\nThe following traject is about to start :\n\nDeparture address : "
+                    +t.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+t.getArrivalPP().getPickupPoint().getAddress()
+                    +"\nDeparture time : "+prop.getItinerary(t.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
+                    +"\nArrival time : "+prop.getItinerary(t.getArrivalPP().getPickupPoint()).getArrivalTime().toString()
+                    +"\n\nThe UCL Carpooling team";
+            MailerAPI mail = play.Play.application().plugin(MailerPlugin.class).email();
+            mail.addRecipient(t.getUser().getEmail());
+            mail.setSubject(subject);
+            mail.addFrom(sender);
+            mail.send(message);
+	}
+	Traject traj = traject.get(0);
+	String messageDriver = "Hello,\n\nThe following traject is about to start :\n\nDeparture address : "
+                    		+traj.getDeparturePP().getPickupPoint().getAddress()+"\nArrival address : "+traj.getArrivalPP().getPickupPoint().getAddress()
+                    		+"\nReserved seats : "+traj.getReservedSeats()
+                    		+"\nDeparture time : "+prop.getItinerary(traj.getDeparturePP().getPickupPoint()).getDepartureTime().toString()
+                    		+"\nArrival time : "+prop.getItinerary(traj.getArrivalPP().getPickupPoint()).getArrivalTime().toString()
+                    		+"\n\nThe UCL Carpooling team";
+	MailerAPI mailDriver = play.Play.application().plugin(MailerPlugin.class).email();
+	mailDriver.addRecipient(prop.getUser().getEmail());
+	mailDriver.setSubject(subject);
+	mailDriver.addFrom(sender);
+	mailDriver.send(messageDriver);
     }
 
     /**

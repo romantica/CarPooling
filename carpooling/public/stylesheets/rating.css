@@ -1,0 +1,12 @@
+div.ratingItem h3 {
+	margin-top: 0px;
+	margin-bottom: 3px;
+	text-shadow: #CCC 0px 1px 0px;
+	font-weight: 500;
+}
+
+div.ratingItem {
+	background-color: rgb(240,240,240);
+	margin: 5px;
+	padding: 5px;
+}

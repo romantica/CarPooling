@@ -169,10 +169,10 @@ public class RequestUI extends Controller {
         
 		try {
 			TrajectManager.recordTraject(selectedTraject, UserManager.getUserLogged());
+			requestManager.recordRequest(request);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		requestManager.recordRequest(request);
         
 		return redirect("/traject/passanger");
 	}
@@ -203,7 +203,11 @@ public class RequestUI extends Controller {
         	return ok("An error occured: cached data have expired. Please try to encode again your request");
         
         // And save it to postpone the matching
-        requestManager.matchLater(request);
+        try {
+        	requestManager.matchLater(request);
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
 		
 		return redirect("/traject/request");
 	}
