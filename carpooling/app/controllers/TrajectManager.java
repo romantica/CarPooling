@@ -26,7 +26,6 @@ public class TrajectManager extends ITrajectManager {
 	private static int minutes15 = 15;
 	private static int hours24 = 60;
 
-	private static ArrayList<TrajectReminderHandler> trajectRemTimers = new ArrayList<TrajectReminderHandler>();
 	private static ArrayList<ProposalReminderHandler> proposalRemTimers = new ArrayList<ProposalReminderHandler>();
 	private static ArrayList<EndHandler> endTimers = new ArrayList<EndHandler>();
 
@@ -107,7 +106,7 @@ public class TrajectManager extends ITrajectManager {
 	}
 
 	public static void arrivalNotification(Traject traj, short rating, String comment) {
-		if(rating < 0){
+		if(rating < 3){
 			ICommunication.helpMeStaff(traj);
 			return;
 		}
@@ -139,10 +138,6 @@ public class TrajectManager extends ITrajectManager {
 	private static void createTimer(Traject traj){
 		//Ajout pour les timers
 		ITimer timer = new TimerCP();
-		//trajectReminder : obligatoire
-		TrajectReminderHandler trh = new TrajectReminderHandler(traj);
-		timer.wakeAtDate(new Date(traj.getDeparturePP().getTime().getTime() - minutes15), trh);
-		trajectRemTimers.add(trh);
 		//porposalReminder : seulement si il n'existe pas déjà
 		boolean exist = false;
 		for(ProposalReminderHandler p: proposalRemTimers){
@@ -165,14 +160,6 @@ public class TrajectManager extends ITrajectManager {
 
 	private static void cancelTimer(Traject traj){
 		//Suppression des timers
-		//TrajectReminder : obligatoire
-		for(TrajectReminderHandler tmh : trajectRemTimers){
-			if (tmh.getProposal().equals(traj)){
-				tmh.stop();
-				trajectRemTimers.remove(tmh);
-				break;
-			}
-		}
 		//24h après : obligatoire
 		for(EndHandler eh : endTimers){
 			if (eh.getProposal().equals(eh)){
@@ -193,33 +180,6 @@ public class TrajectManager extends ITrajectManager {
 		}
 	}
 
-	public static class TrajectReminderHandler implements IHandler{
-
-		private Traject traj;
-		private boolean stop;
-
-		public TrajectReminderHandler(Traject traj){
-			this.traj = traj;
-			stop = false;
-		}
-
-		public void execute(){
-			//Communicate
-			if (stop) return;
-			//TODO: compatibilite
-			System.out.println("traject reminded");
-			//ICommunication.trajectReminder(prop);
-		}
-
-		public Traject getProposal(){
-			return traj;
-		}
-
-		public void stop(){
-			stop = true;
-		}
-	}
-
 	public static class ProposalReminderHandler implements IHandler{
 
 		private Proposal prop;
@@ -233,9 +193,7 @@ public class TrajectManager extends ITrajectManager {
 		public void execute(){
 			//Communicate
 			if (stop) return;
-			//TODO: compatibilite
-			System.out.println("proposal reminded");
-			//ICommunication.trajectReminder(prop);
+			ICommunication.trajectReminder(prop);
 		}
 
 		public Proposal getProposal(){
@@ -260,10 +218,7 @@ public class TrajectManager extends ITrajectManager {
 		public void execute(){
 			//Communicate
 			if (stop) return;
-			//TODO: compatibilite
-			System.out.println("endTimeout");
 			deleteTraject(traj);
-			//ICommunication.trajectReminder(prop);
 		}
 
 		public Traject getProposal(){
